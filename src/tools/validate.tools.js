@@ -1,18 +1,15 @@
 /**
- * Validation tool. Composes two layers:
- *  - core/validate.js: structural rules Kettle would reject at load/run time.
- *  - knowledge/catalog-check.js: soft check that each element type is a known
- *    (ideally canonical) type in the embedded knowledge catalog.
- *
- * The catalog layer is on by default here (unlike core, which stays
- * knowledge-agnostic) because the whole point of this server is a knowledge-
- * aware "will it load?" check. Pass checkCatalog:false to get pure structural
- * results. Catalog issues are only warning/info, so they never turn a
- * structurally-sound file into a failure.
+ * Validation tool. Composes structural validation and catalog checks.
  */
 import { validateFile, validateAll } from '../core/validate.js';
 import { loadModel } from '../core/model.js';
 import { checkCatalogTypes } from '../knowledge/catalog-check.js';
+import {
+  artifactSelectorSchema,
+  directorySelectorSchema,
+  selectArtifact,
+  selectDirectory,
+} from './repository-schema.js';
 
 const str = d => ({ type: 'string', description: d });
 
@@ -25,43 +22,52 @@ function recount(report) {
   return report;
 }
 
-/** Run structural validation on one file, then append catalog-type issues. */
 function validateWithCatalog(filePath) {
   const report = validateFile(filePath);
-  // Only attempt the catalog layer if the file parsed cleanly enough to model.
   try {
     const model = loadModel(filePath);
     report.issues.push(...checkCatalogTypes(model));
     recount(report);
   } catch {
-    // A parse failure is already an error in the structural report; skip.
+    // structural error already recorded
   }
   return report;
 }
 
-export function validateTools({ resolveRead, root }) {
+export function validateTools(ctx) {
+  const { root } = ctx;
   return [
     {
       name: 'kettle_validate',
       title: 'Validate artifact',
-      description: 'Lint one file (or every file under KETTLE_ROOT when path omitted). Checks structure (XML, hops, connections, start entry, reachability) plus knowledge-catalog type coverage. checkCatalog:false skips the catalog layer.',
+      description: 'Lint one file or directory tree (default KETTLE_ROOT). Checks structure plus knowledge-catalog type coverage.',
       annotations: { title: 'Validate artifact', readOnlyHint: true },
       inputSchema: {
         type: 'object',
         properties: {
-          path: str('Path to a .kjb/.ktr file (workspace-relative, or an absolute path contained by KETTLE_ROOT)'),
+          ...artifactSelectorSchema(),
+          ...directorySelectorSchema(),
           checkCatalog: { type: 'boolean', description: 'Include knowledge-catalog type check (default true)' },
         },
         additionalProperties: false,
       },
       handler: a => {
         const withCatalog = a.checkCatalog !== false;
-        if (a.path) {
-          const file = resolveRead(a.path);
-          return withCatalog ? validateWithCatalog(file) : validateFile(file);
+        const hasArtifactSelector = Boolean(a.path || a.repositoryPath || a.artifactKind);
+        const hasDirSelector = Boolean(a.directory || a.repositoryDirectory);
+
+        if (hasArtifactSelector && hasDirSelector) {
+          throw new Error('Cannot specify both artifact selector and directory selector in kettle_validate');
         }
-        // Whole-tree: core validateAll, optionally enriched per reported file.
-        const all = validateAll(root);
+
+        if (hasArtifactSelector) {
+          const id = selectArtifact(ctx, a);
+          const report = withCatalog ? validateWithCatalog(id.physicalPath) : validateFile(id.physicalPath);
+          return { repositoryPath: id.repositoryPath, artifactKind: id.artifactKind, ...report };
+        }
+
+        const { physicalPath } = selectDirectory(ctx, a);
+        const all = validateAll(physicalPath);
         if (!withCatalog) return all;
         for (const report of all.files) {
           try {
@@ -69,7 +75,6 @@ export function validateTools({ resolveRead, root }) {
             recount(report);
           } catch { /* structural error already recorded */ }
         }
-        // Recompute the tree-level counters after enrichment.
         const summary = { files: all.summary.files, errors: 0, warnings: 0, info: 0 };
         for (const r of all.files) {
           summary.errors += r.summary.errors;

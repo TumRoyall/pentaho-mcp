@@ -1,0 +1,110 @@
+{
+  "pdiVersion": "9.4.0.0-SNAPSHOT",
+  "sourceRevision": "1a939ab5cabe4517867879684aeca2a526bcc638",
+  "adapters": [
+    {
+      "ownerKind": "job",
+      "type": "JOB",
+      "targetKind": "job",
+      "nameTag": "jobname",
+      "directoryTag": "directory",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "job_object_id",
+      "source": "org.pentaho.di.job.entries.job.JobEntryJob",
+      "fixture": "job_entry_job.kjb"
+    },
+    {
+      "ownerKind": "job",
+      "type": "TRANS",
+      "targetKind": "trans",
+      "nameTag": "transname",
+      "directoryTag": "directory",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.job.entries.trans.JobEntryTrans",
+      "fixture": "job_entry_trans.kjb"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "JobExecutor",
+      "targetKind": "job",
+      "nameTag": "job_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "job_object_id",
+      "source": "org.pentaho.di.trans.steps.jobexecutor.JobExecutorMeta",
+      "fixture": "trans_job_executor.ktr"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "TransExecutor",
+      "targetKind": "trans",
+      "nameTag": "trans_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.trans.steps.transexecutor.TransExecutorMeta",
+      "fixture": "trans_trans_executor.ktr"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "Mapping",
+      "targetKind": "trans",
+      "nameTag": "trans_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.trans.steps.mapping.MappingMeta",
+      "fixture": "trans_mapping.ktr"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "SimpleMapping",
+      "targetKind": "trans",
+      "nameTag": "trans_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.trans.steps.simplemapping.SimpleMappingMeta",
+      "fixture": "trans_simple_mapping.ktr"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "SingleThreader",
+      "targetKind": "trans",
+      "nameTag": "trans_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.trans.steps.singlethreader.SingleThreaderMeta",
+      "fixture": "trans_single_threader.ktr"
+    },
+    {
+      "ownerKind": "trans",
+      "type": "MetaInject",
+      "targetKind": "trans",
+      "nameTag": "trans_name",
+      "directoryTag": "directory_path",
+      "methodTag": "specification_method",
+      "methodValue": "rep_name",
+      "objectIdTag": "trans_object_id",
+      "source": "org.pentaho.di.trans.steps.metainject.MetaInjectMeta",
+      "fixture": "trans_meta_inject.ktr"
+    }
+  ],
+  "registry": {
+    "sources": ["RepositoriesMeta.readData", "Const.getKettleUserRepositoriesFile"],
+    "precedence": ["working_directory_repositories_xml", "user_kettle_repositories_xml"]
+  },
+  "loadcheck": {
+    "verified": true,
+    "observations": ["Exit code 7 can occur on both listparam success and load failure"]
+  }
+}

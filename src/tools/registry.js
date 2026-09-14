@@ -13,10 +13,12 @@ import { knowledgeTools } from './knowledge.tools.js';
 import { runtimeTools } from './runtime.tools.js';
 import { artifactTools } from './artifact.tools.js';
 import { removeTools } from './remove.tools.js';
+import { repositoryTools } from './repository.tools.js';
+import { connectionTools } from './connection.tools.js';
 
 const FACTORIES = [
   readTools, editTools, validateTools, knowledgeTools, runtimeTools,
-  artifactTools, removeTools,
+  artifactTools, removeTools, repositoryTools, connectionTools,
 ];
 
 export function buildTools(ctx) {

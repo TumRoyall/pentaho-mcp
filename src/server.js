@@ -17,14 +17,22 @@ import {
 import { buildTools } from './tools/registry.js';
 import { validateToolArguments } from './tools/schema.js';
 import { createWorkspaceBoundary } from './workspace/boundary.js';
+import { createRepositoryPaths } from './repository/paths.js';
 import { SERVER_VERSION } from './version.js';
 
 export function makeContext({
   root = process.env.KETTLE_ROOT ?? process.cwd(),
   pentahoHome = process.env.PENTAHO_HOME,
+  repositoryName = process.env.PENTAHO_REPOSITORY_NAME,
 } = {}) {
+  const boundary = createWorkspaceBoundary(root);
+  const repositoryPaths = createRepositoryPaths(boundary);
   return {
-    ...createWorkspaceBoundary(root),
+    ...boundary,
+    repositoryPaths,
+    repositoryName: typeof repositoryName === 'string' && repositoryName.trim()
+      ? repositoryName.trim()
+      : null,
     pentahoHome: typeof pentahoHome === 'string' && pentahoHome.trim()
       ? pentahoHome.trim()
       : null,

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_single_threader</name>
+  </info>
+  <step>
+    <name>Single Threader Step</name>
+    <type>SingleThreader</type>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <filename/>
+    <trans_name>single_sub</trans_name>
+    <directory_path>/batch</directory_path>
+  </step>
+</transformation>

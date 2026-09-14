@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_meta_inject</name>
+  </info>
+  <step>
+    <name>ETL Metadata Injection</name>
+    <type>MetaInject</type>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <filename/>
+    <trans_name>inject_target</trans_name>
+    <directory_path>/inject</directory_path>
+  </step>
+</transformation>

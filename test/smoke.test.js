@@ -16,6 +16,12 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_add_element',
   'kettle_add_error_hop',
   'kettle_clone',
+  'kettle_connection_delete',
+  'kettle_connection_get',
+  'kettle_connection_list',
+  'kettle_connection_put',
+  'kettle_connection_rename',
+  'kettle_connection_usage',
   'kettle_copy_connection',
   'kettle_create_file',
   'kettle_edit_error_hop',
@@ -28,6 +34,14 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_list',
   'kettle_remove_element',
   'kettle_rename_element',
+  'kettle_repository_detect',
+  'kettle_repository_list',
+  'kettle_repository_migrate_references',
+  'kettle_repository_mkdir',
+  'kettle_repository_move',
+  'kettle_repository_recover',
+  'kettle_repository_references',
+  'kettle_repository_register',
   'kettle_runtime_detect',
   'kettle_runtime_execute',
   'kettle_runtime_loadcheck',
@@ -37,11 +51,12 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_set_field_path',
   'kettle_set_fields',
   'kettle_set_parameters',
+  'kettle_set_reference',
   'kettle_summary',
   'kettle_validate',
 ];
 
-test('stdio smoke: initialize, 26 tools, and tool calls', async () => {
+test('stdio smoke: initialize, 41 tools, and tool calls', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'kettle-smoke-'));
   copyFileSync(path.join(here, 'fixtures', 'mini.ktr'), path.join(root, 'mini.ktr'));
   writeFileSync(
@@ -74,7 +89,7 @@ test('stdio smoke: initialize, 26 tools, and tool calls', async () => {
     const responses = out.split('\n').filter(l => l.trim().startsWith('{')).map(l => JSON.parse(l));
 
     const list = responses.find(r => r.id === 2);
-    assert.equal(list.result.tools.length, 26);
+    assert.equal(list.result.tools.length, 41);
     // Assert the EXACT advertised tool set, not just the count, so an
     // accidental rename or swap is caught even at a stable total.
     assert.deepEqual(

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_trans_executor</name>
+  </info>
+  <step>
+    <name>Execute Trans</name>
+    <type>TransExecutor</type>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <filename/>
+    <trans_name>sub_trans</trans_name>
+    <directory_path>/batch</directory_path>
+  </step>
+</transformation>

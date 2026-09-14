@@ -209,7 +209,7 @@ function verifyExecutable(exePath) {
   if (res.status !== 0 && res.status !== null) fail(`executable exited ${res.status}: ${res.stderr}`);
   const responses = (res.stdout || '').split(/\r?\n/).filter(l => l.startsWith('{')).map(JSON.parse);
   const tools = responses.find(r => r.id === 2)?.result?.tools;
-  if (!tools || tools.length !== 26) fail(`executable advertised ${tools ? tools.length : 'no'} tools, expected 26`);
+  if (!tools || tools.length !== 41) fail(`executable advertised ${tools ? tools.length : 'no'} tools, expected 41`);
   if (tools.some(t => t.name.startsWith('pentaho_'))) fail('executable exposes lifecycle pentaho_* tools');
   const capabilities = responses.find(r => r.id === 1)?.result?.capabilities ?? {};
   if (Object.hasOwn(capabilities, 'prompts')) fail('executable advertises a prompts capability');

@@ -95,6 +95,10 @@ components:
     - {type: PROCESS_FILES, xml_type: ProcessFiles, file: trans/ProcessFiles.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: DATA_GRID, xml_type: DataGrid, file: trans/DataGrid.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: JOB_EXECUTOR, xml_type: JobExecutor, file: trans/JobExecutor.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TRANS_EXECUTOR, xml_type: TransExecutor, file: trans/TransExecutor.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SIMPLE_MAPPING, xml_type: SimpleMapping, file: trans/SimpleMapping.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SINGLE_THREADER, xml_type: SingleThreader, file: trans/SingleThreader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: META_INJECT, xml_type: MetaInject, file: trans/MetaInject.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: XML_OUTPUT, xml_type: XMLOutput, file: trans/XMLOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: ORA_BULK_LOADER, xml_type: OraBulkLoader, file: trans/OraBulkLoader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: SET_SESSION_VARIABLE, xml_type: SetSessionVariableStep, file: trans/SetSessionVariableStep.md, status: observed, generator_eligible: false, source_version: "not_established", verified_versions: "", verification: source_reviewed}

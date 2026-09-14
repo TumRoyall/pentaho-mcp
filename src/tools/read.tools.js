@@ -1,27 +1,46 @@
 /** Read-only tools: inventory, summary, element detail, search. */
 import { summarize, getElement } from '../core/summarize.js';
 import { listArtifacts, search } from '../core/search.js';
+import {
+  artifactSelectorSchema,
+  directorySelectorSchema,
+  selectArtifact,
+  selectDirectory
+} from './repository-schema.js';
 
-const str = d => ({ type: 'string', description: d });
-const PATH = str('Path to a .kjb/.ktr file (workspace-relative, or an absolute path contained by KETTLE_ROOT)');
-
-export function readTools({ resolveRead, root }) {
+export function readTools(ctx) {
+  const { root } = ctx;
   return [
     {
       name: 'kettle_list',
       title: 'List Kettle artifacts',
       description: 'Inventory of Kettle jobs/transformations under a directory (default: KETTLE_ROOT)',
       annotations: { title: 'List Kettle artifacts', readOnlyHint: true },
-      inputSchema: { type: 'object', properties: { directory: str('Directory to scan') }, additionalProperties: false },
-      handler: a => listArtifacts(resolveRead(a.directory)),
+      inputSchema: {
+        type: 'object',
+        properties: { ...directorySelectorSchema() },
+        additionalProperties: false
+      },
+      handler: a => {
+        const { physicalPath } = selectDirectory(ctx, a);
+        return listArtifacts(physicalPath);
+      },
     },
     {
       name: 'kettle_summary',
       title: 'Summarize artifact',
       description: 'Summarize one job/transformation: elements with types, hop graph, connections, params, SQL previews',
       annotations: { title: 'Summarize artifact', readOnlyHint: true },
-      inputSchema: { type: 'object', properties: { path: PATH }, required: ['path'], additionalProperties: false },
-      handler: a => summarize(resolveRead(a.path)),
+      inputSchema: {
+        type: 'object',
+        properties: { ...artifactSelectorSchema() },
+        additionalProperties: false
+      },
+      handler: a => {
+        const id = selectArtifact(ctx, a);
+        const res = summarize(id.physicalPath);
+        return { repositoryPath: id.repositoryPath, artifactKind: id.artifactKind, ...res };
+      },
     },
     {
       name: 'kettle_get_element',
@@ -30,11 +49,19 @@ export function readTools({ resolveRead, root }) {
       annotations: { title: 'Get element detail', readOnlyHint: true },
       inputSchema: {
         type: 'object',
-        properties: { path: PATH, name: str('Step/entry name'), raw: { type: 'boolean' } },
-        required: ['path', 'name'],
+        properties: {
+          ...artifactSelectorSchema(),
+          name: { type: 'string', description: 'Step/entry name' },
+          raw: { type: 'boolean' }
+        },
+        required: ['name'],
         additionalProperties: false,
       },
-      handler: a => getElement(resolveRead(a.path), a.name, a.raw === true),
+      handler: a => {
+        const id = selectArtifact(ctx, a);
+        const res = getElement(id.physicalPath, a.name, a.raw === true);
+        return { repositoryPath: id.repositoryPath, artifactKind: id.artifactKind, ...res };
+      },
     },
     {
       name: 'kettle_search',
@@ -46,13 +73,16 @@ export function readTools({ resolveRead, root }) {
         properties: {
           query: { type: 'string', minLength: 1, description: 'What to search for' },
           kind: { type: 'string', enum: ['text', 'table', 'connection', 'variable', 'step_type', 'entry_type'] },
-          directory: str('Directory to scan (default: KETTLE_ROOT)'),
+          ...directorySelectorSchema(),
           limit: { type: 'integer', minimum: 1, maximum: 500, default: 100, description: 'Maximum matches to return (1..500)' },
         },
         required: ['query'],
         additionalProperties: false,
       },
-      handler: a => search(root, a.query, a.kind ?? 'text', resolveRead(a.directory), { limit: a.limit ?? 100 }),
+      handler: a => {
+        const { physicalPath } = selectDirectory(ctx, a);
+        return search(root, a.query, a.kind ?? 'text', physicalPath, { limit: a.limit ?? 100 });
+      },
     },
   ];
 }

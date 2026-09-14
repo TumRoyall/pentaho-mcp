@@ -6,15 +6,9 @@ import {
   parseModel, text, toArray, STEP_REFERENCE_TAGS, STEP_TARGET_REFERENCE_TAGS,
 } from './model.js';
 import { walkKettleFiles } from './search.js';
+import { extractReferences } from '../repository/references.js';
+import { scanRepository, dependencyClosure } from '../repository/graph.js';
 
-/**
- * A hop is an ACTIVE graph edge unless it is explicitly disabled. Kettle's
- * <enabled> is 'Y' for active hops and 'N' for a hop the author has switched
- * off in Spoon; an absent/empty value defaults to active. Only active hops
- * draw an arrow, carry rows, and satisfy target-reference/error routing.
- * Disabled hops are still part of the saved artifact and are still checked for
- * endpoint existence, but they do not connect the graph.
- */
 export function isActiveHop(hop) {
   return hop.enabled !== 'N';
 }
@@ -35,7 +29,6 @@ function isStartEntry(e) {
   return e.type === 'SPECIAL' && text(e.raw.start) === 'Y';
 }
 
-/** BFS over hops. Jobs start from the start entry; transformations from source steps. */
 function computeReachable(m) {
   const activeHops = m.hops.filter(isActiveHop);
   const adj = new Map();
@@ -87,11 +80,18 @@ function checkJobStartEntry(m, push) {
   }
 }
 
-function checkJobEntryFilenames(m, push, dir) {
+function checkJobEntryFilenames(m, push, dir, repositoryContext) {
   for (const e of m.elements.filter(e => e.type === 'TRANS' || e.type === 'JOB')) {
+    const method = text(e.raw.specification_method);
+    if (method === 'rep_name' || method === 'rep_ref') {
+      // Repository references do not require physical filename tag
+      continue;
+    }
     const fn = text(e.raw.filename);
     if (!fn) {
-      push('warning', `${e.type} entry "${e.name}" has no filename (repository reference?)`);
+      if (!repositoryContext) {
+        push('warning', `${e.type} entry "${e.name}" has no filename (repository reference?)`);
+      }
       continue;
     }
     const resolved = fn
@@ -115,13 +115,6 @@ function checkUndefinedConnections(m, push) {
   }
 }
 
-/**
- * Steps reference each other by name outside the hop graph too (MergeJoin's
- * <step1>/<step2>, FilterRows' <send_true_to>/<send_false_to>, ...). A stale
- * one is invisible to the hop-endpoint rule but breaks the transformation, so
- * flag it. Warning rather than error: the reference may point at a step the
- * author is about to add, and unlike a bad hop the file still parses.
- */
 function checkStepReferences(m, names, push) {
   for (const e of m.elements) {
     for (const tag of STEP_REFERENCE_TAGS) {
@@ -135,14 +128,6 @@ function checkStepReferences(m, names, push) {
   }
 }
 
-/**
- * A downstream step reference (FilterRows <send_true_to>, SwitchCase
- * <target_step>, ...) names where the row flow goes, but Kettle only actually
- * routes it when a matching enabled <hop> exists from the carrier step to that
- * target. A reference without its hop draws no arrow in Spoon and drops rows at
- * run time, so warn. The reverse (a hop with no reference) is legal — plenty of
- * steps have a single output and no target tag — so it is not flagged here.
- */
 function checkTargetReferenceHops(m, push) {
   if (m.kind !== 'trans') return;
   const hopSet = new Set(m.hops.filter(isActiveHop).map(h => `${h.from}\u0000${h.to}`));
@@ -157,21 +142,12 @@ function checkTargetReferenceHops(m, push) {
         flag(e.name, text(raw), `<${tag}>`);
       }
     }
-    // SwitchCase routes each case to a step named in a nested
-    // <cases>/<case>/<target_step>, which the flat tag scan above cannot see.
     for (const c of toArray(e.raw.cases?.case)) {
       flag(e.name, text(c.target_step), '<cases><case><target_step>');
     }
   }
 }
 
-/**
- * Error handling (<step_error_handling><error>) routes a step's error rows to a
- * target step — the red hop in Spoon. Like other target references it needs a
- * matching enabled <hop> from source to target to connect the graph. Parse the
- * error blocks straight off the transformation node (they live outside <step>,
- * so they are not on any element's raw).
- */
 function checkErrorHandlingHops(m, push) {
   if (m.kind !== 'trans') return;
   const names = new Set(m.elements.map(e => e.name));
@@ -190,19 +166,6 @@ function checkErrorHandlingHops(m, push) {
   }
 }
 
-/**
- * Every <step> shares a wrapper that StepMeta.getXML() always emits around the
- * step-specific body: name/type, the distribute+copies routing, <partitioning>,
- * and the <GUI> block. Spoon reads by tag name so a missing wrapper node does
- * not break loading, but it does mean the step was hand-assembled or generated
- * from an incomplete template and will not round-trip cleanly (Spoon
- * re-materialises the node on save, producing diff noise). Flag the missing
- * ones as warnings — never errors — so authors can complete the wrapper.
- *
- * Only the always-present nodes are checked. Cosmetic optional nodes
- * (custom_distribution, cluster_schema, remotesteps) are intentionally left
- * out: their absence is harmless and flagging them would just add noise.
- */
 const STEP_WRAPPER_NODES = Object.freeze(['type', 'distribute', 'copies', 'partitioning', 'GUI']);
 
 function checkStepWrapper(m, push) {
@@ -241,7 +204,39 @@ function checkUndeclaredVariables(m, xml, push) {
   }
 }
 
-export function validateXml(xml, filePath, { dir }) {
+function checkRepositoryReferences(xml, filePath, repositoryContext, candidateFiles, push) {
+  if (!repositoryContext || !repositoryContext.repositoryPaths) return;
+  const ownerIdentity = repositoryContext.repositoryPaths.fromPhysical(filePath);
+  const refs = extractReferences(xml, ownerIdentity);
+
+  for (const ref of refs) {
+    if (ref.status === 'MANAGED_REPO_REFERENCE' && ref.targetRepositoryPath) {
+      let targetExists = false;
+      try {
+        const targetId = repositoryContext.repositoryPaths.resolveArtifact({
+          repositoryPath: ref.targetRepositoryPath,
+          artifactKind: ref.targetKind
+        }, { write: false });
+
+        if (candidateFiles && candidateFiles.has(targetId.physicalPath)) {
+          targetExists = candidateFiles.get(targetId.physicalPath) !== null;
+        } else {
+          targetExists = existsSync(targetId.physicalPath);
+        }
+      } catch {
+        targetExists = false;
+      }
+
+      if (!targetExists) {
+        push('error', `${ref.ownerType} "${ref.elementName}" references missing repository target "${ref.targetRepositoryPath}"`);
+      }
+    } else if (ref.status === 'STREAMING_CALLER_UNSUPPORTED') {
+      push('warning', `Element "${ref.elementName}" uses unsupported streaming caller type "${ref.ownerType}"`);
+    }
+  }
+}
+
+export function validateXml(xml, filePath, { dir, repositoryContext, candidateFiles } = {}) {
   const issues = [];
   const push = (severity, message) => issues.push({ severity, message });
 
@@ -265,7 +260,7 @@ export function validateXml(xml, filePath, { dir }) {
 
   if (m.kind === 'job') {
     checkJobStartEntry(m, push);
-    checkJobEntryFilenames(m, push, dir);
+    checkJobEntryFilenames(m, push, dir, repositoryContext);
   }
 
   checkUndefinedConnections(m, push);
@@ -275,22 +270,23 @@ export function validateXml(xml, filePath, { dir }) {
   checkStepWrapper(m, push);
   checkReachability(m, push);
   checkUndeclaredVariables(m, xml, push);
+  checkRepositoryReferences(xml, filePath, repositoryContext, candidateFiles, push);
 
   return report(filePath, issues);
 }
 
-export function validateFile(filePath) {
+export function validateFile(filePath, { repositoryContext } = {}) {
   let xml;
   try {
     xml = readFileSync(filePath, 'utf8');
   } catch (err) {
     return report(filePath, [{ severity: 'error', message: `Cannot read file: ${err.message}` }]);
   }
-  return validateXml(xml, filePath, { dir: path.dirname(filePath) });
+  return validateXml(xml, filePath, { dir: path.dirname(filePath), repositoryContext });
 }
 
-export function validateAll(root) {
-  const reports = walkKettleFiles(root).map(validateFile);
+export function validateAll(root, { repositoryContext } = {}) {
+  const reports = walkKettleFiles(root).map(f => validateFile(f, { repositoryContext }));
   const summary = { files: reports.length, errors: 0, warnings: 0, info: 0 };
   for (const r of reports) {
     summary.errors += r.summary.errors;
@@ -298,4 +294,15 @@ export function validateAll(root) {
     summary.info += r.summary.info;
   }
   return { summary, files: reports.filter(r => r.issues.length > 0) };
+}
+
+export function validateRepositoryReadiness(ctx, identity, { candidateFiles } = {}) {
+  const scan = scanRepository(ctx);
+  const closure = dependencyClosure(scan, identity);
+  const ready = closure.issues.length === 0 && closure.complete;
+  return {
+    ready,
+    issues: closure.issues,
+    closure
+  };
 }

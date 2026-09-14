@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_simple_mapping</name>
+  </info>
+  <step>
+    <name>Simple Mapping Step</name>
+    <type>SimpleMapping</type>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <filename/>
+    <trans_name>simple_sub</trans_name>
+    <directory_path>/mapping</directory_path>
+  </step>
+</transformation>

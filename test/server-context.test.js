@@ -28,6 +28,8 @@ test('runtime context carries executeEnabled through to runtime tools', () => {
     process.env.PENTAHO_ENABLE_EXECUTE = '1';
     const ctx = makeContext({ root: process.cwd() });
     assert.equal(ctx.executeEnabled, true);
+    assert.ok(ctx.repositoryPaths);
+    assert.equal(typeof ctx.repositoryPaths.resolveArtifact, 'function');
   } finally {
     if (previous === undefined) delete process.env.PENTAHO_ENABLE_EXECUTE;
     else process.env.PENTAHO_ENABLE_EXECUTE = previous;

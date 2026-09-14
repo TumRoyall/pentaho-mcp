@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_job_executor</name>
+  </info>
+  <step>
+    <name>Execute Job</name>
+    <type>JobExecutor</type>
+    <specification_method>rep_name</specification_method>
+    <job_object_id/>
+    <filename/>
+    <job_name>sub_job</job_name>
+    <directory_path>/batch</directory_path>
+  </step>
+</transformation>

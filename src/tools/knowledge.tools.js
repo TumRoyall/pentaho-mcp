@@ -6,6 +6,7 @@
 import { listTypes, getReference, isGeneratorEligible, verifiedVersions, knowledgeDir } from '../knowledge/loader.js';
 import { analyzeKnowledgeXml } from '../core/knowledge-intake.js';
 import { knowledgeCoverage } from '../core/knowledge-coverage.js';
+import { directorySelectorSchema, selectDirectory } from './repository-schema.js';
 
 const str = d => ({ type: 'string', description: d });
 const KIND = { type: 'string', enum: ['job', 'trans'], description: 'job (entries) or trans (steps)' };
@@ -15,12 +16,12 @@ const VERIFICATION = {
   description: 'How the supplied XML was verified; defaults to unverified',
 };
 
-export function knowledgeTools({ resolveRead, root } = {}) {
+export function knowledgeTools(ctx = {}) {
   return [
     {
       name: 'kettle_knowledge_list',
       title: 'List knowledge types',
-      description: 'List the step/entry types documented in the embedded knowledge catalog, with status (canonical/observed) and generator eligibility',
+      description: 'List step/entry types documented in embedded knowledge catalog',
       annotations: { title: 'List knowledge types', readOnlyHint: true },
       inputSchema: {
         type: 'object',
@@ -48,7 +49,7 @@ export function knowledgeTools({ resolveRead, root } = {}) {
     {
       name: 'kettle_knowledge_get',
       title: 'Get knowledge reference',
-      description: 'Get the full knowledge reference for one type (XML template, config field table, YAML->XML mapping, gotchas). Accepts the Kettle XML type (e.g. TableInput, SPECIAL) or the design alias (e.g. TABLE_INPUT).',
+      description: 'Get full knowledge reference for one type.',
       annotations: { title: 'Get knowledge reference', readOnlyHint: true },
       inputSchema: {
         type: 'object',
@@ -74,7 +75,7 @@ export function knowledgeTools({ resolveRead, root } = {}) {
     {
       name: 'kettle_knowledge_analyze_xml',
       title: 'Analyze knowledge XML',
-      description: 'Analyze user-supplied Kettle XML as a read-only catalog candidate; never writes knowledge or promotes a type',
+      description: 'Analyze user-supplied Kettle XML as a read-only catalog candidate',
       annotations: { title: 'Analyze knowledge XML', readOnlyHint: true },
       inputSchema: {
         type: 'object',
@@ -100,12 +101,12 @@ export function knowledgeTools({ resolveRead, root } = {}) {
       inputSchema: {
         type: 'object',
         properties: {
-          directory: str('Directory under KETTLE_ROOT to scan'),
+          ...directorySelectorSchema(),
           includeExamples: { type: 'boolean' },
         },
         additionalProperties: false,
       },
-      handler: a => knowledgeCoverage(resolveRead ? resolveRead(a.directory) : root, {
+      handler: a => knowledgeCoverage(selectDirectory(ctx, a).physicalPath, {
         includeExamples: a.includeExamples !== false,
       }),
     },

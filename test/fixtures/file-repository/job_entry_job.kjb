@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job>
+  <name>job_entry_job</name>
+  <entries>
+    <entry>
+      <name>Run Sub Job</name>
+      <type>JOB</type>
+      <specification_method>rep_name</specification_method>
+      <job_object_id/>
+      <filename/>
+      <jobname>sub_job</jobname>
+      <directory>/batch</directory>
+    </entry>
+  </entries>
+</job>

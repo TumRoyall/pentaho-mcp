@@ -6,7 +6,7 @@ MCP stdio server cho file Pentaho Kettle `.kjb` và `.ktr`: kiểm tra/chỉnh s
 
 ## Khả năng
 
-Bề mặt production đúng **26 tool**, chia 6 nhóm:
+Bề mặt production đúng **41 tool**, chia 8 nhóm:
 
 | Nhóm | Số lượng | Tool |
 |------|----------|------|
@@ -14,6 +14,8 @@ Bề mặt production đúng **26 tool**, chia 6 nhóm:
 | Edit | 9 | `kettle_create_file`, `kettle_add_element`, `kettle_set_field`, `kettle_set_field_path`, `kettle_set_fields`, `kettle_edit_hops`, `kettle_add_error_hop`, `kettle_rename_element`, `kettle_clone` |
 | Artifact | 2 | `kettle_set_parameters`, `kettle_copy_connection` |
 | Removal | 2 | `kettle_remove_element`, `kettle_edit_error_hop` |
+| Connections | 6 | `kettle_connection_list`, `kettle_connection_get`, `kettle_connection_put`, `kettle_connection_delete`, `kettle_connection_usage`, `kettle_connection_rename` |
+| Repository | 9 | `kettle_repository_list`, `kettle_repository_mkdir`, `kettle_set_reference`, `kettle_repository_references`, `kettle_repository_move`, `kettle_repository_migrate_references`, `kettle_repository_recover`, `kettle_repository_detect`, `kettle_repository_register` |
 | Validate | 1 | `kettle_validate` |
 | Knowledge | 4 | `kettle_knowledge_list`, `kettle_knowledge_get`, `kettle_knowledge_analyze_xml`, `kettle_knowledge_coverage` |
 | Runtime (PDI tùy chọn, phase-gated) | 4 | `kettle_runtime_detect`, `kettle_runtime_loadcheck`, `kettle_runtime_execute`, `kettle_runtime_logs` |
@@ -92,7 +94,7 @@ node --test
 node scripts/verify-production-profile.mjs
 ```
 
-Chuẩn mực thành công: toàn bộ suite pass và `production profile OK: 26 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
+Chuẩn mực thành công: toàn bộ suite pass và `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
 
 ### Bản Windows tự chứa (cho end user)
 
@@ -139,7 +141,7 @@ Chi tiết xem `docs/configuration.md`.
 |----------|-----------|
 | `docs/architecture.md` | Kiến trúc hệ thống, module, luồng MCP, biên an toàn |
 | `docs/configuration.md` | `KETTLE_ROOT` và biên workspace, biến môi trường, `PENTAHO_HOME` runtime tùy chọn |
-| `docs/tools-reference.md` | Catalog 26 tool: tham số, output, ví dụ, bảng chọn tool |
+| `docs/tools-reference.md` | Catalog 41 tool: tham số, output, ví dụ, bảng chọn tool |
 | `docs/workflow-guide.md` | Workflow phát triển Pentaho năm pha, hợp đồng đặc tả, cổng mutation, runtime phase-gated |
 | `docs/development.md` | Setup repo, test, thêm tool/type, build release, checklist đóng góp |
 | `docs/operations.md` | Triển khai, verify, upgrade/rollback, `doctor.ps1`, log, sự cố |

@@ -1,6 +1,6 @@
 # Tham chiếu tool MCP
 
-Catalog đầy đủ 26 tool production. Nguồn sự thật: `src/tools/*.tools.js`, `src/tools/registry.js`, `src/server.js`, `test/`. Mọi kết quả là `text` chứa `{ "ok": true, "data": ... }` hoặc `{ "ok": false, "error": "..." }`.
+Catalog đầy đủ 41 tool production. Nguồn sự thật: `src/tools/*.tools.js`, `src/tools/registry.js`, `src/server.js`, `test/`. Mọi kết quả là `text` chứa `{ "ok": true, "data": ... }` hoặc `{ "ok": false, "error": "..." }`.
 
 MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai báo `capabilities = { tools: {} }`. Superpowers (ngoài MCP) là workflow suy luận khuyến nghị, nhưng các tool dưới đây gọi trực tiếp được bởi client bất kỳ.
 
@@ -177,6 +177,85 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 - Tham số: `directory?`; `includeExamples?` (mặc định `true`).
 - Output: `{summary: {files, parsedFiles, scanIssues, typeUsages, distinctTypes, canonical, observed, missing}, types, issues}`. Chỉ đọc, resilient trước file hỏng.
 - Ví dụ: `{ "directory": "etl-pentaho" }`
+
+## Nhóm connection (6)
+
+### `kettle_connection_list`
+- Mục đích: Liệt kê các database connection `.kdb` tại root repository. Tự động che giấu mật khẩu.
+- Tham số: không có.
+- Output: `{ connections: [{ name, physicalPath, passwordStatus, hash }], complete: true }`.
+
+### `kettle_connection_get`
+- Mục đích: Xem chi tiết cấu hình connection `.kdb` sanitized.
+- Tham số: `name` (bắt buộc).
+- Output: `{ name, physicalPath, definition, passwordStatus, hash }`.
+
+### `kettle_connection_put`
+- Mục đích: Tạo mới hoặc cập nhật file `.kdb` tại root repository. Từ chối mật khẩu dạng plaintext.
+- Tham số: `name` (bắt buộc), `definition` (object), `expectedHash?`.
+- Output: `{ applied, physicalPath, connection }`.
+
+### `kettle_connection_delete`
+- Mục đích: Xóa connection `.kdb` tại root nếu không có artifact nào sử dụng.
+- Tham số: `name` (bắt buộc), `expectedHash?`.
+- Output: `{ deleted: true, name }`.
+
+### `kettle_connection_usage`
+- Mục đích: Quét các artifact trong repository đang tham chiếu tới connection `.kdb`.
+- Tham số: `name` (bắt buộc).
+- Output: `{ name, usages: [{ artifactPath, kind }] }`.
+
+### `kettle_connection_rename`
+- Mục đích: Đổi tên connection `.kdb` và tự động cập nhật tất cả artifact đang sử dụng nó qua giao dịch previewed.
+- Tham số: `name` (bắt buộc), `newName` (bắt buộc), `apply?` (boolean, mặc định `false`).
+- Output: `{ applied, changes, issues }`.
+
+## Nhóm repository (9)
+
+### `kettle_repository_list`
+- Mục đích: Liệt kê thư mục và định danh artifact không đuôi dưới một đường dẫn repository directory.
+- Tham số: `repositoryDirectory?` (mặc định `'/'`), `limit?` (mặc định `100`).
+- Output: `{ repositoryDirectory, items: [{ name, repositoryPath, artifactKind, type }], total, truncated }`.
+
+### `kettle_repository_mkdir`
+- Mục đích: Tạo thư mục chứa trong File Repository.
+- Tham số: `repositoryDirectory` (bắt buộc, bắt đầu bằng `'/'`).
+- Output: `{ repositoryDirectory, physicalPath, created: true }`.
+
+### `kettle_set_reference`
+- Mục đích: Phẫu thuật sửa đổi tham chiếu job entry/step để trỏ tới một repository artifact theo đường dẫn không đuôi.
+- Tham số: `repositoryPath` hoặc `artifact`, `elementName` (bắt buộc), `targetRepositoryPath` (bắt buộc), `targetKind?`.
+- Output: `{ repositoryPath, elementName, targetRepositoryPath, targetKind, status: 'MANAGED_REPO_REFERENCE' }`.
+
+### `kettle_repository_references`
+- Mục đích: Trích xuất đồ thị tham chiếu executable incoming/outgoing giữa các artifact.
+- Tham số: `repositoryPath?`, `direction?` (`outgoing`|`incoming`|`both`), `limit?`.
+- Output: `{ direction, edges, issues, complete }`.
+
+### `kettle_repository_move`
+- Mục đích: Di chuyển hoặc đổi tên artifact, đồng bộ internal `<name>` và cập nhật các caller đang gọi nó qua giao dịch previewed.
+- Tham số: `sourceRepositoryPath`, `targetRepositoryPath` (bắt buộc), `apply?` (boolean, mặc định `false`).
+- Output: `{ complete, applied, transactionId, changes, issues }`.
+
+### `kettle_repository_migrate_references`
+- Mục đích: Preview hoặc apply chuyển đổi các tham chiếu file path legacy sang repository reference.
+- Tham số: `repositoryDirectory?` (mặc định `'/'`), `apply?` (boolean, mặc định `false`).
+- Output: `{ complete, applied, changes, issues }`.
+
+### `kettle_repository_recover`
+- Mục đích: Khôi phục/rollback giao dịch đa file dở dang do sự cố.
+- Tham số: `transactionId` (bắt buộc).
+- Output: `{ recovered: true, transactionId, restoredFiles }`.
+
+### `kettle_repository_detect`
+- Mục đích: Phát hiện cấu hình File Repository hiệu lực trong `repositories.xml` (xử lý ưu tiên local registry shadowing).
+- Tham số: không có.
+- Output: `{ status: 'READY'|'MISMATCH'|'UNREGISTERED'|'AMBIGUOUS', registryPath, provenance, repository, issues }`.
+
+### `kettle_repository_register`
+- Mục đích: Preview hoặc đăng ký trực tiếp File Repository vào file `repositories.xml` hiệu lực.
+- Tham số: `name` (bắt buộc), `apply?` (boolean, mặc định `false`).
+- Output: `{ registryPath, name, beforeHash, afterHash, proposedXml, alreadyRegistered }`.
 
 ## Nhóm runtime (4, phase-gated, tùy chọn PDI)
 

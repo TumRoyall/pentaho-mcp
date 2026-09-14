@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>trans_mapping</name>
+  </info>
+  <step>
+    <name>Mapping Step</name>
+    <type>Mapping</type>
+    <specification_method>rep_name</specification_method>
+    <trans_object_id/>
+    <filename/>
+    <trans_name>sub_mapping</trans_name>
+    <directory_path>/mapping</directory_path>
+  </step>
+</transformation>

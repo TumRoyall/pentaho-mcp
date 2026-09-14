@@ -2,7 +2,7 @@
 /**
  * Verify the production surface before a release is built.
  *
- * The production profile is exactly the 26 tools the server advertises:
+ * The production profile is exactly the 41 tools the server advertises:
  * read/edit/validate/knowledge (read-only) + runtime + artifact-level
  * parameter/connection editing + reference-safe removal. There are no MCP
  * prompts or resources, no BA lifecycle (`pentaho_*`) tools, and intentionally
@@ -27,6 +27,12 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_add_element',
   'kettle_add_error_hop',
   'kettle_clone',
+  'kettle_connection_delete',
+  'kettle_connection_get',
+  'kettle_connection_list',
+  'kettle_connection_put',
+  'kettle_connection_rename',
+  'kettle_connection_usage',
   'kettle_copy_connection',
   'kettle_create_file',
   'kettle_edit_error_hop',
@@ -39,6 +45,14 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_list',
   'kettle_remove_element',
   'kettle_rename_element',
+  'kettle_repository_detect',
+  'kettle_repository_list',
+  'kettle_repository_migrate_references',
+  'kettle_repository_mkdir',
+  'kettle_repository_move',
+  'kettle_repository_recover',
+  'kettle_repository_references',
+  'kettle_repository_register',
   'kettle_runtime_detect',
   'kettle_runtime_execute',
   'kettle_runtime_loadcheck',
@@ -48,6 +62,7 @@ const EXPECTED_TOOL_NAMES = [
   'kettle_set_field_path',
   'kettle_set_fields',
   'kettle_set_parameters',
+  'kettle_set_reference',
   'kettle_summary',
   'kettle_validate',
 ];

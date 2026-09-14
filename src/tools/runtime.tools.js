@@ -2,22 +2,21 @@ import { existsSync, readFileSync, readdirSync, realpathSync, unlinkSync } from 
 import path from 'node:path';
 import { detectPdi } from '../runtime/detect.js';
 import { runPdi } from '../runtime/run.js';
+import { artifactSelectorSchema, selectArtifact } from './repository-schema.js';
 
 const str = description => ({ type: 'string', description });
 
 const runProperties = {
-  artifact: str('KJB/KTR path relative to KETTLE_ROOT'),
+  ...artifactSelectorSchema(),
+  artifact: str('Physical KJB/KTR path relative to KETTLE_ROOT or repository path'),
   parameters: { type: 'object', additionalProperties: { type: 'string' } },
   timeoutMs: { type: 'integer', minimum: 1 },
-};
-
-function artifactPath(ctx, value) {
-  const artifact = ctx.resolveRead(value);
-  if (!/\.(kjb|ktr)$/i.test(artifact)) {
-    throw new Error('Runtime artifact must end in .kjb or .ktr');
+  logLevel: {
+    type: 'string',
+    enum: ['Basic', 'Detailed', 'Debug', 'Rowlevel', 'Error', 'Nothing'],
+    description: 'Logging level for PDI execution (default Basic)'
   }
-  return artifact;
-}
+};
 
 const LOGS_SUBDIR = ['.pentaho-mcp', 'runtime-logs'];
 const MAX_LOG_BYTES = 256 * 1024;
@@ -29,16 +28,16 @@ function logsDirFor(ctx) {
 
 function runContext(ctx) {
   return {
+    ...ctx,
     pentahoHome: ctx.pentahoHome,
     logsDir: logsDirFor(ctx),
     executeEnabled: ctx.executeEnabled,
+    repositoryPaths: ctx.repositoryPaths,
+    repositoryName: ctx.repositoryName,
   };
 }
 
 function readLogFile(logsDir, name) {
-  // Canonical containment per file: resolve the requested log through its real
-  // path and refuse anything that escapes the logs directory (e.g. via `..`
-  // or a symlink), then bound the returned bytes to the tail.
   const target = path.resolve(logsDir, name);
   const rel = path.relative(logsDir, target);
   if (rel === '' || rel.startsWith('..') || path.isAbsolute(rel)) {
@@ -63,9 +62,8 @@ function pruneLogs(logsDir) {
 }
 
 async function runArtifact(ctx, args, mode) {
-  const artifact = artifactPath(ctx, args.artifact);
-  const kind = /\.ktr$/i.test(artifact) ? 'trans' : 'job';
-  const result = await runPdi({ ...args, artifact, kind, mode }, runContext(ctx));
+  const id = selectArtifact(ctx, args, { physicalKey: 'artifact', write: false });
+  const result = await runPdi({ ...args, artifact: id.physicalPath, identity: id, kind: id.artifactKind, mode }, runContext(ctx));
   pruneLogs(logsDirFor(ctx));
   return result;
 }
@@ -84,8 +82,6 @@ export function runtimeTools(ctx) {
       name: 'kettle_runtime_loadcheck',
       title: 'Load-check artifact',
       description: 'Statically validate and ask local Kitchen/Pan to load an artifact without deployment.',
-      // Invokes an external PDI process, so it reaches outside the workspace
-      // (open world); it does not deploy or mutate artifacts.
       annotations: { title: 'Load-check artifact', readOnlyHint: false, destructiveHint: false, openWorldHint: true },
       inputSchema: { type: 'object', properties: runProperties, required: ['artifact'], additionalProperties: false },
       handler: args => runArtifact(ctx, args, 'loadcheck'),
@@ -94,8 +90,6 @@ export function runtimeTools(ctx) {
       name: 'kettle_runtime_execute',
       title: 'Execute artifact',
       description: 'Execute with Kitchen/Pan; every execution requires confirmed=true.',
-      // Runs the artifact for real: destructive side effects are possible and
-      // the effect reaches external systems (open world).
       annotations: { title: 'Execute artifact', readOnlyHint: false, destructiveHint: true, openWorldHint: true },
       inputSchema: { type: 'object', properties: { ...runProperties, confirmed: { type: 'boolean' } }, required: ['artifact'], additionalProperties: false },
       handler: args => runArtifact(ctx, args, 'execute'),
@@ -123,7 +117,7 @@ export function runtimeTools(ctx) {
         const names = readdirSync(logsDir)
           .filter(name => name.endsWith('.log'))
           .sort()
-          .reverse() // newest-first: timestamp-prefixed names sort lexicographically
+          .reverse()
           .slice(0, limit);
         return { files: names.map(name => ({ name, content: readLogFile(logsDir, name) })) };
       },

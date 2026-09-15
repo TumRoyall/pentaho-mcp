@@ -92,6 +92,24 @@ Nghiệm thu (xác minh thực tế trên đĩa, không tin summary agent):
 - Evidence report: **104 dòng (37 job + 67 trans)**, source_reviewed 95, spoon_loaded 8, observed 1.
 - Mức bằng chứng: `source_reviewed` (chưa Spoon/runtime) — đúng chính sách.
 
+## B2a — existence + DB join (4 ID) — ĐÃ NGHIỆM THU (Kiro verify 2026-09-15)
+
+Phạm vi: trans `TableExists`, job `TABLE_EXISTS`, trans `ColumnExists`, trans `DBJoin`.
+Source-notes: `docs/inventory/2026-09-15-b2a-source-notes.md`. Test: `test/knowledge-b2a-existence.test.js`.
+- 4 reference đúng semantics source (đối chiếu source-notes có trích class/method/dòng):
+  TableExists dùng `tablenamefield` (dynamic, KHÔNG có `<tablename>` tĩnh); job TABLE_EXISTS dùng `tablename` TĨNH;
+  ColumnExists `columnnamefield` (KHÔNG `<columnname>`/`<valuename>`); DBJoin `<parameter>/<field>` paired (KHÔNG `<lookup>`),
+  `<type>` = tên value-meta chuỗi, số field = số `?`. Cả 4 tham chiếu `<connection>` theo tên (${VAR}, không credential thật).
+- 4 catalog row (job dòng 50, trans dòng 120–122). Alias `TABLE_EXISTS` trùng chuỗi giữa job/trans nhưng KHÁC KIND —
+  hợp lệ (catalog tách list theo kind; test "catalog aliases are unique..." PASS).
+- Kiro FIX lỗi test do OpenCode: fixture minimalKtr/minimalKjb thiếu khai báo `<connection>` nên validator báo
+  "undefined connection" (5/8 fail). Đã thêm `<connection><name>${CONN}</name></connection>` vào 2 fixture → 8/8 pass.
+  (BÀI HỌC cho B2 sau: step DB tham chiếu connection thì fixture PHẢI khai báo connection đó.)
+- Test: targeted 8/8; `npm test` toàn suite **289: 288 pass, 0 fail, 1 skipped**.
+- Evidence report: **108 dòng (38 job + 70 trans)**, source_reviewed 107, observed 1. Mức source_reviewed.
+- Commit: user cho phép → Kiro commit (xem git log). Còn lại B2: AnalyticQuery, CombinationLookup, DBProc,
+  DimensionLookup, MemoryGroupBy, SortedMerge, SynchronizeAfterMerge, WAIT_FOR_SQL (9 ID) — chia gói tiếp.
+
 => **B1 HOÀN TẤT** (gói 1: RowsFromResult/MappingInput/MappingOutput; gói 2: 5 result-file ID; gói 3: 4 stream-control ID). Đợt tiếp theo: B2 theo inventory.
 Commit: user cho phép commit 2026-09-15 → Kiro commit toàn bộ B1 (xem git log).
 

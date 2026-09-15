@@ -822,12 +822,12 @@
       "className": "org.pentaho.di.job.entries.tableexists.JobEntryTableExists",
       "source": "engine/src/main/resources/kettle-job-entries.xml",
       "origin": "engine-registry",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "engine/src/main/java/org/pentaho/di/job/entries/tableexists/JobEntryTableExists.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "job",
@@ -1270,12 +1270,12 @@
       "className": "org.pentaho.di.trans.steps.columnexists.ColumnExistsMeta",
       "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/columnexists/ColumnExistsMeta.java",
       "origin": "annotation",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/columnexists/ColumnExistsMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",
@@ -1396,12 +1396,12 @@
       "className": "org.pentaho.di.trans.steps.databasejoin.DatabaseJoinMeta",
       "source": "engine/src/main/resources/kettle-steps.xml",
       "origin": "engine-registry",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "engine/src/main/java/org/pentaho/di/trans/steps/databasejoin/DatabaseJoinMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",
@@ -3580,12 +3580,12 @@
       "className": "org.pentaho.di.trans.steps.tableexists.TableExistsMeta",
       "source": "engine/src/main/resources/kettle-steps.xml",
       "origin": "engine-registry",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "engine/src/main/java/org/pentaho/di/trans/steps/tableexists/TableExistsMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",

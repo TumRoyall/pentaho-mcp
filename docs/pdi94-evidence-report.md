@@ -9,12 +9,16 @@ PDI 9.4.
 
 ## Counts
 
-- Total catalog rows: **104** (37 job + 67 transformation)
-- Rows with explicit PDI 9.4 target evidence: **103**
+- Total catalog rows: **108** (38 job + 70 transformation)
+- Rows with explicit PDI 9.4 target evidence: **107**
 - Rows without PDI 9.4 evidence (downgraded/kept observed): **1**
-- `status: canonical`: **103**
+- `status: canonical`: **107**
 - `status: observed`: **1**
-- Generator-eligible (canonical + eligible + 9.4 verified): **103**
+- Generator-eligible (canonical + eligible + 9.4 verified): **107**
+
+> Bổ sung B2a (2026-09-15): trans `TableExists`, job `TABLE_EXISTS`, trans
+> `ColumnExists`, trans `DBJoin` — 4/4 `source_reviewed` PDI 9.4, xem
+> per-row cuối bảng. Số tổng đếm trực tiếp từ `catalog.yaml`.
 
 > Bổ sung B1 gói 3 (2026-09-15): `Append`, `BlockingStep`,
 > `DetectEmptyStream`, `DetectLastRow` — 4/4 `source_reviewed` PDI 9.4, xem
@@ -27,7 +31,7 @@ PDI 9.4.
 
 ### Verification breakdown (rows with 9.4 evidence)
 
-- `source_reviewed` (PDI 9.4 `getXML()` source reference): **95**
+- `source_reviewed` (PDI 9.4 `getXML()` source reference): **99**
 - `spoon_loaded` (Spoon PDI 9.4-saved artifact): **8**
 
 ### Rows kept observed (no target evidence, not promoted)
@@ -138,3 +142,7 @@ PDI 9.4.
 | trans | BlockingStep | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, 5-tag spool config (see trans/BlockingStep.md) |
 | trans | DetectEmptyStream | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — no override, inherited empty serialization (see trans/DetectEmptyStream.md) |
 | trans | DetectLastRow | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — single resultfieldname boolean flag (see trans/DetectLastRow.md) |
+| trans | TableExists | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — connection/tablenamefield/resultfieldname/schemaname, dynamic table-name field (see trans/TableExists.md) |
+| job | TABLE_EXISTS | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — static tablename/schemaname/connection condition entry (see job/TABLE_EXISTS.md) |
+| trans | ColumnExists | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, 7-tag order with dynamic columnnamefield (see trans/ColumnExists.md) |
+| trans | DBJoin | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — sql + paired parameter/field list, outer_join/rowlimit flags (see trans/DBJoin.md) |

@@ -127,3 +127,8 @@ components:
     - {type: ANALYTIC_QUERY, xml_type: AnalyticQuery, file: trans/AnalyticQuery.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: DB_PROC, xml_type: DBProc, file: trans/DBProc.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: SYNCHRONIZE_AFTER_MERGE, xml_type: SynchronizeAfterMerge, file: trans/SynchronizeAfterMerge.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SET_VALUE_FIELD, xml_type: SetValueField, file: trans/SetValueField.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: REPLACE_STRING, xml_type: ReplaceString, file: trans/ReplaceString.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SPLIT_FIELD_TO_ROWS3, xml_type: SplitFieldToRows3, file: trans/SplitFieldToRows3.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FIELD_SPLITTER, xml_type: FieldSplitter, file: trans/FieldSplitter.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: UNIQUE_ROWS_BY_HASH_SET, xml_type: UniqueRowsByHashSet, file: trans/UniqueRowsByHashSet.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

@@ -9,12 +9,16 @@ PDI 9.4.
 
 ## Counts
 
-- Total catalog rows: **108** (38 job + 70 transformation)
-- Rows with explicit PDI 9.4 target evidence: **107**
+- Total catalog rows: **111** (38 job + 73 transformation)
+- Rows with explicit PDI 9.4 target evidence: **110**
 - Rows without PDI 9.4 evidence (downgraded/kept observed): **1**
-- `status: canonical`: **107**
+- `status: canonical`: **110**
 - `status: observed`: **1**
-- Generator-eligible (canonical + eligible + 9.4 verified): **107**
+- Generator-eligible (canonical + eligible + 9.4 verified): **110**
+
+> Bổ sung B2b (2026-09-15): trans `SortedMerge`, trans `MemoryGroupBy`,
+> trans `AnalyticQuery` — 3/3 `source_reviewed` PDI 9.4, xem per-row cuối
+> bảng. Số tổng đếm trực tiếp từ `catalog.yaml`.
 
 > Bổ sung B2a (2026-09-15): trans `TableExists`, job `TABLE_EXISTS`, trans
 > `ColumnExists`, trans `DBJoin` — 4/4 `source_reviewed` PDI 9.4, xem
@@ -31,7 +35,7 @@ PDI 9.4.
 
 ### Verification breakdown (rows with 9.4 evidence)
 
-- `source_reviewed` (PDI 9.4 `getXML()` source reference): **99**
+- `source_reviewed` (PDI 9.4 `getXML()` source reference): **102**
 - `spoon_loaded` (Spoon PDI 9.4-saved artifact): **8**
 
 ### Rows kept observed (no target evidence, not promoted)
@@ -146,3 +150,6 @@ PDI 9.4.
 | job | TABLE_EXISTS | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — static tablename/schemaname/connection condition entry (see job/TABLE_EXISTS.md) |
 | trans | ColumnExists | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, 7-tag order with dynamic columnnamefield (see trans/ColumnExists.md) |
 | trans | DBJoin | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — sql + paired parameter/field list, outer_join/rowlimit flags (see trans/DBJoin.md) |
+| trans | SortedMerge | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — fields-only block of name/ascending, merges pre-sorted streams (see trans/SortedMerge.md) |
+| trans | MemoryGroupBy | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — give_back_row/group/fields order, string typeGroupCode, COUNT_* give-back fallback (see trans/MemoryGroupBy.md) |
+| trans | AnalyticQuery | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, group/fields order, LEAD/LAG with int valuefield offset (see trans/AnalyticQuery.md) |

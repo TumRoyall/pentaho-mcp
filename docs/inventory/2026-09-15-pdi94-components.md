@@ -51,14 +51,14 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 | [ ] | job | `COLUMNS_EXIST` | Conditions | `org.pentaho.di.job.entries.columnsexist.JobEntryColumnsExist` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [x] | job | `TABLE_EXISTS` | Conditions | `org.pentaho.di.job.entries.tableexists.JobEntryTableExists` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `WAIT_FOR_SQL` | Utility | `org.pentaho.di.job.entries.waitforsql.JobEntryWaitForSQL` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | trans | `AnalyticQuery` | Statistics | `org.pentaho.di.trans.steps.analyticquery.AnalyticQueryMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java` |
+| [x] | trans | `AnalyticQuery` | Statistics | `org.pentaho.di.trans.steps.analyticquery.AnalyticQueryMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java` |
 | [x] | trans | `ColumnExists` | Lookup | `org.pentaho.di.trans.steps.columnexists.ColumnExistsMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/columnexists/ColumnExistsMeta.java` |
 | [ ] | trans | `CombinationLookup` | DataWarehouse | `org.pentaho.di.trans.steps.combinationlookup.CombinationLookupMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/combinationlookup/CombinationLookupMeta.java` |
 | [x] | trans | `DBJoin` | Lookup | `org.pentaho.di.trans.steps.databasejoin.DatabaseJoinMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `DBProc` | Lookup | `org.pentaho.di.trans.steps.dbproc.DBProcMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `DimensionLookup` | DataWarehouse | `org.pentaho.di.trans.steps.dimensionlookup.DimensionLookupMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `MemoryGroupBy` | Statistics | `org.pentaho.di.trans.steps.memgroupby.MemoryGroupByMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `SortedMerge` | Joins | `org.pentaho.di.trans.steps.sortedmerge.SortedMergeMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `MemoryGroupBy` | Statistics | `org.pentaho.di.trans.steps.memgroupby.MemoryGroupByMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `SortedMerge` | Joins | `org.pentaho.di.trans.steps.sortedmerge.SortedMergeMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `SynchronizeAfterMerge` | Output | `org.pentaho.di.trans.steps.synchronizeaftermerge.SynchronizeAfterMergeMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [x] | trans | `TableExists` | Lookup | `org.pentaho.di.trans.steps.tableexists.TableExistsMeta` — `engine/src/main/resources/kettle-steps.xml` |
 

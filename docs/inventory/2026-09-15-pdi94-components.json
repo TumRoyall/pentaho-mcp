@@ -1102,12 +1102,12 @@
       "className": "org.pentaho.di.trans.steps.analyticquery.AnalyticQueryMeta",
       "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java",
       "origin": "annotation",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",
@@ -2362,12 +2362,12 @@
       "className": "org.pentaho.di.trans.steps.memgroupby.MemoryGroupByMeta",
       "source": "engine/src/main/resources/kettle-steps.xml",
       "origin": "engine-registry",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "engine/src/main/java/org/pentaho/di/trans/steps/memgroupby/MemoryGroupByMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",
@@ -3356,12 +3356,12 @@
       "className": "org.pentaho.di.trans.steps.sortedmerge.SortedMergeMeta",
       "source": "engine/src/main/resources/kettle-steps.xml",
       "origin": "engine-registry",
-      "status": "missing",
+      "status": "canonical",
       "batch": "B2",
       "implementationSources": [
         "engine/src/main/java/org/pentaho/di/trans/steps/sortedmerge/SortedMergeMeta.java"
       ],
-      "xmlEvidenceReview": "pending"
+      "xmlEvidenceReview": "reviewed"
     },
     {
       "kind": "trans",

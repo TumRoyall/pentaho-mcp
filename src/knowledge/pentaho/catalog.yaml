@@ -120,3 +120,6 @@ components:
     - {type: TABLE_EXISTS, xml_type: TableExists, file: trans/TableExists.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: COLUMN_EXISTS, xml_type: ColumnExists, file: trans/ColumnExists.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: DB_JOIN, xml_type: DBJoin, file: trans/DBJoin.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SORTED_MERGE, xml_type: SortedMerge, file: trans/SortedMerge.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MEMORY_GROUP_BY, xml_type: MemoryGroupBy, file: trans/MemoryGroupBy.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ANALYTIC_QUERY, xml_type: AnalyticQuery, file: trans/AnalyticQuery.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

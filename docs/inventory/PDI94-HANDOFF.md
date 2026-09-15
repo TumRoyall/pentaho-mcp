@@ -20,19 +20,26 @@ Môi trường / bẫy đã biết (Windows):
 - Commit dùng `git commit -F <file>` (tránh lỗi quoting PowerShell). Stage file cụ thể, KHÔNG `git add -A`.
 - Foreground shell đôi khi bị nhiễu khi có process nền OpenCode; đọc trạng thái OpenCode qua log JSONL `%TEMP%/opencode-*.jsonl` bằng `.superpowers/oc-log.cjs`.
 
-## Trạng thái hiện tại (2026-09-15, sau B2a)
+## Trạng thái hiện tại (2026-09-15, sau B2b)
 
-- **Đã xong & ĐÃ COMMIT + PUSH lên origin/main:**
-  - B1 (12 component: RowsFromResult/MappingInput/MappingOutput; 5 result-file ID; Append/BlockingStep/DetectEmptyStream/DetectLastRow) — commit `34c0be5`.
+- **Đã xong & ĐÃ COMMIT (B1/B2a đã push; B2b chờ user push):**
+  - B1 (12 component) — commit `34c0be5`.
   - B2a (4 ID: trans TableExists, job TABLE_EXISTS, trans ColumnExists, trans DBJoin) — commit `156f984`.
-  - Catalog hiện: **108 dòng (38 job + 70 trans)**, 107 source_reviewed, 1 observed (`SetSessionVariableStep`). Full suite **289: 288 pass, 0 fail, 1 skipped**.
-  - `main` khớp `origin/main` (đã push). Working tree sạch.
-- **Bước tiếp theo:** B2 còn **9 ID** chưa làm. Đề xuất chia:
-  - **B2b (aggregate/merge, 3 ID):** trans `SortedMerge`, trans `MemoryGroupBy`, trans `AnalyticQuery`.
-  - **B2c (SCD/warehouse/DB proc, 4 ID):** trans `DimensionLookup`, trans `CombinationLookup`, trans `DBProc`, trans `SynchronizeAfterMerge`.
-  - **B2d (job SQL, 1–2 ID):** job `WAIT_FOR_SQL` (+ có thể gộp ID job SQL khác nếu hợp).
-  - (Class/registry của từng ID: xem `docs/inventory/2026-09-15-pdi94-components.md` mục "B2 — 13 ID".)
-- Sau B2: B3 (làm sạch/biến đổi), B4 (file/JSON/XML/HTTP/FTP), ... theo plan. Chỉ đánh dấu xong khi có review + tests, mức bằng chứng giữ `source_reviewed` (chưa Spoon/runtime).
+  - B2b (3 ID: trans SortedMerge, trans MemoryGroupBy, trans AnalyticQuery) — commit `dd74186` (đi trước origin/main 1 commit, user tự push).
+  - Catalog hiện: **111 dòng (38 job + 73 trans)**, 110 source_reviewed, 1 observed (`SetSessionVariableStep`). Full suite **295: 294 pass, 0 fail, 1 skipped**.
+  - Working tree sạch (trừ handoff này).
+- **Bước tiếp theo:** B2 còn **6 ID** chưa làm. Kế hoạch batch đề xuất (mỗi batch = tests → implement → primary chạy test+review+commit):
+  - **B2c (SCD/warehouse, 2 ID):** trans `DimensionLookup`, trans `CombinationLookup` (DataWarehouse — SCD lookup/update; nặng, tách riêng khỏi phần còn lại).
+  - **B2d (DB proc + sync + job SQL, 4 ID):** trans `DBProc`, trans `SynchronizeAfterMerge`, job `WAIT_FOR_SQL`, job `COLUMNS_EXIST`.
+    (Tất cả tham chiếu DB connection theo tên → BẪY B2: fixture PHẢI khai báo `<connection>`.)
+  - (Class/registry từng ID: `docs/inventory/2026-09-15-pdi94-components.md` mục "B2 — 13 ID".)
+- **Sau B2 — backlog đầy đủ (đối chiếu inventory 2026-09-15):**
+  - **B3 (14 ID, làm sạch/biến đổi):** CheckSum, CloneRow, Denormaliser, FieldSplitter, Formula, IfNull, Normaliser, NumberRange, ReplaceString, SetValueConstant, SetValueField, SplitFieldToRows3, UniqueRowsByHashSet, Validator. → chia 3 gói (~5/5/4).
+  - **B4 (27 ID, file/JSON/XML/HTTP/FTP + job điều kiện):** 13 job + 14 trans. → chia ~6 gói theo họ (XML plugin; JSON/YAML; HTTP/FTP job; file-management job; input trans).
+  - **B5 (8 ID, alias/đăng ký bất thường):** gồm alias trùng (Flattener/Flatterner, ScriptValue/ScriptValuesMod, TeraFast/TeraFastPlugin, MAIL_VALIDATOR × 2) — cần xác minh alias là chính. → 2 gói.
+  - **B6 (103 ID):** khối lớn nhất (mail, bulk-loader, streaming, salesforce, crypto, LDAP, palo, v.v.). → chia theo họ plugin, mỗi gói 3–5 ID; nhiều ID cần connection/credential → dùng placeholder `${VAR}`, không embed thật.
+  - **B7 (21 ID, DEPRECATED):** phục vụ đọc/bảo trì; đánh giá riêng khả năng generation, có thể giữ observed thay vì canonical. Làm cuối.
+- Chỉ đánh dấu xong khi có review + tests; mức bằng chứng giữ `source_reviewed` (chưa Spoon/runtime). Tổng backlog sau B2b: **6 (B2) + 14 + 27 + 8 + 103 + 21 = 179 ID** (có alias, không phải 179 implementation độc lập).
 
 ## Mục tiêu và ủy quyền
 

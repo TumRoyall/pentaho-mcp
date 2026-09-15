@@ -48,6 +48,8 @@ components:
     - {type: DELETE_RESULT_FILENAMES, xml_type: DELETE_RESULT_FILENAMES, file: job/DELETE_RESULT_FILENAMES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: COPY_MOVE_RESULT_FILENAMES, xml_type: COPY_MOVE_RESULT_FILENAMES, file: job/COPY_MOVE_RESULT_FILENAMES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: TABLE_EXISTS, xml_type: TABLE_EXISTS, file: job/TABLE_EXISTS.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: WAIT_FOR_SQL, xml_type: WAIT_FOR_SQL, file: job/WAIT_FOR_SQL.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: COLUMNS_EXIST, xml_type: COLUMNS_EXIST, file: job/COLUMNS_EXIST.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
 
   transformation:
     - {type: TABLE_INPUT, xml_type: TableInput, file: trans/TableInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -123,3 +125,5 @@ components:
     - {type: SORTED_MERGE, xml_type: SortedMerge, file: trans/SortedMerge.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: MEMORY_GROUP_BY, xml_type: MemoryGroupBy, file: trans/MemoryGroupBy.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: ANALYTIC_QUERY, xml_type: AnalyticQuery, file: trans/AnalyticQuery.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DB_PROC, xml_type: DBProc, file: trans/DBProc.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SYNCHRONIZE_AFTER_MERGE, xml_type: SynchronizeAfterMerge, file: trans/SynchronizeAfterMerge.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

@@ -177,6 +177,7 @@ const EVIDENCE_BACKED_TYPES = {
     'BlockUntilStepsFinish', 'CsvInput', 'PropertyInput', 'StringCut', 'RandomValue',
     'ProcessFiles', 'DataGrid', 'JobExecutor', 'XMLOutput', 'OraBulkLoader',
     'TypeExitExcelWriterStep', 'Sequence',
+    'RowsFromResult', 'MappingInput', 'MappingOutput',
   ],
   job: [
     'EVAL_FILES_METRICS', 'CHECK_DB_CONNECTIONS', 'FILES_EXIST', 'DELETE_FOLDERS',

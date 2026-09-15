@@ -1,7 +1,7 @@
 version: 1
-updated_at: "2026-08-26"
+updated_at: "2026-09-15"
 pdi_version: "9.4"
-enriched_at: "2026-08-26"
+enriched_at: "2026-09-15"
 
 policy:
   generator_requires_status: canonical
@@ -44,6 +44,9 @@ components:
     - {type: DELAY, xml_type: DELAY, file: job/DELAY.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: XSLT, xml_type: XSLT, file: job/XSLT.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: EXPORT_REPOSITORY, xml_type: EXPORT_REPOSITORY, file: job/EXPORT_REPOSITORY.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ADD_RESULT_FILENAMES, xml_type: ADD_RESULT_FILENAMES, file: job/ADD_RESULT_FILENAMES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DELETE_RESULT_FILENAMES, xml_type: DELETE_RESULT_FILENAMES, file: job/DELETE_RESULT_FILENAMES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: COPY_MOVE_RESULT_FILENAMES, xml_type: COPY_MOVE_RESULT_FILENAMES, file: job/COPY_MOVE_RESULT_FILENAMES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
 
   transformation:
     - {type: TABLE_INPUT, xml_type: TableInput, file: trans/TableInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -104,3 +107,12 @@ components:
     - {type: SET_SESSION_VARIABLE, xml_type: SetSessionVariableStep, file: trans/SetSessionVariableStep.md, status: observed, generator_eligible: false, source_version: "not_established", verified_versions: "", verification: source_reviewed}
     - {type: EXCEL_WRITER, xml_type: TypeExitExcelWriterStep, file: trans/TypeExitExcelWriterStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: SEQUENCE, xml_type: Sequence, file: trans/Sequence.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ROWS_FROM_RESULT, xml_type: RowsFromResult, file: trans/RowsFromResult.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAPPING_INPUT, xml_type: MappingInput, file: trans/MappingInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAPPING_OUTPUT, xml_type: MappingOutput, file: trans/MappingOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILES_FROM_RESULT, xml_type: FilesFromResult, file: trans/FilesFromResult.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILES_TO_RESULT, xml_type: FilesToResult, file: trans/FilesToResult.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: APPEND, xml_type: Append, file: trans/Append.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: BLOCKING_STEP, xml_type: BlockingStep, file: trans/BlockingStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DETECT_EMPTY_STREAM, xml_type: DetectEmptyStream, file: trans/DetectEmptyStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DETECT_LAST_ROW, xml_type: DetectLastRow, file: trans/DetectLastRow.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

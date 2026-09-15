@@ -1,0 +1,4039 @@
+{
+  "sourceRoot": "C:\\Users\\TumRoyal\\Documents\\GitHub\\pentaho-kettle",
+  "sourceCommit": "1a939ab5cabe4517867879684aeca2a526bcc638",
+  "scope": "engine XML registries plus literal Step/JobEntry annotations under engine/plugins src/main/java; source presence does not prove installation",
+  "rows": [
+    {
+      "kind": "job",
+      "id": "ABORT",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.abort.JobEntryAbort",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/abort/JobEntryAbort.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/abort/JobEntryAbort.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "ADD_RESULT_FILENAMES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.addresultfilenames.JobEntryAddResultFilenames",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/addresultfilenames/JobEntryAddResultFilenames.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/addresultfilenames/JobEntryAddResultFilenames.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "job",
+      "id": "CHECK_DB_CONNECTIONS",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.checkdbconnection.JobEntryCheckDbConnections",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/checkdbconnection/JobEntryCheckDbConnections.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/job/entries/checkdbconnection/JobEntryCheckDbConnections.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "CHECK_FILES_LOCKED",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.checkfilelocked.JobEntryCheckFilesLocked",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/checkfilelocked/JobEntryCheckFilesLocked.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "COLUMNS_EXIST",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.columnsexist.JobEntryColumnsExist",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/columnsexist/JobEntryColumnsExist.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "CONNECTED_TO_REPOSITORY",
+      "category": "Repository",
+      "className": "org.pentaho.di.job.entries.connectedtorepository.JobEntryConnectedToRepository",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/connectedtorepository/JobEntryConnectedToRepository.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "COPY_FILES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.copyfiles.JobEntryCopyFiles",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/copyfiles/JobEntryCopyFiles.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "COPY_MOVE_RESULT_FILENAMES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.copymoveresultfilenames.JobEntryCopyMoveResultFilenames",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/copymoveresultfilenames/JobEntryCopyMoveResultFilenames.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "job",
+      "id": "CREATE_FILE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.createfile.JobEntryCreateFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/createfile/JobEntryCreateFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "CREATE_FOLDER",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.createfolder.JobEntryCreateFolder",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/createfolder/JobEntryCreateFolder.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DELAY",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.delay.JobEntryDelay",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/delay/JobEntryDelay.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DELETE_FILE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.deletefile.JobEntryDeleteFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/deletefile/JobEntryDeleteFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DELETE_FILES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.deletefiles.JobEntryDeleteFiles",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/deletefiles/JobEntryDeleteFiles.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DELETE_FOLDERS",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.deletefolders.JobEntryDeleteFolders",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/deletefolders/JobEntryDeleteFolders.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DELETE_RESULT_FILENAMES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.deleteresultfilenames.JobEntryDeleteResultFilenames",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/deleteresultfilenames/JobEntryDeleteResultFilenames.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "job",
+      "id": "DOS_UNIX_CONVERTER",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.dostounix.JobEntryDosToUnix",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/dostounix/JobEntryDosToUnix.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "DTD_VALIDATOR",
+      "category": "Category",
+      "className": "org.pentaho.di.job.entries.dtdvalidator.JobEntryDTDValidator",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/dtdvalidator/JobEntryDTDValidator.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/dtdvalidator/JobEntryDTDValidator.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "EVAL",
+      "category": "Scripting",
+      "className": "org.pentaho.di.job.entries.eval.JobEntryEval",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/eval/JobEntryEval.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "EVAL_FILES_METRICS",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.evalfilesmetrics.JobEntryEvalFilesMetrics",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/evalfilesmetrics/JobEntryEvalFilesMetrics.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "EVAL_TABLE_CONTENT",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.evaluatetablecontent.JobEntryEvalTableContent",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/evaluatetablecontent/JobEntryEvalTableContent.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "EXPORT_REPOSITORY",
+      "category": "Repository",
+      "className": "org.pentaho.di.job.entries.exportrepository.JobEntryExportRepository",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/exportrepository/JobEntryExportRepository.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FILE_COMPARE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.filecompare.JobEntryFileCompare",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/filecompare/JobEntryFileCompare.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FILE_EXISTS",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.fileexists.JobEntryFileExists",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/fileexists/JobEntryFileExists.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FILES_EXIST",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.filesexist.JobEntryFilesExist",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/filesexist/JobEntryFilesExist.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FOLDER_IS_EMPTY",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.folderisempty.JobEntryFolderIsEmpty",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/folderisempty/JobEntryFolderIsEmpty.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FOLDERS_COMPARE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.folderscompare.JobEntryFoldersCompare",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/folderscompare/JobEntryFoldersCompare.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FTP",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.ftp.JobEntryFTP",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ftp/JobEntryFTP.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FTP_DELETE",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.ftpdelete.JobEntryFTPDelete",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ftpdelete/JobEntryFTPDelete.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FTP_PUT",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.ftpput.JobEntryFTPPUT",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ftpput/JobEntryFTPPUT.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FTPS_GET",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.ftpsget.JobEntryFTPSGet",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ftpsget/JobEntryFTPSGet.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "FTPS_PUT",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.ftpsput.JobEntryFTPSPUT",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ftpsput/JobEntryFTPSPUT.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "GET_POP",
+      "category": "Mail",
+      "className": "org.pentaho.di.job.entries.getpop.JobEntryGetPOP",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/getpop/JobEntryGetPOP.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "HTTP",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.http.JobEntryHTTP",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/http/JobEntryHTTP.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "JOB",
+      "category": "General",
+      "className": "org.pentaho.di.job.entries.job.JobEntryJob",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/job/JobEntryJob.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "JobCategory.Category.Mail_VALIDATOR",
+      "category": "Mail",
+      "className": "org.pentaho.di.job.entries.mailvalidator.JobEntryMailValidator",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mailvalidator/JobEntryMailValidator.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MAIL",
+      "category": "Mail",
+      "className": "org.pentaho.di.job.entries.mail.JobEntryMail",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mail/JobEntryMail.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MAIL_VALIDATOR",
+      "category": "Mail",
+      "className": "org.pentaho.di.job.entries.mailvalidator.JobEntryMailValidator",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mailvalidator/JobEntryMailValidator.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MOVE_FILES",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.movefiles.JobEntryMoveFiles",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/movefiles/JobEntryMoveFiles.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MS_ACCESS_BULK_LOAD",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.job.entries.msaccessbulkload.JobEntryMSAccessBulkLoad",
+      "source": "plugins/ms-access/impl/src/main/java/org/pentaho/di/job/entries/msaccessbulkload/JobEntryMSAccessBulkLoad.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/ms-access/impl/src/main/java/org/pentaho/di/job/entries/msaccessbulkload/JobEntryMSAccessBulkLoad.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MSGBOX_INFO",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.msgboxinfo.JobEntryMsgBoxInfo",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/msgboxinfo/JobEntryMsgBoxInfo.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MSSQL_BULK_LOAD",
+      "category": "BulkLoading",
+      "className": "org.pentaho.di.job.entries.mssqlbulkload.JobEntryMssqlBulkLoad",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mssqlbulkload/JobEntryMssqlBulkLoad.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MYSQL_BULK_FILE",
+      "category": "BulkLoading",
+      "className": "org.pentaho.di.job.entries.mysqlbulkfile.JobEntryMysqlBulkFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mysqlbulkfile/JobEntryMysqlBulkFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "MYSQL_BULK_LOAD",
+      "category": "BulkLoading",
+      "className": "org.pentaho.di.job.entries.mysqlbulkload.JobEntryMysqlBulkLoad",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/mysqlbulkload/JobEntryMysqlBulkLoad.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "PGP_DECRYPT_FILES",
+      "category": "FileEncryption",
+      "className": "org.pentaho.di.job.entries.pgpdecryptfiles.JobEntryPGPDecryptFiles",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/pgpdecryptfiles/JobEntryPGPDecryptFiles.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "PGP_ENCRYPT_FILES",
+      "category": "FileEncryption",
+      "className": "org.pentaho.di.job.entries.pgpencryptfiles.JobEntryPGPEncryptFiles",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/pgpencryptfiles/JobEntryPGPEncryptFiles.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "PGP_VERIFY_FILES",
+      "category": "FileEncryption",
+      "className": "org.pentaho.di.job.entries.pgpverify.JobEntryPGPVerify",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/pgpverify/JobEntryPGPVerify.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "PING",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.ping.JobEntryPing",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/ping/JobEntryPing.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SEND_NAGIOS_PASSIVE_CHECK",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.sendnagiospassivecheck.JobEntrySendNagiosPassiveCheck",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/sendnagiospassivecheck/JobEntrySendNagiosPassiveCheck.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SET_VARIABLES",
+      "category": "General",
+      "className": "org.pentaho.di.job.entries.setvariables.JobEntrySetVariables",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/setvariables/JobEntrySetVariables.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SFTP",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.sftp.JobEntrySFTP",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/sftp/JobEntrySFTP.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SFTPPUT",
+      "category": "FileTransfer",
+      "className": "org.pentaho.di.job.entries.sftpput.JobEntrySFTPPUT",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/sftpput/JobEntrySFTPPUT.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SHELL",
+      "category": "Scripting",
+      "className": "org.pentaho.di.job.entries.shell.JobEntryShell",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/shell/JobEntryShell.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SIMPLE_EVAL",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.simpleeval.JobEntrySimpleEval",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/simpleeval/JobEntrySimpleEval.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SNMP_TRAP",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.snmptrap.JobEntrySNMPTrap",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/snmptrap/JobEntrySNMPTrap.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SPECIAL",
+      "category": "General",
+      "className": "org.pentaho.di.job.entries.special.JobEntrySpecial",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/special/JobEntrySpecial.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SQL",
+      "category": "Scripting",
+      "className": "org.pentaho.di.job.entries.sql.JobEntrySQL",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/sql/JobEntrySQL.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SUCCESS",
+      "category": "General",
+      "className": "org.pentaho.di.job.entries.success.JobEntrySuccess",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/success/JobEntrySuccess.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "SYSLOG",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.syslog.JobEntrySyslog",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/syslog/JobEntrySyslog.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "TABLE_EXISTS",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.tableexists.JobEntryTableExists",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/tableexists/JobEntryTableExists.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "TALEND_JOB_EXEC",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.job.entries.talendjobexec.JobEntryTalendJobExec",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/talendjobexec/JobEntryTalendJobExec.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "TELNET",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.telnet.JobEntryTelnet",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/telnet/JobEntryTelnet.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "TRANS",
+      "category": "General",
+      "className": "org.pentaho.di.job.entries.trans.JobEntryTrans",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/trans/JobEntryTrans.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "TRUNCATE_TABLES",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.truncatetables.JobEntryTruncateTables",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/truncatetables/JobEntryTruncateTables.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "UNZIP",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.unzip.JobEntryUnZip",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/unzip/JobEntryUnZip.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "WAIT_FOR_FILE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.waitforfile.JobEntryWaitForFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/waitforfile/JobEntryWaitForFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "WAIT_FOR_SQL",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.waitforsql.JobEntryWaitForSQL",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/waitforsql/JobEntryWaitForSQL.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "WEBSERVICE_AVAILABLE",
+      "category": "Conditions",
+      "className": "org.pentaho.di.job.entries.webserviceavailable.JobEntryWebServiceAvailable",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/webserviceavailable/JobEntryWebServiceAvailable.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "WRITE_TO_FILE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.writetofile.JobEntryWriteToFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/writetofile/JobEntryWriteToFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "WRITE_TO_LOG",
+      "category": "Utility",
+      "className": "org.pentaho.di.job.entries.writetolog.JobEntryWriteToLog",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/writetolog/JobEntryWriteToLog.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "XML_WELL_FORMED",
+      "category": "Category",
+      "className": "org.pentaho.di.job.entries.xmlwellformed.JobEntryXMLWellFormed",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xmlwellformed/JobEntryXMLWellFormed.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xmlwellformed/JobEntryXMLWellFormed.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "XSD_VALIDATOR",
+      "category": "Category",
+      "className": "org.pentaho.di.job.entries.xsdvalidator.JobEntryXSDValidator",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xsdvalidator/JobEntryXSDValidator.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xsdvalidator/JobEntryXSDValidator.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "XSLT",
+      "category": "Category",
+      "className": "org.pentaho.di.job.entries.xslt.JobEntryXSLT",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xslt/JobEntryXSLT.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/job/entries/xslt/JobEntryXSLT.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "job",
+      "id": "ZIP_FILE",
+      "category": "FileManagement",
+      "className": "org.pentaho.di.job.entries.zipfile.JobEntryZipFile",
+      "source": "engine/src/main/resources/kettle-job-entries.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/job/entries/zipfile/JobEntryZipFile.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Abort",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.abort.AbortMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/abort/AbortMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/abort/AbortMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AccessInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.accessinput.AccessInputMeta",
+      "source": "plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessinput/AccessInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessinput/AccessInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AccessOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.accessoutput.AccessOutputMeta",
+      "source": "plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessoutput/AccessOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessoutput/AccessOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AddXML",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.addxml.AddXMLMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/addxml/AddXMLMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/addxml/AddXMLMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AggregateRows",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.aggregaterows.AggregateRowsMeta",
+      "source": "plugins/aggregate-rows/core/src/main/java/org/pentaho/di/trans/steps/aggregaterows/AggregateRowsMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/aggregate-rows/core/src/main/java/org/pentaho/di/trans/steps/aggregaterows/AggregateRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AnalyticQuery",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.analyticquery.AnalyticQueryMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/analyticquery/AnalyticQueryMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Append",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.append.AppendMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/append/AppendMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/append/AppendMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "AutoDoc",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.autodoc.AutoDocMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/autodoc/AutoDocMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/autodoc/AutoDocMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AvroInputNew",
+      "category": "BigData",
+      "className": "org.pentaho.di.trans.steps.avro.input.AvroInputMeta",
+      "source": "plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/input/AvroInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/input/AvroInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "AvroOutput",
+      "category": "BigData",
+      "className": "org.pentaho.di.trans.steps.avro.output.AvroOutputMeta",
+      "source": "plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/output/AvroOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/output/AvroOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "BlockingStep",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.blockingstep.BlockingStepMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/blockingstep/BlockingStepMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/blockingstep/BlockingStepMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "BlockUntilStepsFinish",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.blockuntilstepsfinish.BlockUntilStepsFinishMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/blockuntilstepsfinish/BlockUntilStepsFinishMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/blockuntilstepsfinish/BlockUntilStepsFinishMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Calculator",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.calculator.CalculatorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/calculator/CalculatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ChangeFileEncoding",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.changefileencoding.ChangeFileEncodingMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/changefileencoding/ChangeFileEncodingMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/changefileencoding/ChangeFileEncodingMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CheckSum",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.checksum.CheckSumMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/checksum/CheckSumMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/checksum/CheckSumMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CloneRow",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.clonerow.CloneRowMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/clonerow/CloneRowMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/clonerow/CloneRowMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ClosureGenerator",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.closure.ClosureGeneratorMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/closure/ClosureGeneratorMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/closure/ClosureGeneratorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ColumnExists",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.columnexists.ColumnExistsMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/columnexists/ColumnExistsMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/columnexists/ColumnExistsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CombinationLookup",
+      "category": "DataWarehouse",
+      "className": "org.pentaho.di.trans.steps.combinationlookup.CombinationLookupMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/combinationlookup/CombinationLookupMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/combinationlookup/CombinationLookupMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ConcatFields",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.concatfields.ConcatFieldsMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/concatfields/ConcatFieldsMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/concatfields/ConcatFieldsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Constant",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.constant.ConstantMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/constant/ConstantMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CreditCardValidator",
+      "category": "Validation",
+      "className": "org.pentaho.di.trans.steps.creditcardvalidator.CreditCardValidatorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/creditcardvalidator/CreditCardValidatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CsvInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.csvinput.CsvInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/csvinput/CsvInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CubeInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.cubeinput.CubeInputMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeinput/CubeInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeinput/CubeInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "CubeOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.cubeoutput.CubeOutputMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeoutput/CubeOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeoutput/CubeOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DataGrid",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.datagrid.DataGridMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/datagrid/DataGridMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DBJoin",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.databasejoin.DatabaseJoinMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/databasejoin/DatabaseJoinMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DBLookup",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.databaselookup.DatabaseLookupMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/databaselookup/DatabaseLookupMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DBProc",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.dbproc.DBProcMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/dbproc/DBProcMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Delay",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.delay.DelayMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/delay/DelayMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/delay/DelayMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Delete",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.delete.DeleteMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/delete/DeleteMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Denormaliser",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.denormaliser.DenormaliserMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/denormaliser/DenormaliserMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DetectEmptyStream",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.detectemptystream.DetectEmptyStreamMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/detectemptystream/DetectEmptyStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "DetectLastRow",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.detectlastrow.DetectLastRowMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/detectlastrow/DetectLastRowMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "DimensionLookup",
+      "category": "DataWarehouse",
+      "className": "org.pentaho.di.trans.steps.dimensionlookup.DimensionLookupMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/dimensionlookup/DimensionLookupMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Dummy",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.dummytrans.DummyTransMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/dummytrans/DummyTransMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DummyStep",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.be.ibridge.kettle.dummy.DummyPluginMeta",
+      "source": "plugins/dummy/core/src/main/java/org/pentaho/di/be/ibridge/kettle/dummy/DummyPluginMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/dummy/core/src/main/java/org/pentaho/di/be/ibridge/kettle/dummy/DummyPluginMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "DynamicSQLRow",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.dynamicsqlrow.DynamicSQLRowMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/dynamicsqlrow/DynamicSQLRowMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ElasticSearchBulk",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.elasticsearchbulk.ElasticSearchBulkMeta",
+      "source": "plugins/elasticsearch-bulk-insert/core/src/main/java/org/pentaho/di/trans/steps/elasticsearchbulk/ElasticSearchBulkMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/elasticsearch-bulk-insert/core/src/main/java/org/pentaho/di/trans/steps/elasticsearchbulk/ElasticSearchBulkMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ExcelInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.excelinput.ExcelInputMeta",
+      "source": "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/excelinput/ExcelInputMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/excelinput/ExcelInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ExcelOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.exceloutput.ExcelOutputMeta",
+      "source": "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/exceloutput/ExcelOutputMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/exceloutput/ExcelOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ExecProcess",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.execprocess.ExecProcessMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/execprocess/ExecProcessMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ExecSQL",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.sql.ExecSQLMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sql/ExecSQLMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ExecSQLRow",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.execsqlrow.ExecSQLRowMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/execsqlrow/ExecSQLRowMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FieldsChangeSequence",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.fieldschangesequence.FieldsChangeSequenceMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fieldschangesequence/FieldsChangeSequenceMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FieldSplitter",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.fieldsplitter.FieldSplitterMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fieldsplitter/FieldSplitterMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FileExists",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.fileexists.FileExistsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fileexists/FileExistsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FileLocked",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.filelocked.FileLockedMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/filelocked/FileLockedMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FilesFromResult",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.filesfromresult.FilesFromResultMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/filesfromresult/FilesFromResultMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "FilesToResult",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.filestoresult.FilesToResultMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/filestoresult/FilesToResultMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "FileStream",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.step.filestream.FileStreamMeta",
+      "source": "plugins/file-stream/src/main/java/org/pentaho/di/trans/step/filestream/FileStreamMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/file-stream/src/main/java/org/pentaho/di/trans/step/filestream/FileStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FilterRows",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.filterrows.FilterRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/filterrows/FilterRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FixedInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.fixedinput.FixedInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fixedinput/FixedInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Flattener",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.flattener.FlattenerMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/flattener/FlattenerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Flatterner",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.flattener.FlattenerMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/flattener/FlattenerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Formula",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.formula.FormulaMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/formula/FormulaMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "FuzzyMatch",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.fuzzymatch.FuzzyMatchMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fuzzymatch/FuzzyMatchMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetFileNames",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.getfilenames.GetFileNamesMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getfilenames/GetFileNamesMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetFilesRowsCount",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.getfilesrowscount.GetFilesRowsCountMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getfilesrowscount/GetFilesRowsCountMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetPreviousRowField",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.getpreviousrowfield.GetPreviousRowFieldMeta",
+      "source": "plugins/get-previous-row-field/core/src/main/java/org/pentaho/di/trans/steps/getpreviousrowfield/GetPreviousRowFieldMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/get-previous-row-field/core/src/main/java/org/pentaho/di/trans/steps/getpreviousrowfield/GetPreviousRowFieldMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetRepositoryNames",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.getrepositorynames.GetRepositoryNamesMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getrepositorynames/GetRepositoryNamesMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetSlaveSequence",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.getslavesequence.GetSlaveSequenceMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getslavesequence/GetSlaveSequenceMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetSubFolders",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.getsubfolders.GetSubFoldersMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getsubfolders/GetSubFoldersMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetTableNames",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.gettablenames.GetTableNamesMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/gettablenames/GetTableNamesMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GetVariable",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.getvariable.GetVariableMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/getvariable/GetVariableMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "getXMLData",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.getxmldata.GetXMLDataMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/getxmldata/GetXMLDataMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/getxmldata/GetXMLDataMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GPBulkLoader",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.gpbulkloader.GPBulkLoaderMeta",
+      "source": "plugins/gp-bulk-loader/core/src/main/java/org/pentaho/di/trans/steps/gpbulkloader/GPBulkLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/gp-bulk-loader/core/src/main/java/org/pentaho/di/trans/steps/gpbulkloader/GPBulkLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GPLoad",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.gpload.GPLoadMeta",
+      "source": "plugins/gpload/core/src/main/java/org/pentaho/di/trans/steps/gpload/GPLoadMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/gpload/core/src/main/java/org/pentaho/di/trans/steps/gpload/GPLoadMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "GroupBy",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.groupby.GroupByMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/groupby/GroupByMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "HL7Input",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.hl7input.HL7InputMeta",
+      "source": "plugins/hl7/core/src/main/java/org/pentaho/di/trans/steps/hl7input/HL7InputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/hl7/core/src/main/java/org/pentaho/di/trans/steps/hl7input/HL7InputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "HTTP",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.http.HTTPMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/http/HTTPMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "HTTPPOST",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.httppost.HTTPPOSTMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/httppost/HTTPPOSTMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "IfNull",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.ifnull.IfNullMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/ifnull/IfNullMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "InfobrightOutput",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.infobrightoutput.InfobrightLoaderMeta",
+      "source": "plugins/infobright-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/infobrightoutput/InfobrightLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/infobright-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/infobrightoutput/InfobrightLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Injector",
+      "category": "Inline",
+      "className": "org.pentaho.di.trans.steps.injector.InjectorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/injector/InjectorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "InsertUpdate",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.insertupdate.InsertUpdateMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/insertupdate/InsertUpdateMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Janino",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.janino.JaninoMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/janino/JaninoMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "JavaFilter",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.javafilter.JavaFilterMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/javafilter/JavaFilterMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Jms2Consumer",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.step.jms.JmsConsumerMeta",
+      "source": "plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsConsumerMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsConsumerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Jms2Producer",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.step.jms.JmsProducerMeta",
+      "source": "plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsProducerMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsProducerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "JobExecutor",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.jobexecutor.JobExecutorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/jobexecutor/JobExecutorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "JoinRows",
+      "category": "Joins",
+      "className": "org.pentaho.di.trans.steps.joinrows.JoinRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/joinrows/JoinRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "JsonInput",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.jsoninput.JsonInputMeta",
+      "source": "plugins/json/core/src/main/java/org/pentaho/di/trans/steps/jsoninput/JsonInputMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/json/core/src/main/java/org/pentaho/di/trans/steps/jsoninput/JsonInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "JsonOutput",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.jsonoutput.JsonOutputMeta",
+      "source": "plugins/json/core/src/main/java/org/pentaho/di/trans/steps/jsonoutput/JsonOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/json/core/src/main/java/org/pentaho/di/trans/steps/jsonoutput/JsonOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "LDAPInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.ldapinput.LDAPInputMeta",
+      "source": "plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapinput/LDAPInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapinput/LDAPInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "LDAPOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.ldapoutput.LDAPOutputMeta",
+      "source": "plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapoutput/LDAPOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapoutput/LDAPOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "LDIFInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.ldifinput.LDIFInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/ldifinput/LDIFInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "LoadFileInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.loadfileinput.LoadFileInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/loadfileinput/LoadFileInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "LucidDBStreamingLoader",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.luciddbstreamingloader.LucidDBStreamingLoaderMeta",
+      "source": "plugins/lucid-db-streaming-loader/core/src/main/java/org/pentaho/di/trans/steps/luciddbstreamingloader/LucidDBStreamingLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/lucid-db-streaming-loader/core/src/main/java/org/pentaho/di/trans/steps/luciddbstreamingloader/LucidDBStreamingLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Mail",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.mail.MailMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mail/MailMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MailInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.mailinput.MailInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mailinput/MailInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MailValidator",
+      "category": "Validation",
+      "className": "org.pentaho.di.trans.steps.mailvalidator.MailValidatorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mailvalidator/MailValidatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Mapping",
+      "category": "Mapping",
+      "className": "org.pentaho.di.trans.steps.mapping.MappingMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mapping/MappingMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MappingInput",
+      "category": "Mapping",
+      "className": "org.pentaho.di.trans.steps.mappinginput.MappingInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mappinginput/MappingInputMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "MappingOutput",
+      "category": "Mapping",
+      "className": "org.pentaho.di.trans.steps.mappingoutput.MappingOutputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mappingoutput/MappingOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "MemoryGroupBy",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.memgroupby.MemoryGroupByMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/memgroupby/MemoryGroupByMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MergeJoin",
+      "category": "Joins",
+      "className": "org.pentaho.di.trans.steps.mergejoin.MergeJoinMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mergejoin/MergeJoinMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MergeRows",
+      "category": "Joins",
+      "className": "org.pentaho.di.trans.steps.mergerows.MergeRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/mergerows/MergeRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MetaInject",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.metainject.MetaInjectMeta",
+      "source": "plugins/meta-inject/impl/src/main/java/org/pentaho/di/trans/steps/metainject/MetaInjectMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/meta-inject/impl/src/main/java/org/pentaho/di/trans/steps/metainject/MetaInjectMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MondrianInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.mondrianinput.MondrianInputMeta",
+      "source": "plugins/mondrianinput/impl/src/main/java/org/pentaho/di/trans/steps/mondrianinput/MondrianInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/mondrianinput/impl/src/main/java/org/pentaho/di/trans/steps/mondrianinput/MondrianInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MonetDBBulkLoader",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.monetdbbulkloader.MonetDBBulkLoaderMeta",
+      "source": "plugins/monet-db-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/monetdbbulkloader/MonetDBBulkLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/monet-db-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/monetdbbulkloader/MonetDBBulkLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MQTTConsumer",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.step.mqtt.MQTTConsumerMeta",
+      "source": "plugins/streaming/impls/mqtt/src/main/java/org/pentaho/di/trans/step/mqtt/MQTTConsumerMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/streaming/impls/mqtt/src/main/java/org/pentaho/di/trans/step/mqtt/MQTTConsumerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MQTTProducer",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.step.mqtt.MQTTProducerMeta",
+      "source": "plugins/streaming/impls/mqtt/src/main/java/org/pentaho/di/trans/step/mqtt/MQTTProducerMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/streaming/impls/mqtt/src/main/java/org/pentaho/di/trans/step/mqtt/MQTTProducerMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MultiwayMergeJoin",
+      "category": "Joins",
+      "className": "org.pentaho.di.trans.steps.multimerge.MultiMergeJoinMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/multimerge/MultiMergeJoinMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "MySQLBulkLoader",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.mysqlbulkloader.MySQLBulkLoaderMeta",
+      "source": "plugins/mysql-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/mysqlbulkloader/MySQLBulkLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/mysql-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/mysqlbulkloader/MySQLBulkLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Normaliser",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.normaliser.NormaliserMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/normaliser/NormaliserMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "NullIf",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.nullif.NullIfMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/nullif/NullIfMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "NumberRange",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.numberrange.NumberRangeMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/numberrange/NumberRangeMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OlapInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.olapinput.OlapInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/olapinput/OlapInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OldTextFileInput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.textfileinput.TextFileInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/textfileinput/TextFileInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OpenERPObjectDelete",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.openerp.objectdelete.OpenERPObjectDeleteMeta",
+      "source": "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectdelete/OpenERPObjectDeleteMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectdelete/OpenERPObjectDeleteMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OpenERPObjectInput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.openerp.objectinput.OpenERPObjectInputMeta",
+      "source": "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectinput/OpenERPObjectInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectinput/OpenERPObjectInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OpenERPObjectOutputImport",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.openerp.objectoutput.OpenERPObjectOutputMeta",
+      "source": "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectoutput/OpenERPObjectOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectoutput/OpenERPObjectOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "OraBulkLoader",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.orabulkloader.OraBulkLoaderMeta",
+      "source": "plugins/oracle-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/orabulkloader/OraBulkLoaderMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/oracle-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/orabulkloader/OraBulkLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PaloCellInput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.palo.cellinput.PaloCellInputMeta",
+      "source": "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/cellinput/PaloCellInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/cellinput/PaloCellInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PaloCellOutput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.palo.celloutput.PaloCellOutputMeta",
+      "source": "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/celloutput/PaloCellOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/celloutput/PaloCellOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PaloDimInput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.palo.diminput.PaloDimInputMeta",
+      "source": "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/diminput/PaloDimInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/diminput/PaloDimInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PaloDimOutput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.palo.dimoutput.PaloDimOutputMeta",
+      "source": "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/dimoutput/PaloDimOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/dimoutput/PaloDimOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ParallelGzipCsvInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.parallelgzipcsv.ParGzipCsvInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/parallelgzipcsv/ParGzipCsvInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PentahoReportingOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.pentahoreporting.PentahoReportingOutputMeta",
+      "source": "plugins/pentaho-reporting/impl/src/main/java/org/pentaho/di/trans/steps/pentahoreporting/PentahoReportingOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/pentaho-reporting/impl/src/main/java/org/pentaho/di/trans/steps/pentahoreporting/PentahoReportingOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PGBulkLoader",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.pgbulkloader.PGBulkLoaderMeta",
+      "source": "plugins/postgresql-db-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/pgbulkloader/PGBulkLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/postgresql-db-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/pgbulkloader/PGBulkLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PGPDecryptStream",
+      "category": "Cryptography",
+      "className": "org.pentaho.di.trans.steps.pgpdecryptstream.PGPDecryptStreamMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/pgpdecryptstream/PGPDecryptStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PGPEncryptStream",
+      "category": "Cryptography",
+      "className": "org.pentaho.di.trans.steps.pgpencryptstream.PGPEncryptStreamMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/pgpencryptstream/PGPEncryptStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PrioritizeStreams",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.prioritizestreams.PrioritizeStreamsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/prioritizestreams/PrioritizeStreamsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ProcessFiles",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.processfiles.ProcessFilesMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/processfiles/ProcessFilesMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PropertyInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.propertyinput.PropertyInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/propertyinput/PropertyInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "PropertyOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.propertyoutput.PropertyOutputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/propertyoutput/PropertyOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RandomCCNumberGenerator",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.randomccnumber.RandomCCNumberGeneratorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/randomccnumber/RandomCCNumberGeneratorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RandomValue",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.randomvalue.RandomValueMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/randomvalue/RandomValueMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RecordsFromStream",
+      "category": "Streaming",
+      "className": "org.pentaho.di.trans.steps.recordsfromstream.RecordsFromStreamMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/recordsfromstream/RecordsFromStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RegexEval",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.regexeval.RegexEvalMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/regexeval/RegexEvalMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ReplaceString",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.replacestring.ReplaceStringMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/replacestring/ReplaceStringMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ReservoirSampling",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.reservoirsampling.ReservoirSamplingMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/reservoirsampling/ReservoirSamplingMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Rest",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.rest.RestMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/rest/RestMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RowGenerator",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.rowgenerator.RowGeneratorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/rowgenerator/RowGeneratorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RowsFromResult",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.rowsfromresult.RowsFromResultMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "B1",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/rowsfromresult/RowsFromResultMeta.java"
+      ],
+      "xmlEvidenceReview": "reviewed"
+    },
+    {
+      "kind": "trans",
+      "id": "RowsToResult",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.rowstoresult.RowsToResultMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/rowstoresult/RowsToResultMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RssInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.rssinput.RssInputMeta",
+      "source": "plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssinput/RssInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssinput/RssInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RssOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.rssoutput.RssOutputMeta",
+      "source": "plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssoutput/RssOutputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssoutput/RssOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RuleAccumulator",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.rules.RulesAccumulatorMeta",
+      "source": "plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesAccumulatorMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesAccumulatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "RuleExecutor",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.rules.RulesExecutorMeta",
+      "source": "plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesExecutorMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesExecutorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "S3CSVINPUT",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.s3csvinput.S3CsvInputMeta",
+      "source": "plugins/s3csvinput/core/src/main/java/org/pentaho/di/trans/steps/s3csvinput/S3CsvInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/s3csvinput/core/src/main/java/org/pentaho/di/trans/steps/s3csvinput/S3CsvInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SalesforceDelete",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.salesforcedelete.SalesforceDeleteMeta",
+      "source": "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforcedelete/SalesforceDeleteMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforcedelete/SalesforceDeleteMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SalesforceInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.salesforceinput.SalesforceInputMeta",
+      "source": "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinput/SalesforceInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinput/SalesforceInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SalesforceInsert",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.salesforceinsert.SalesforceInsertMeta",
+      "source": "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinsert/SalesforceInsertMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinsert/SalesforceInsertMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SalesforceUpdate",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.salesforceupdate.SalesforceUpdateMeta",
+      "source": "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupdate/SalesforceUpdateMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupdate/SalesforceUpdateMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SalesforceUpsert",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.salesforceupsert.SalesforceUpsertMeta",
+      "source": "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupsert/SalesforceUpsertMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupsert/SalesforceUpsertMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SampleRows",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.samplerows.SampleRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/samplerows/SampleRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SAPINPUT",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.sapinput.SapInputMeta",
+      "source": "plugins/sap/core/src/main/java/org/pentaho/di/trans/steps/sapinput/SapInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/sap/core/src/main/java/org/pentaho/di/trans/steps/sapinput/SapInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SASInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.sasinput.SasInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sasinput/SasInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Script",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.script.ScriptMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/script/ScriptMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ScriptValue",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.scriptvalues_mod.ScriptValuesMetaMod",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/scriptvalues_mod/ScriptValuesMetaMod.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ScriptValueMod",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.scriptvalues_mod.ScriptValuesMetaMod",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/scriptvalues_mod/ScriptValuesMetaMod.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ScriptValuesMod",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.scriptvalues_mod.ScriptValuesMetaMod",
+      "source": "engine/src/main/java/org/pentaho/di/trans/steps/scriptvalues_mod/ScriptValuesMetaMod.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/scriptvalues_mod/ScriptValuesMetaMod.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SecretKeyGenerator",
+      "category": "Cryptography",
+      "className": "org.pentaho.di.trans.steps.symmetriccrypto.secretkeygenerator.SecretKeyGeneratorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/symmetriccrypto/secretkeygenerator/SecretKeyGeneratorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SelectValues",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.selectvalues.SelectValuesMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/selectvalues/SelectValuesMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Sequence",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.addsequence.AddSequenceMeta",
+      "source": "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/addsequence/AddSequenceMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/addsequence/AddSequenceMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SetValueConstant",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.setvalueconstant.SetValueConstantMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/setvalueconstant/SetValueConstantMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SetValueField",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.setvaluefield.SetValueFieldMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/setvaluefield/SetValueFieldMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SetVariable",
+      "category": "Job",
+      "className": "org.pentaho.di.trans.steps.setvariable.SetVariableMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/setvariable/SetVariableMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SFTPPut",
+      "category": "Experimental",
+      "className": "org.pentaho.di.trans.steps.sftpput.SFTPPutMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sftpput/SFTPPutMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ShapeFileReader",
+      "category": "Input",
+      "className": "org.pentaho.di.shapefilereader.ShapeFileReaderMeta",
+      "source": "plugins/shapefilereader/core/src/main/java/org/pentaho/di/shapefilereader/ShapeFileReaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/shapefilereader/core/src/main/java/org/pentaho/di/shapefilereader/ShapeFileReaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SimpleMapping",
+      "category": "Mapping",
+      "className": "org.pentaho.di.trans.steps.simplemapping.SimpleMappingMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/simplemapping/SimpleMappingMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SingleThreader",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.singlethreader.SingleThreaderMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/singlethreader/SingleThreaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SocketReader",
+      "category": "Inline",
+      "className": "org.pentaho.di.trans.steps.socketreader.SocketReaderMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/socketreader/SocketReaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SocketWriter",
+      "category": "Inline",
+      "className": "org.pentaho.di.trans.steps.socketwriter.SocketWriterMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/socketwriter/SocketWriterMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SortedMerge",
+      "category": "Joins",
+      "className": "org.pentaho.di.trans.steps.sortedmerge.SortedMergeMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sortedmerge/SortedMergeMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SortRows",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.sort.SortRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sort/SortRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SplitFieldToRows3",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.splitfieldtorows.SplitFieldToRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/splitfieldtorows/SplitFieldToRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SQLFileOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.sqlfileoutput.SQLFileOutputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/sqlfileoutput/SQLFileOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SSH",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.ssh.SSHMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/ssh/SSHMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "StepMetastructure",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.stepmeta.StepMetastructureMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/stepmeta/StepMetastructureMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "StepsMetrics",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.stepsmetrics.StepsMetricsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/stepsmetrics/StepsMetricsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "StreamLookup",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.streamlookup.StreamLookupMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/streamlookup/StreamLookupMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "StringCut",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.stringcut.StringCutMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/stringcut/StringCutMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "StringOperations",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.stringoperations.StringOperationsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/stringoperations/StringOperationsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SwitchCase",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.switchcase.SwitchCaseMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/switchcase/SwitchCaseMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SymmetricCryptoTrans",
+      "category": "Cryptography",
+      "className": "org.pentaho.di.trans.steps.symmetriccrypto.symmetriccryptotrans.SymmetricCryptoTransMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/symmetriccrypto/symmetriccryptotrans/SymmetricCryptoTransMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SynchronizeAfterMerge",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.synchronizeaftermerge.SynchronizeAfterMergeMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/synchronizeaftermerge/SynchronizeAfterMergeMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SyslogMessage",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.syslog.SyslogMessageMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/syslog/SyslogMessageMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "SystemInfo",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.systemdata.SystemDataMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/systemdata/SystemDataMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TableCompare",
+      "category": "Name",
+      "className": "org.pentaho.di.trans.steps.tablecompare.TableCompareMeta",
+      "source": "engine/src/main/java/org/pentaho/di/trans/steps/tablecompare/TableCompareMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/tablecompare/TableCompareMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TableExists",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.tableexists.TableExistsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B2",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/tableexists/TableExistsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TableInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.tableinput.TableInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/tableinput/TableInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TableOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.tableoutput.TableOutputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/tableoutput/TableOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TeraFast",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.terafastbulkloader.TeraFastMeta",
+      "source": "plugins/terafast-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/terafastbulkloader/TeraFastMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "plugins/terafast-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/terafastbulkloader/TeraFastMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TeraFastPlugin",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.terafastbulkloader.TeraFastMeta",
+      "source": "plugins/terafast-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/terafastbulkloader/TeraFastMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B5",
+      "implementationSources": [
+        "plugins/terafast-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/terafastbulkloader/TeraFastMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TextFileInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.fileinput.text.TextFileInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/fileinput/text/TextFileInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TextFileOutput",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.textfileoutput.TextFileOutputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/textfileoutput/TextFileOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TextFileOutputLegacy",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.textfileoutputlegacy.TextFileOutputLegacyMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/textfileoutputlegacy/TextFileOutputLegacyMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TransExecutor",
+      "category": "Flow",
+      "className": "org.pentaho.di.trans.steps.transexecutor.TransExecutorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/transexecutor/TransExecutorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TypeExitEdi2XmlStep",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.edi2xml.Edi2XmlMeta",
+      "source": "plugins/edi2xml/impl/src/main/java/org/pentaho/di/trans/steps/edi2xml/Edi2XmlMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/edi2xml/impl/src/main/java/org/pentaho/di/trans/steps/edi2xml/Edi2XmlMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TypeExitExcelWriterStep",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.excelwriter.ExcelWriterStepMeta",
+      "source": "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/excelwriter/ExcelWriterStepMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/excel/core/src/main/java/org/pentaho/di/trans/steps/excelwriter/ExcelWriterStepMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "TypeExitGoogleAnalyticsInputStep",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.googleanalytics.GaInputStepMeta",
+      "source": "plugins/google-analytics/core/src/main/java/org/pentaho/di/trans/steps/googleanalytics/GaInputStepMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/google-analytics/core/src/main/java/org/pentaho/di/trans/steps/googleanalytics/GaInputStepMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Unique",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.uniquerows.UniqueRowsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/uniquerows/UniqueRowsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "UniqueRowsByHashSet",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.uniquerowsbyhashset.UniqueRowsByHashSetMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/uniquerowsbyhashset/UniqueRowsByHashSetMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "UnivariateStats",
+      "category": "Statistics",
+      "className": "org.pentaho.di.trans.steps.univariatestats.UnivariateStatsMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/univariatestats/UnivariateStatsMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Update",
+      "category": "Output",
+      "className": "org.pentaho.di.trans.steps.update.UpdateMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/update/UpdateMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "UserDefinedJavaClass",
+      "category": "Scripting",
+      "className": "org.pentaho.di.trans.steps.userdefinedjavaclass.UserDefinedJavaClassMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/userdefinedjavaclass/UserDefinedJavaClassMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "Validator",
+      "category": "Validation",
+      "className": "org.pentaho.di.trans.steps.validator.ValidatorMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B3",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/validator/ValidatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ValueMapper",
+      "category": "Transform",
+      "className": "org.pentaho.di.trans.steps.valuemapper.ValueMapperMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/valuemapper/ValueMapperMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "VectorWiseBulkLoader",
+      "category": "Bulk",
+      "className": "org.pentaho.di.trans.steps.ivwloader.IngresVectorwiseLoaderMeta",
+      "source": "plugins/ivw-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/ivwloader/IngresVectorwiseLoaderMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/ivw-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/ivwloader/IngresVectorwiseLoaderMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "WebServiceAvailable",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.webserviceavailable.WebServiceAvailableMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/webserviceavailable/WebServiceAvailableMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "WebServiceLookup",
+      "category": "Lookup",
+      "className": "org.pentaho.di.trans.steps.webservices.WebServiceMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/webservices/WebServiceMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "WriteToLog",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.writetolog.WriteToLogMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/writetolog/WriteToLogMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XBaseInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.xbaseinput.XBaseInputMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/xbaseinput/XBaseInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XMLInput",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.xmlinput.XMLInputMeta",
+      "source": "plugins/xml-input/core/src/main/java/org/pentaho/di/trans/steps/xmlinput/XMLInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/xml-input/core/src/main/java/org/pentaho/di/trans/steps/xmlinput/XMLInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XMLInputSax",
+      "category": "Deprecated",
+      "className": "org.pentaho.di.trans.steps.xmlinputsax.XMLInputSaxMeta",
+      "source": "plugins/xml-input-stream/core/src/main/java/org/pentaho/di/trans/steps/xmlinputsax/XMLInputSaxMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B7",
+      "implementationSources": [
+        "plugins/xml-input-stream/core/src/main/java/org/pentaho/di/trans/steps/xmlinputsax/XMLInputSaxMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XMLInputStream",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.xmlinputstream.XMLInputStreamMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmlinputstream/XMLInputStreamMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmlinputstream/XMLInputStreamMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XMLJoin",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.xmljoin.XMLJoinMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmljoin/XMLJoinMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmljoin/XMLJoinMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XMLOutput",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.xmloutput.XMLOutputMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmloutput/XMLOutputMeta.java",
+      "origin": "annotation",
+      "status": "canonical",
+      "batch": "EXISTING",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmloutput/XMLOutputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XSDValidator",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.xsdvalidator.XsdValidatorMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xsdvalidator/XsdValidatorMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xsdvalidator/XsdValidatorMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "XSLT",
+      "category": "category",
+      "className": "org.pentaho.di.trans.steps.xslt.XsltMeta",
+      "source": "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xslt/XsltMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xslt/XsltMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "YamlInput",
+      "category": "Input",
+      "className": "org.pentaho.di.trans.steps.yamlinput.YamlInputMeta",
+      "source": "plugins/yaml-input/impl/src/main/java/org/pentaho/di/trans/steps/yamlinput/YamlInputMeta.java",
+      "origin": "annotation",
+      "status": "missing",
+      "batch": "B4",
+      "implementationSources": [
+        "plugins/yaml-input/impl/src/main/java/org/pentaho/di/trans/steps/yamlinput/YamlInputMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    },
+    {
+      "kind": "trans",
+      "id": "ZipFile",
+      "category": "Utility",
+      "className": "org.pentaho.di.trans.steps.zipfile.ZipFileMeta",
+      "source": "engine/src/main/resources/kettle-steps.xml",
+      "origin": "engine-registry",
+      "status": "missing",
+      "batch": "B6",
+      "implementationSources": [
+        "engine/src/main/java/org/pentaho/di/trans/steps/zipfile/ZipFileMeta.java"
+      ],
+      "xmlEvidenceReview": "pending"
+    }
+  ]
+}

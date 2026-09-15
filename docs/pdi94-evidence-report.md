@@ -9,16 +9,25 @@ PDI 9.4.
 
 ## Counts
 
-- Total catalog rows: **88**
-- Rows with explicit PDI 9.4 target evidence: **87**
+- Total catalog rows: **104** (37 job + 67 transformation)
+- Rows with explicit PDI 9.4 target evidence: **103**
 - Rows without PDI 9.4 evidence (downgraded/kept observed): **1**
-- `status: canonical`: **87**
+- `status: canonical`: **103**
 - `status: observed`: **1**
-- Generator-eligible (canonical + eligible + 9.4 verified): **87**
+- Generator-eligible (canonical + eligible + 9.4 verified): **103**
+
+> Bổ sung B1 gói 3 (2026-09-15): `Append`, `BlockingStep`,
+> `DetectEmptyStream`, `DetectLastRow` — 4/4 `source_reviewed` PDI 9.4, xem
+> per-row cuối bảng. Số tổng đếm trực tiếp từ `catalog.yaml`.
+
+> Gap ghi nhận từ trước (không do gói B1 gây ra): 4 dòng catalog hiện có
+> (`TransExecutor`, `SimpleMapping`, `SingleThreader`, `MetaInject`) chưa
+> có mục per-row trong bảng dưới. Số tổng ở trên được đếm trực tiếp từ
+> `catalog.yaml`; bảng per-row sẽ được bổ sung dần theo từng gói.
 
 ### Verification breakdown (rows with 9.4 evidence)
 
-- `source_reviewed` (PDI 9.4 `getXML()` source reference): **79**
+- `source_reviewed` (PDI 9.4 `getXML()` source reference): **95**
 - `spoon_loaded` (Spoon PDI 9.4-saved artifact): **8**
 
 ### Rows kept observed (no target evidence, not promoted)
@@ -117,3 +126,15 @@ PDI 9.4.
 | trans | SetSessionVariableStep | not_established | (none) | observed | No PDI 9.4 evidence located (not_established) |
 | trans | TypeExitExcelWriterStep | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see trans/TypeExitExcelWriterStep.md) |
 | trans | Sequence | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see trans/Sequence.md) |
+| trans | RowsFromResult | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see trans/RowsFromResult.md) |
+| trans | MappingInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see trans/MappingInput.md) |
+| trans | MappingOutput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — inherited empty serialization (see trans/MappingOutput.md) |
+| trans | FilesFromResult | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — no override, inherited empty serialization (see trans/FilesFromResult.md) |
+| trans | FilesToResult | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see trans/FilesToResult.md) |
+| job | ADD_RESULT_FILENAMES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin (see job/ADD_RESULT_FILENAMES.md) |
+| job | DELETE_RESULT_FILENAMES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see job/DELETE_RESULT_FILENAMES.md) |
+| job | COPY_MOVE_RESULT_FILENAMES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference (see job/COPY_MOVE_RESULT_FILENAMES.md) |
+| trans | Append | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, head_name/tail_name info streams (see trans/Append.md) |
+| trans | BlockingStep | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, 5-tag spool config (see trans/BlockingStep.md) |
+| trans | DetectEmptyStream | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — no override, inherited empty serialization (see trans/DetectEmptyStream.md) |
+| trans | DetectLastRow | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — single resultfieldname boolean flag (see trans/DetectLastRow.md) |

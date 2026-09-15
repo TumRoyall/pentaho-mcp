@@ -2,11 +2,37 @@
 
 **Cập nhật:** 2026-09-15. **Đọc file này đầu tiên khi tiếp tục phiên mới.**
 
-## Trạng thái hiện tại
+## HƯỚNG DẪN CHUYỂN SESSION MỚI (đọc trước tiên)
 
-- **Đã xong:** B1 gói 2 — 5 ID result files ĐÃ NGHIỆM THU (Kiro verify 2026-09-15, xem "B1 gói 2 — nghiệm thu" bên dưới). Phase implement của OpenCode đã kết thúc và tự sửa cả F1–F5; không còn process nào chạy.
-- **Bước tiếp theo:** B1 gói cuối — `Append`, `BlockingStep`, `DetectEmptyStream`, `DetectLastRow` (xem "Sau gói 2"). Chưa bắt đầu.
-- **Trạng thái commit:** toàn bộ B1 (gói 1 + gói 2) vẫn UNCOMMITTED theo đúng ràng buộc "không commit". Working tree giữ nguyên; chờ user quyết định commit.
+Cách làm hiện tại: **user tự chạy OpenCode** (model `muse-spark 1.3 free`) bằng prompt do coordinator (Kiro/Codex) soạn; coordinator **chạy test + review + nghiệm thu + commit**. User tự `git push`.
+
+Khi mở session mới, coordinator làm đúng thứ tự:
+1. Đọc file này + `docs/superpowers/plans/2026-09-15-expand-pdi94-component-catalog.md` + `docs/inventory/2026-09-15-pdi94-components.md`.
+2. Kiểm tra thực tế (KHÔNG tin summary agent): `git status --short`, `git log --oneline -5`, `git rev-list --left-right --count origin/main...main`.
+3. Xác nhận source pin: `git -C ../pentaho-kettle rev-parse HEAD` phải = `1a939ab5cabe4517867879684aeca2a526bcc638`.
+4. Chọn gói kế tiếp (3–5 ID cùng chức năng), soạn 2 prompt (phase tests → phase implement) cho user dán vào OpenCode.
+5. Khi user báo "xong": chạy test targeted + full suite, **đọc thật 4/5 reference đối chiếu source-notes** (test xanh KHÔNG đủ — phải xem semantics), sửa lỗi nếu có, rồi commit (git commit -F messagefile) khi user cho phép.
+
+Môi trường / bẫy đã biết (Windows):
+- Dùng `npm.cmd` hoặc `node --test ...` trực tiếp; **KHÔNG** dùng npm.ps1 (ExecutionPolicy chặn). Chạy suite: `node --test --test-isolation=none <files>` hoặc `node --test`.
+- Log test là UTF-16LE khi redirect; đọc bằng helper `.superpowers/tail-log.cjs` / `grep-log.cjs` (ghi ra file rồi read). `.superpowers/` đã gitignore — scratch, không commit.
+- **BẪY B2 (quan trọng):** step DB tham chiếu `<connection>` theo tên → **test fixture PHẢI khai báo connection đó** (`<connection><name>${CONN}</name></connection>` trong minimal .ktr/.kjb), nếu không validator báo "undefined connection" và test đòi 0-error sẽ FAIL. B2a đã dính lỗi này (OpenCode viết test thiếu) — nhắc trong prompt phase tests.
+- Commit dùng `git commit -F <file>` (tránh lỗi quoting PowerShell). Stage file cụ thể, KHÔNG `git add -A`.
+- Foreground shell đôi khi bị nhiễu khi có process nền OpenCode; đọc trạng thái OpenCode qua log JSONL `%TEMP%/opencode-*.jsonl` bằng `.superpowers/oc-log.cjs`.
+
+## Trạng thái hiện tại (2026-09-15, sau B2a)
+
+- **Đã xong & ĐÃ COMMIT + PUSH lên origin/main:**
+  - B1 (12 component: RowsFromResult/MappingInput/MappingOutput; 5 result-file ID; Append/BlockingStep/DetectEmptyStream/DetectLastRow) — commit `34c0be5`.
+  - B2a (4 ID: trans TableExists, job TABLE_EXISTS, trans ColumnExists, trans DBJoin) — commit `156f984`.
+  - Catalog hiện: **108 dòng (38 job + 70 trans)**, 107 source_reviewed, 1 observed (`SetSessionVariableStep`). Full suite **289: 288 pass, 0 fail, 1 skipped**.
+  - `main` khớp `origin/main` (đã push). Working tree sạch.
+- **Bước tiếp theo:** B2 còn **9 ID** chưa làm. Đề xuất chia:
+  - **B2b (aggregate/merge, 3 ID):** trans `SortedMerge`, trans `MemoryGroupBy`, trans `AnalyticQuery`.
+  - **B2c (SCD/warehouse/DB proc, 4 ID):** trans `DimensionLookup`, trans `CombinationLookup`, trans `DBProc`, trans `SynchronizeAfterMerge`.
+  - **B2d (job SQL, 1–2 ID):** job `WAIT_FOR_SQL` (+ có thể gộp ID job SQL khác nếu hợp).
+  - (Class/registry của từng ID: xem `docs/inventory/2026-09-15-pdi94-components.md` mục "B2 — 13 ID".)
+- Sau B2: B3 (làm sạch/biến đổi), B4 (file/JSON/XML/HTTP/FTP), ... theo plan. Chỉ đánh dấu xong khi có review + tests, mức bằng chứng giữ `source_reviewed` (chưa Spoon/runtime).
 
 ## Mục tiêu và ủy quyền
 

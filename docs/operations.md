@@ -25,9 +25,9 @@ Source-mode, chạy từ repo root:
 node scripts/verify-production-profile.mjs
 ```
 
-`doctor.ps1` bắt tay MCP bằng **initialize + tools/list** (không kiểm prompt/resource), assert đúng **26 tool** và từ chối mọi tool `pentaho_*` (lifecycle legacy không được đăng ký). Kỳ vọng profile: `production profile OK: 26 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
+`doctor.ps1` bắt tay MCP bằng **initialize + tools/list** (không kiểm prompt/resource), assert đúng **41 tool** và từ chối mọi tool `pentaho_*` (lifecycle legacy không được đăng ký). Kỳ vọng profile: `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
 
-Kiểm tra handshake thủ công: `tools/list` phải có `kettle_add_error_hop`, 4 `kettle_runtime_*`, và 4 tool artifact/removal mới (`kettle_set_parameters`, `kettle_copy_connection`, `kettle_remove_element`, `kettle_edit_error_hop`), tổng 26 tool, và **không** có tool `pentaho_*` nào; MCP không quảng bá prompt/resource.
+Kiểm tra handshake thủ công: `tools/list` phải có đủ 41 tool thuộc 8 nhóm (read 4, edit 9, artifact 2, removal 2, connection 6, repository 9, validate 1, knowledge 4, runtime 4), và **không** có tool `pentaho_*` nào; MCP không quảng bá prompt/resource.
 
 ## Companion skill
 

@@ -12,7 +12,7 @@
  *      otherwise.
  *   3. Generate the SEA blob with `node --experimental-sea-config`.
  *   4. Copy the running Node executable and inject the blob with postject.
- *   5. Verify the executable answers initialize/tools/list with the 26-tool
+ *   5. Verify the executable answers initialize/tools/list with the 41-tool
  *      surface and no prompt/resource capability.
  *   6. Assemble the versioned ZIP (exact inventory) and SHA-256 checksum.
  *
@@ -198,7 +198,7 @@ function injectExecutable(blob) {
   return exePath;
 }
 
-/** Smoke the built executable over stdio; assert the 26-tool production surface. */
+/** Smoke the built executable over stdio; assert the 41-tool production surface. */
 function verifyExecutable(exePath) {
   const rpc = (id, method, params) => JSON.stringify({ jsonrpc: '2.0', id, method, params });
   const input = [

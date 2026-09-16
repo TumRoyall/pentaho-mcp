@@ -207,7 +207,7 @@ Cây nguồn và ZIP đều chứa `skills/developing-pentaho-jobs/`, nhưng đ�
 .\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
 ```
 
-Lệnh thực hiện handshake MCP bằng initialize + tools/list, assert 26 tool, từ chối `pentaho_*`.
+Lệnh thực hiện handshake MCP bằng initialize + tools/list, assert 41 tool, từ chối `pentaho_*`.
 
 Kiểm tra nhanh source-mode:
 
@@ -216,11 +216,11 @@ node --test
 node scripts/verify-production-profile.mjs
 ```
 
-Kỳ vọng: toàn suite pass và `production profile OK: 26 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
+Kỳ vọng: toàn suite pass và `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
 
 ## Mạng nội bộ hạn chế (không ra npm)
 
-Vì chỉ có 3 dependency, có 2 lựa chọn đã kiểm chứng:
+Vì chỉ có 2 runtime dependency, có 2 lựa chọn đã kiểm chứng:
 
 1. **Đưa cả repo kèm `node_modules`.** Cài `npm install` một lần ở máy có mạng, rồi copy nguyên thư mục (gồm `node_modules`) vào máy đích. ESM chạy trực tiếp, không cần build lại.
 2. **Trỏ registry nội bộ** (Nexus/Artifactory): `npm config set registry <internal-registry-url>` rồi `npm install`.

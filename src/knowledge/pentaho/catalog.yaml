@@ -1,7 +1,7 @@
 version: 1
-updated_at: "2026-09-15"
+updated_at: "2026-09-16"
 pdi_version: "9.4"
-enriched_at: "2026-09-15"
+enriched_at: "2026-09-16"
 
 policy:
   generator_requires_status: canonical
@@ -53,6 +53,36 @@ components:
     - {type: PGP_ENCRYPT_FILES, xml_type: PGP_ENCRYPT_FILES, file: job/PGP_ENCRYPT_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: PGP_DECRYPT_FILES, xml_type: PGP_DECRYPT_FILES, file: job/PGP_DECRYPT_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: PGP_VERIFY_FILES, xml_type: PGP_VERIFY_FILES, file: job/PGP_VERIFY_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CONNECTED_TO_REPOSITORY, xml_type: CONNECTED_TO_REPOSITORY, file: job/CONNECTED_TO_REPOSITORY.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CREATE_FILE, xml_type: CREATE_FILE, file: job/CREATE_FILE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DOS_UNIX_CONVERTER, xml_type: DOS_UNIX_CONVERTER, file: job/DOS_UNIX_CONVERTER.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DTD_VALIDATOR, xml_type: DTD_VALIDATOR, file: job/DTD_VALIDATOR.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: EVAL, xml_type: EVAL, file: job/EVAL.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILE_COMPARE, xml_type: FILE_COMPARE, file: job/FILE_COMPARE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FOLDERS_COMPARE, xml_type: FOLDERS_COMPARE, file: job/FOLDERS_COMPARE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FOLDER_IS_EMPTY, xml_type: FOLDER_IS_EMPTY, file: job/FOLDER_IS_EMPTY.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FTPS_GET, xml_type: FTPS_GET, file: job/FTPS_GET.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FTPS_PUT, xml_type: FTPS_PUT, file: job/FTPS_PUT.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FTP_DELETE, xml_type: FTP_DELETE, file: job/FTP_DELETE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FTP_PUT, xml_type: FTP_PUT, file: job/FTP_PUT.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_POP, xml_type: GET_POP, file: job/GET_POP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: HTTP, xml_type: HTTP, file: job/HTTP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAIL_VALIDATOR, xml_type: MAIL_VALIDATOR, file: job/MAIL_VALIDATOR.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MSGBOX_INFO, xml_type: MSGBOX_INFO, file: job/MSGBOX_INFO.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MSSQL_BULK_LOAD, xml_type: MSSQL_BULK_LOAD, file: job/MSSQL_BULK_LOAD.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MS_ACCESS_BULK_LOAD, xml_type: MS_ACCESS_BULK_LOAD, file: job/MS_ACCESS_BULK_LOAD.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MYSQL_BULK_FILE, xml_type: MYSQL_BULK_FILE, file: job/MYSQL_BULK_FILE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MYSQL_BULK_LOAD, xml_type: MYSQL_BULK_LOAD, file: job/MYSQL_BULK_LOAD.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PING, xml_type: PING, file: job/PING.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SEND_NAGIOS_PASSIVE_CHECK, xml_type: SEND_NAGIOS_PASSIVE_CHECK, file: job/SEND_NAGIOS_PASSIVE_CHECK.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SNMP_TRAP, xml_type: SNMP_TRAP, file: job/SNMP_TRAP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SYSLOG, xml_type: SYSLOG, file: job/SYSLOG.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TALEND_JOB_EXEC, xml_type: TALEND_JOB_EXEC, file: job/TALEND_JOB_EXEC.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TELNET, xml_type: TELNET, file: job/TELNET.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: WEBSERVICE_AVAILABLE, xml_type: WEBSERVICE_AVAILABLE, file: job/WEBSERVICE_AVAILABLE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: WRITE_TO_FILE, xml_type: WRITE_TO_FILE, file: job/WRITE_TO_FILE.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XML_WELL_FORMED, xml_type: XML_WELL_FORMED, file: job/XML_WELL_FORMED.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XSD_VALIDATOR, xml_type: XSD_VALIDATOR, file: job/XSD_VALIDATOR.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
 
   transformation:
     - {type: TABLE_INPUT, xml_type: TableInput, file: trans/TableInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -149,10 +179,10 @@ components:
     - {type: LDIF_INPUT, xml_type: LDIFInput, file: trans/LDIFInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: ACCESS_INPUT, xml_type: AccessInput, file: trans/AccessInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: ACCESS_OUTPUT, xml_type: AccessOutput, file: trans/AccessOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
-    - {type: PALO_CELL_INPUT, xml_type: PaloCellInput, file: trans/PaloCellInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
-    - {type: PALO_CELL_OUTPUT, xml_type: PaloCellOutput, file: trans/PaloCellOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
-    - {type: PALO_DIM_INPUT, xml_type: PaloDimInput, file: trans/PaloDimInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
-    - {type: PALO_DIM_OUTPUT, xml_type: PaloDimOutput, file: trans/PaloDimOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_CELL_INPUT, xml_type: PaloCellInput, file: trans/PaloCellInput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_CELL_OUTPUT, xml_type: PaloCellOutput, file: trans/PaloCellOutput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_DIM_INPUT, xml_type: PaloDimInput, file: trans/PaloDimInput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_DIM_OUTPUT, xml_type: PaloDimOutput, file: trans/PaloDimOutput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: JANINO, xml_type: Janino, file: trans/Janino.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: JAVA_FILTER, xml_type: JavaFilter, file: trans/JavaFilter.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: USER_DEFINED_JAVA_CLASS, xml_type: UserDefinedJavaClass, file: trans/UserDefinedJavaClass.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -175,3 +205,92 @@ components:
     - {type: TEXT_FILE_OUTPUT_LEGACY, xml_type: TextFileOutputLegacy, file: trans/TextFileOutputLegacy.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: GET_PREVIOUS_ROW_FIELD, xml_type: GetPreviousRowField, file: trans/GetPreviousRowField.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: ELASTIC_SEARCH_BULK, xml_type: ElasticSearchBulk, file: trans/ElasticSearchBulk.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ADD_XML, xml_type: AddXML, file: trans/AddXML.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: AUTO_DOC, xml_type: AutoDoc, file: trans/AutoDoc.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CHECK_SUM, xml_type: CheckSum, file: trans/CheckSum.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CLONE_ROW, xml_type: CloneRow, file: trans/CloneRow.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CLOSURE_GENERATOR, xml_type: ClosureGenerator, file: trans/ClosureGenerator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: COMBINATION_LOOKUP, xml_type: CombinationLookup, file: trans/CombinationLookup.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CREDIT_CARD_VALIDATOR, xml_type: CreditCardValidator, file: trans/CreditCardValidator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CUBE_INPUT, xml_type: CubeInput, file: trans/CubeInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CUBE_OUTPUT, xml_type: CubeOutput, file: trans/CubeOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DENORMALISER, xml_type: Denormaliser, file: trans/Denormaliser.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DIMENSION_LOOKUP, xml_type: DimensionLookup, file: trans/DimensionLookup.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DYNAMIC_SQL_ROW, xml_type: DynamicSQLRow, file: trans/DynamicSQLRow.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: EXEC_SQL_ROW, xml_type: ExecSQLRow, file: trans/ExecSQLRow.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILE_STREAM, xml_type: FileStream, file: trans/FileStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FIXED_INPUT, xml_type: FixedInput, file: trans/FixedInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FLATTENER, xml_type: Flattener, file: trans/Flattener.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FORMULA, xml_type: Formula, file: trans/Formula.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FUZZY_MATCH, xml_type: FuzzyMatch, file: trans/FuzzyMatch.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_FILES_ROWS_COUNT, xml_type: GetFilesRowsCount, file: trans/GetFilesRowsCount.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_REPOSITORY_NAMES, xml_type: GetRepositoryNames, file: trans/GetRepositoryNames.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_SLAVE_SEQUENCE, xml_type: GetSlaveSequence, file: trans/GetSlaveSequence.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_SUB_FOLDERS, xml_type: GetSubFolders, file: trans/GetSubFolders.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_TABLE_NAMES, xml_type: GetTableNames, file: trans/GetTableNames.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_XML_DATA, xml_type: getXMLData, file: trans/getXMLData.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GP_BULK_LOADER, xml_type: GPBulkLoader, file: trans/GPBulkLoader.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GP_LOAD, xml_type: GPLoad, file: trans/GPLoad.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: HL7_INPUT, xml_type: HL7Input, file: trans/HL7Input.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: HTTP, xml_type: HTTP, file: trans/HTTP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: HTTPPOST, xml_type: HTTPPOST, file: trans/HTTPPOST.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: IF_NULL, xml_type: IfNull, file: trans/IfNull.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: INFOBRIGHT_OUTPUT, xml_type: InfobrightOutput, file: trans/InfobrightOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: INJECTOR, xml_type: Injector, file: trans/Injector.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: JMS_CONSUMER, xml_type: Jms2Consumer, file: trans/Jms2Consumer.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: JMS_PRODUCER, xml_type: Jms2Producer, file: trans/Jms2Producer.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: JSON_OUTPUT, xml_type: JsonOutput, file: trans/JsonOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: LOAD_FILE_INPUT, xml_type: LoadFileInput, file: trans/LoadFileInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: LUCID_DB_STREAMING_LOADER, xml_type: LucidDBStreamingLoader, file: trans/LucidDBStreamingLoader.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAIL, xml_type: Mail, file: trans/Mail.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAIL_INPUT, xml_type: MailInput, file: trans/MailInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MAIL_VALIDATOR, xml_type: MailValidator, file: trans/MailValidator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MONDRIAN_INPUT, xml_type: MondrianInput, file: trans/MondrianInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MONETDB_BULK_LOADER, xml_type: MonetDBBulkLoader, file: trans/MonetDBBulkLoader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MQTT_CONSUMER, xml_type: MQTTConsumer, file: trans/MQTTConsumer.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MQTT_PRODUCER, xml_type: MQTTProducer, file: trans/MQTTProducer.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MULTIWAY_MERGE_JOIN, xml_type: MultiwayMergeJoin, file: trans/MultiwayMergeJoin.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: MYSQL_BULK_LOADER, xml_type: MySQLBulkLoader, file: trans/MySQLBulkLoader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: NORMALISER, xml_type: Normaliser, file: trans/Normaliser.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: NUMBER_RANGE, xml_type: NumberRange, file: trans/NumberRange.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: OLAP_INPUT, xml_type: OlapInput, file: trans/OlapInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: OPENERP_OBJECT_DELETE, xml_type: OpenERPObjectDelete, file: trans/OpenERPObjectDelete.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: OPENERP_OBJECT_INPUT, xml_type: OpenERPObjectInput, file: trans/OpenERPObjectInput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: OPENERP_OBJECT_OUTPUT_IMPORT, xml_type: OpenERPObjectOutputImport, file: trans/OpenERPObjectOutputImport.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PARALLEL_GZIP_CSV_INPUT, xml_type: ParallelGzipCsvInput, file: trans/ParallelGzipCsvInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PENTAHO_REPORTING_OUTPUT, xml_type: PentahoReportingOutput, file: trans/PentahoReportingOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PG_BULK_LOADER, xml_type: PGBulkLoader, file: trans/PGBulkLoader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PRIORITIZE_STREAMS, xml_type: PrioritizeStreams, file: trans/PrioritizeStreams.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PROPERTY_OUTPUT, xml_type: PropertyOutput, file: trans/PropertyOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RANDOM_CC_NUMBER_GENERATOR, xml_type: RandomCCNumberGenerator, file: trans/RandomCCNumberGenerator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RECORDS_FROM_STREAM, xml_type: RecordsFromStream, file: trans/RecordsFromStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RSS_INPUT, xml_type: RssInput, file: trans/RssInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RSS_OUTPUT, xml_type: RssOutput, file: trans/RssOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: S3_CSV_INPUT, xml_type: S3CSVINPUT, file: trans/S3CSVINPUT.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SAP_INPUT, xml_type: SAPINPUT, file: trans/SAPINPUT.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SAS_INPUT, xml_type: SASInput, file: trans/SASInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SET_VALUE_CONSTANT, xml_type: SetValueConstant, file: trans/SetValueConstant.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SFTP_PUT, xml_type: SFTPPut, file: trans/SFTPPut.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SHAPE_FILE_READER, xml_type: ShapeFileReader, file: trans/ShapeFileReader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SOCKET_READER, xml_type: SocketReader, file: trans/SocketReader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SOCKET_WRITER, xml_type: SocketWriter, file: trans/SocketWriter.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SQL_FILE_OUTPUT, xml_type: SQLFileOutput, file: trans/SQLFileOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SSH, xml_type: SSH, file: trans/SSH.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: STEP_METASTRUCTURE, xml_type: StepMetastructure, file: trans/StepMetastructure.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SYSLOG_MESSAGE, xml_type: SyslogMessage, file: trans/SyslogMessage.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TABLE_COMPARE, xml_type: TableCompare, file: trans/TableCompare.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TERA_FAST, xml_type: TeraFast, file: trans/TeraFast.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: EDI_2_XML, xml_type: TypeExitEdi2XmlStep, file: trans/TypeExitEdi2XmlStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GOOGLE_ANALYTICS_INPUT, xml_type: TypeExitGoogleAnalyticsInputStep, file: trans/TypeExitGoogleAnalyticsInputStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: VALIDATOR, xml_type: Validator, file: trans/Validator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: VECTORWISE_BULK_LOADER, xml_type: VectorWiseBulkLoader, file: trans/VectorWiseBulkLoader.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: WEB_SERVICE_AVAILABLE, xml_type: WebServiceAvailable, file: trans/WebServiceAvailable.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: WEB_SERVICE_LOOKUP, xml_type: WebServiceLookup, file: trans/WebServiceLookup.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XBASE_INPUT, xml_type: XBaseInput, file: trans/XBaseInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XML_INPUT, xml_type: XMLInput, file: trans/XMLInput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XML_INPUT_SAX, xml_type: XMLInputSax, file: trans/XMLInputSax.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XML_INPUT_STREAM, xml_type: XMLInputStream, file: trans/XMLInputStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XML_JOIN, xml_type: XMLJoin, file: trans/XMLJoin.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XSD_VALIDATOR, xml_type: XSDValidator, file: trans/XSDValidator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: XSLT, xml_type: XSLT, file: trans/XSLT.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: YAML_INPUT, xml_type: YamlInput, file: trans/YamlInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

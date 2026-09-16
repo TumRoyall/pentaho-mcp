@@ -11,8 +11,10 @@ import { addElement, setFields, setFieldPath } from '../src/core/edit.js';
 import { validateFile } from '../src/core/validate.js';
 import { knowledgeCoverage } from '../src/core/knowledge-coverage.js';
 
-// Batch B6-2 (services/directory/scripting/stats/file-utility): 33 trans +
-// 3 job (36 IDs). Source: pentaho-kettle @
+// Batch B6-2 (services/directory/scripting/stats/file-utility): 29 trans +
+// 3 job (32 IDs). The 4 Palo steps once scoped here are now covered at the
+// `observed` level by B7c (deprecated) and are excluded from this batch.
+// Source: pentaho-kettle @
 // 1a939ab5cabe4517867879684aeca2a526bcc638, branch 9.4.
 // Per-plan source notes: docs/inventory/2026-09-15-b6-2-source-notes.md.
 //
@@ -28,8 +30,8 @@ import { knowledgeCoverage } from '../src/core/knowledge-coverage.js';
 //   LDAPOutput (<update> missing => TRUE, <searchBase> capital B),
 //   LDIFInput + AccessInput (flat <file> block, <attribut> no e),
 //   AccessOutput (<table>, no <fields>).
-// - Palo (4 trans, DEPRECATED): CellInput/CellOutput/DimInput/DimOutput all
-//   carry <connection> by DB name => the B2a fixture pitfall APPLIES.
+// - Palo (4 trans, DEPRECATED): CellInput/CellOutput/DimInput/DimOutput are
+//   now covered by B7c at the `observed` level and are NOT part of this batch.
 // - Scripting/rules (5 trans): Janino (<formula> direct), JavaFilter
 //   (send_true_to/send_false_to + condition), UserDefinedJavaClass (6 blocks,
 //   <clear_result_fields> missing => TRUE), RuleAccumulator/RuleExecutor
@@ -61,10 +63,9 @@ const BATCH = [
   { kind: 'trans', xmlType: 'LDIFInput' },
   { kind: 'trans', xmlType: 'AccessInput' },
   { kind: 'trans', xmlType: 'AccessOutput' },
-  { kind: 'trans', xmlType: 'PaloCellInput', needsConnection: true },
-  { kind: 'trans', xmlType: 'PaloCellOutput', needsConnection: true },
-  { kind: 'trans', xmlType: 'PaloDimInput', needsConnection: true },
-  { kind: 'trans', xmlType: 'PaloDimOutput', needsConnection: true },
+  // Palo (4 trans) removed from B6-2 scope: they are now covered at the
+  // `observed` level by B7c (deprecated). See
+  // docs/inventory/2026-09-15-b7c-source-notes.md. B6-2 scope is now 32 IDs.
   { kind: 'trans', xmlType: 'Janino' },
   { kind: 'trans', xmlType: 'JavaFilter' },
   { kind: 'trans', xmlType: 'UserDefinedJavaClass' },
@@ -163,7 +164,7 @@ function entriesOf(reparsed) {
 }
 
 test('B6-2 catalog rows exist, are canonical, and are generator-eligible for PDI 9.4', () => {
-  assert.equal(BATCH.length, 36, 'B6-2 scope is 36 IDs');
+  assert.equal(BATCH.length, 32, 'B6-2 scope is 32 IDs (Palo moved to B7c observed)');
   for (const { kind, xmlType } of BATCH) {
     const entry = findByXmlType(kind, xmlType);
     assert.ok(entry, `${kind} type ${xmlType} missing from catalog`);
@@ -575,95 +576,11 @@ test('LDAP/Access/LDIF family follows source order with typo-tag pitfalls', () =
   assert.equal(validateFile(f5).summary.errors, 0);
 });
 
-test('Palo family carries <connection> and follows source order (fixtures declare it)', () => {
-  for (const xmlType of ['PaloCellInput', 'PaloCellOutput', 'PaloDimInput', 'PaloDimOutput']) {
-    const block = firstFencedXml(getReference('trans', xmlType).content);
-    assert.ok(/<connection>\$\{CONN\}<\/connection>/.test(block),
-      `${xmlType} template references <connection> by name (B2a pitfall)`);
-  }
-  // CellInput: connection, cube, cubemeasurename, cubemeasuretype, fields.
-  const ciBlock = firstFencedXml(getReference('trans', 'PaloCellInput').content);
-  assertTagOrder(ciBlock,
-    ['<connection>', '<cube>', '<cubemeasurename>', '<cubemeasuretype>', '<fields>'], 'PaloCellInput');
-  const f1 = minimalKtr('b6-2-paloci', true);
-  addElement(f1, 'PaloCellInput', 'Read cube');
-  setFields(f1, 'Read cube', 'fields', 'field', [
-    { dimensionname: 'Region', fieldname: 'REGION', fieldtype: 'String' },
-    { dimensionname: 'Year', fieldname: 'YEAR', fieldtype: 'String' },
-  ]);
-  const r1 = parser.parse(readFileSync(f1, 'utf8'));
-  const s1 = stepsOf(r1).find((s) => s.name === 'Read cube');
-  const c1 = Array.isArray(s1.fields.field) ? s1.fields.field : [s1.fields.field];
-  assert.equal(c1.length, 2);
-  assert.equal(validateFile(f1).summary.errors, 0);
-
-  // CellOutput: + measuretype/updateMode/splashMode, clearcube (required),
-  // cache/commit, fields, measures (only the first <measure> loads).
-  const coBlock = firstFencedXml(getReference('trans', 'PaloCellOutput').content);
-  assertTagOrder(coBlock,
-    ['<connection>', '<cube>', '<measuretype>', '<updateMode>', '<splashMode>', '<clearcube>',
-      '<commitSize>', '<fields>', '<measures>'],
-    'PaloCellOutput');
-  const f2 = minimalKtr('b6-2-paloco', true);
-  addElement(f2, 'PaloCellOutput', 'Write cube');
-  setFieldPath(f2, 'Write cube', 'updateMode', 'ADD');
-  setFieldPath(f2, 'Write cube', 'clearcube', 'Y');
-  setFieldPath(f2, 'Write cube', 'commitSize', '500');
-  setFields(f2, 'Write cube', 'measures', 'measure', [
-    { measurename: 'Revenue', measurefieldname: 'REV', measurefieldtype: 'Number' },
-  ]);
-  const a2 = readFileSync(f2, 'utf8');
-  assert.match(a2, /<clearcube>Y<\/clearcube>/);
-  assert.match(a2, /<measurename>Revenue<\/measurename>/);
-  assert.equal(validateFile(f2).summary.errors, 0);
-
-  // DimInput: connection, dimension, baseElementsOnly, levels (levelnumber is
-  // an int — missing => load FAIL).
-  const diBlock = firstFencedXml(getReference('trans', 'PaloDimInput').content);
-  assertTagOrder(diBlock,
-    ['<connection>', '<dimension>', '<baseElementsOnly>', '<levels>'], 'PaloDimInput');
-  assert.ok(!/<fields(?:\s|\/?>)/.test(diBlock), 'DimInput uses <levels>, not <fields>');
-  const f3 = minimalKtr('b6-2-palodi', true);
-  addElement(f3, 'PaloDimInput', 'Read dimension');
-  setFieldPath(f3, 'Read dimension', 'baseElementsOnly', 'Y');
-  setFields(f3, 'Read dimension', 'levels', 'level', [
-    {
-      levelname: 'Country', levelnumber: '0', fieldname: 'COUNTRY', fieldtype: 'String',
-    },
-    {
-      levelname: 'City', levelnumber: '1', fieldname: 'CITY', fieldtype: 'String',
-    },
-  ]);
-  const r3 = parser.parse(readFileSync(f3, 'utf8'));
-  const s3 = stepsOf(r3).find((s) => s.name === 'Read dimension');
-  const l3 = Array.isArray(s3.levels.level) ? s3.levels.level : [s3.levels.level];
-  assert.equal(l3.length, 2);
-  assert.ok(Number.isInteger(Number(l3[1].levelnumber)), 'levelnumber parses as int');
-  assert.equal(validateFile(f3).summary.errors, 0);
-
-  // DimOutput: createdimension/cleardimension REQUIRED (missing => NPE);
-  // levels carry consolidationfieldname instead of fieldtype.
-  const doBlock = firstFencedXml(getReference('trans', 'PaloDimOutput').content);
-  assertTagOrder(doBlock,
-    ['<connection>', '<dimension>', '<elementtype>', '<createdimension>', '<cleardimension>',
-      '<levels>'],
-    'PaloDimOutput');
-  assert.ok(/<createdimension>/.test(doBlock) && /<cleardimension>/.test(doBlock),
-    'NPE-guard tags present');
-  const f4 = minimalKtr('b6-2-palodo', true);
-  addElement(f4, 'PaloDimOutput', 'Write dimension');
-  setFieldPath(f4, 'Write dimension', 'createdimension', 'Y');
-  setFields(f4, 'Write dimension', 'levels', 'level', [
-    {
-      levelname: 'Country', levelnumber: '0', fieldname: 'COUNTRY', consolidationfieldname: 'ALL_REGIONS',
-    },
-  ]);
-  const r4 = parser.parse(readFileSync(f4, 'utf8'));
-  const s4 = stepsOf(r4).find((s) => s.name === 'Write dimension');
-  assert.ok(hasOwn(s4.levels.level, 'consolidationfieldname'), 'consolidation field present');
-  assert.ok(!hasOwn(s4.levels.level, 'fieldtype'), 'DimOutput has no fieldtype');
-  assert.equal(validateFile(f4).summary.errors, 0);
-});
+// Palo family test removed: the 4 Palo steps are no longer part of the B6-2
+// canonical scope. They are covered at the `observed` level by B7c
+// (deprecated components) — see docs/inventory/2026-09-15-b7c-source-notes.md.
+// Their reference templates still exist and their catalog rows are now
+// status: observed, generator_eligible: false.
 
 test('Scripting/rules family: direct blocks, hop refs, hyphen tags', () => {
   // Janino: <formula> items sit DIRECTLY under <step> (no <fields>); load
@@ -925,7 +842,7 @@ test('File/lock/process utility family: field refs, nesting, code/enum tags', ()
 test('knowledgeCoverage reports the B6-2 package as canonical with nothing missing', () => {
   const transIds = BATCH.filter((b) => b.kind === 'trans').map((b) => b.xmlType);
   const jobIds = BATCH.filter((b) => b.kind === 'job').map((b) => b.xmlType);
-  assert.equal(transIds.length, 33, '33 trans IDs');
+  assert.equal(transIds.length, 29, '29 trans IDs (4 Palo moved to B7c observed)');
   assert.equal(jobIds.length, 3, '3 job IDs');
   const ktr = path.join(tmp, 'b6-2-package.ktr');
   writeFileSync(ktr, [

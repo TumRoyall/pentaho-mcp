@@ -40,7 +40,7 @@ export function validateTools(ctx) {
     {
       name: 'kettle_validate',
       title: 'Validate artifact',
-      description: 'Lint one file or directory tree (default KETTLE_ROOT). Checks structure plus knowledge-catalog type coverage.',
+      description: 'Lint one file or directory tree (default the workspace root). Checks structure plus knowledge-catalog type coverage.',
       annotations: { title: 'Validate artifact', readOnlyHint: true },
       inputSchema: {
         type: 'object',

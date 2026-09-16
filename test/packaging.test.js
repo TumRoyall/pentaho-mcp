@@ -9,6 +9,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const version = '1.0.0';
 const zip = path.join(root, 'dist', `dte-pentaho-mcp-${version}-win-x64.zip`);
+// Windows' bundled bsdtar, resolved by absolute path. A bare `tar.exe` goes
+// through PATH, where Git Bash/MSYS resolves it to GNU tar; GNU tar reads the
+// `C:/...` archive path as a remote host and fails with "Cannot connect to C:".
+const SYSTEM_TAR = path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe');
 
 test('production profile and client-neutral doctor remain portable', () => {
   const verify = spawnSync(process.execPath, ['scripts/verify-production-profile.mjs'], { cwd: root, encoding: 'utf8' });
@@ -120,7 +124,7 @@ test('versioned Windows release has exact inventory, checksum, and working MCP e
   const checksum = readFileSync(path.join(root, 'dist', 'checksums.sha256'), 'utf8').trim();
   assert.equal(checksum, `${createHash('sha256').update(readFileSync(zip)).digest('hex')}  ${path.basename(zip)}`);
 
-  const listing = spawnSync('tar.exe', ['-tf', zip], { encoding: 'utf8' });
+  const listing = spawnSync(SYSTEM_TAR, ['-tf', zip], { encoding: 'utf8' });
   assert.equal(listing.status, 0, listing.stderr);
   assert.deepEqual(listing.stdout.trim().split(/\r?\n/).sort(), [
     'README.md',
@@ -137,7 +141,7 @@ test('versioned Windows release has exact inventory, checksum, and working MCP e
 
   const extract = path.join(root, 'dist', 'verify-extract');
   mkdirSync(extract, { recursive: true });
-  const unpack = spawnSync('tar.exe', ['-xf', zip, '-C', extract], { encoding: 'utf8' });
+  const unpack = spawnSync(SYSTEM_TAR, ['-xf', zip, '-C', extract], { encoding: 'utf8' });
   assert.equal(unpack.status, 0, unpack.stderr);
   const proc = spawn(path.join(extract, 'dte-pentaho-mcp.exe'), [], { stdio: ['pipe', 'pipe', 'pipe'] });
   const rpc = (id, method, params) => JSON.stringify({ jsonrpc: '2.0', id, method, params });

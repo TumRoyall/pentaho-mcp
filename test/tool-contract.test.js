@@ -91,12 +91,13 @@ test('read-only tools carry readOnlyHint, runtime execute is destructive+openWor
 test('stdio: missing file, unknown tool, and bad arguments all set isError', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'kettle-contract-'));
   copyFileSync(path.join(here, 'fixtures', 'mini.ktr'), path.join(root, 'mini.ktr'));
-  // Auto-detected workspace: blank the repository-registry sources so
-  // detection falls back to the working directory (the temp root).
-  const env = { ...process.env };
-  delete env.KETTLE_ROOT;
-  delete env.USERPROFILE;
-  delete env.HOME;
+  // Auto-detected workspace: point HOME and USERPROFILE at an empty temp home
+  // so step 1 finds no ~/.kettle/repositories.xml there (deleting them does not
+  // isolate anything: Node restores the real USERPROFILE on Windows), and unset
+  // PENTAHO_HOME to suppress step 2. Detection then falls back to the working
+  // directory, so the server runs with cwd set to the temp root.
+  const home = mkdtempSync(path.join(os.tmpdir(), 'kettle-contract-home-'));
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
   delete env.PENTAHO_HOME;
   const proc = spawn(process.execPath, [path.join(repoRoot, 'src', 'index.js')], {
     cwd: root,
@@ -136,6 +137,7 @@ test('stdio: missing file, unknown tool, and bad arguments all set isError', asy
     assert.equal(JSON.parse(ok.result.content[0].text).ok, true);
   } finally {
     rmSync(root, { recursive: true, force: true });
+    rmSync(home, { recursive: true, force: true });
   }
 });
 

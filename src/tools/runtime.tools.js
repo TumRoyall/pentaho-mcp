@@ -8,7 +8,7 @@ const str = description => ({ type: 'string', description });
 
 const runProperties = {
   ...artifactSelectorSchema(),
-  artifact: str('Physical KJB/KTR path relative to KETTLE_ROOT or repository path'),
+  artifact: str('Physical KJB/KTR path relative to the workspace root or repository path'),
   parameters: { type: 'object', additionalProperties: { type: 'string' } },
   timeoutMs: { type: 'integer', minimum: 1 },
   logLevel: {

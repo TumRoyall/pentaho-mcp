@@ -3,8 +3,10 @@
  *
  * A single shared policy that every read/edit/validate/coverage tool factory
  * uses to turn a caller-supplied path into an absolute, canonical, in-root
- * path — or to reject it. The root is resolved once (KETTLE_ROOT, else
- * process.cwd()) and canonicalized so symlink/junction escapes are rejected.
+ * path — or to reject it. The root is auto-detected once by
+ * `src/workspace/resolve-root.js` (`~/.kettle/repositories.xml` →
+ * `PENTAHO_HOME/repositories.xml` → `process.cwd()`) and it is then
+ * canonicalized so symlink/junction escapes are rejected.
  *
  * `resolveRead` and `resolveWrite` share containment logic today but stay
  * separate so tool adapters keep their access intent explicit.
@@ -50,11 +52,11 @@ function checkedInput(value) {
 
 export function createWorkspaceBoundary(rootInput) {
   if (typeof rootInput !== 'string' || rootInput.trim() === '') {
-    throw new Error('KETTLE_ROOT must be a non-empty string');
+    throw new Error('Workspace root must be a non-empty string');
   }
   const requestedRoot = path.resolve(rootInput);
   if (!existsSync(requestedRoot) || !statSync(requestedRoot).isDirectory()) {
-    throw new Error(`KETTLE_ROOT must be an existing directory: ${rootInput}`);
+    throw new Error(`Workspace root must be an existing directory: ${rootInput}`);
   }
   const root = realpathSync(requestedRoot);
   const resolveInside = inputPath => {
@@ -62,7 +64,7 @@ export function createWorkspaceBoundary(rootInput) {
     const requested = path.isAbsolute(input) ? path.resolve(input) : path.resolve(root, input);
     const target = canonicalizeExistingPrefix(requested);
     if (!isInside(root, target)) {
-      throw new Error(`Path is outside KETTLE_ROOT (${root}): ${inputPath}`);
+      throw new Error(`Path is outside the workspace root (${root}): ${inputPath}`);
     }
     return target;
   };

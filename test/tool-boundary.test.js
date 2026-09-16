@@ -52,25 +52,25 @@ test('kettle_summary rejects an absolute outside file', async () => {
   const tools = toolMap(root);
   await assert.rejects(
     () => invoke(tools.get('kettle_summary'), { path: path.join(outside, 'mini.ktr') }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
 });
 
 test('read/validate/coverage tools reject an outside directory or path', async () => {
   const { root, outside } = scratch();
   const tools = toolMap(root);
-  await assert.rejects(() => invoke(tools.get('kettle_list'), { directory: outside }), /outside KETTLE_ROOT/i);
+  await assert.rejects(() => invoke(tools.get('kettle_list'), { directory: outside }), /outside the workspace root/i);
   await assert.rejects(
     () => invoke(tools.get('kettle_search'), { query: 'x', directory: outside }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   await assert.rejects(
     () => invoke(tools.get('kettle_validate'), { path: path.join(outside, 'mini.ktr') }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   await assert.rejects(
     () => invoke(tools.get('kettle_knowledge_coverage'), { directory: outside }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
 });
 
@@ -81,7 +81,7 @@ test('kettle_set_field rejects an outside file and leaves it unchanged', async (
   const before = readFileSync(target);
   await assert.rejects(
     () => invoke(tools.get('kettle_set_field'), { path: target, name: 'in', field: 'connection', value: 'conn_b' }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   assert.deepEqual(readFileSync(target), before);
 });
@@ -90,7 +90,7 @@ test('kettle_create_file rejects an outside destination and creates no file', as
   const { root, outside } = scratch();
   const tools = toolMap(root);
   const dest = path.join(outside, 'new.ktr');
-  await assert.rejects(() => invoke(tools.get('kettle_create_file'), { path: dest }), /outside KETTLE_ROOT/i);
+  await assert.rejects(() => invoke(tools.get('kettle_create_file'), { path: dest }), /outside the workspace root/i);
   assert.equal(existsSync(dest), false);
 });
 
@@ -155,11 +155,11 @@ test('runtime loadcheck/execute reject outside and non-Kettle artifacts before s
   const execute = tools.get('kettle_runtime_execute');
   await assert.rejects(
     () => invoke(loadcheck, { artifact: '../outside.kjb' }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   await assert.rejects(
     () => invoke(execute, { artifact: path.join(outside, 'mini.kjb'), confirmed: true }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   await assert.rejects(
     () => invoke(loadcheck, { artifact: 'notes.txt' }),
@@ -182,7 +182,7 @@ test('runtime tools reject an in-root link that resolves to an outside artifact'
   const tools = runtimeMap(root);
   return assert.rejects(
     () => invoke(tools.get('kettle_runtime_loadcheck'), { artifact: path.join('external', 'mini.kjb') }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
 });
 
@@ -195,7 +195,7 @@ test('kettle_clone rejects an outside source and independently an outside destin
       destPath: 'clone.ktr',
       name: 'clone',
     }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   assert.equal(existsSync(path.join(root, 'clone.ktr')), false);
   await assert.rejects(
@@ -204,7 +204,7 @@ test('kettle_clone rejects an outside source and independently an outside destin
       destPath: path.join(outside, 'clone.ktr'),
       name: 'clone',
     }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   assert.equal(existsSync(path.join(outside, 'clone.ktr')), false);
 });
@@ -228,7 +228,7 @@ test('kettle_set_parameters rejects an outside file and leaves it unchanged', as
       path: target,
       parameters: [{ name: 'RUN_DATE', default: '2026-09-09', description: 'Business date' }],
     }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   assert.deepEqual(readFileSync(target), before);
 });
@@ -244,7 +244,7 @@ test('kettle_copy_connection rejects an outside source and independently an outs
       sourceName: 'conn_a',
       destName: 'conn_copy',
     }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   const destBefore = readFileSync(path.join(root, 'mini.kjb'));
   assert.deepEqual(readFileSync(path.join(root, 'mini.kjb')), destBefore);
@@ -258,7 +258,7 @@ test('kettle_copy_connection rejects an outside source and independently an outs
       sourceName: 'conn_a',
       destName: 'conn_copy',
     }),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
   assert.deepEqual(readFileSync(target), targetBefore);
 });

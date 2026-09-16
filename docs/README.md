@@ -13,7 +13,7 @@ Tùy theo nhu cầu tiếp cận, bạn có thể tham khảo các lộ trình g
 Nếu bạn muốn cấu hình Pentaho MCP vào các AI Client (Claude Code, Cursor, Windsurf, Kiro, Codex) và bắt đầu làm việc với các file Kettle `.kjb`/`.ktr`:
 
 1. [Hướng dẫn cài đặt (`install.md`)](install.md): Hướng dẫn kết nối file chạy `.exe` hoặc chế độ source vào client.
-2. [Cấu hình môi trường (`configuration.md`)](configuration.md): Thiết lập `KETTLE_ROOT` và phát hiện workspace tự động.
+2. [Cấu hình môi trường (`configuration.md`)](configuration.md): Cơ chế phát hiện workspace root tự động và các biến môi trường tùy chọn (`PENTAHO_HOME`, `PENTAHO_ENABLE_EXECUTE`).
 3. [Playbook phát triển Pentaho 5 pha (`workflow-guide.md`)](workflow-guide.md): Quy trình chuẩn kết hợp AI reasoning (Superpowers/Skill) với các tool deterministic của MCP.
 4. [Tra cứu 41 Tool MCP (`tools-reference.md`)](tools-reference.md): Danh mục chi tiết tham số, input schema và ví dụ của từng tool.
 
@@ -49,7 +49,7 @@ Nếu bạn muốn mở rộng tính năng, bổ sung component vào catalog ho�
 | Tập tin | Đối tượng | Mô tả nội dung chính |
 |---------|-----------|----------------------|
 | [`architecture.md`](architecture.md) | Architect, Dev | Kiến trúc chi tiết, nguyên tắc thiết kế ba trục, span-based XML engine, luồng xử lý MCP và chính sách biên. |
-| [`configuration.md`](configuration.md) | Operator, Dev | Toàn bộ biến môi trường (`KETTLE_ROOT`, `PENTAHO_HOME`, `PENTAHO_ENABLE_EXECUTE`), biên an toàn và chính sách kiểm soát spawn tiến trình. |
+| [`configuration.md`](configuration.md) | Operator, Dev | Cơ chế phát hiện workspace root tự động, các biến môi trường (`PENTAHO_HOME`, `PENTAHO_ENABLE_EXECUTE`, `KETTLE_KNOWLEDGE_DIR`), biên an toàn và chính sách kiểm soát spawn tiến trình. |
 | [`tools-reference.md`](tools-reference.md) | All | Danh mục đầy đủ 41 công cụ sản xuất, phân loại 8 nhóm, giải thích tham số, envelope phản hồi và ví dụ thực tế. |
 | [`workflow-guide.md`](workflow-guide.md) | User, Agent | Playbook 5 pha phát triển Pentaho (BA -> Brainstorm -> Spec -> Plan -> Exec), hợp đồng đặc tả, cổng mutation kép và runtime phase-gated. |
 | [`install.md`](install.md) | Operator, User | Hướng dẫn cài đặt thủ công bản `.exe` độc lập và bản mã nguồn cho các client AI phổ biến; triển khai mạng nội bộ. |
@@ -68,7 +68,7 @@ Khi đọc tài liệu và làm việc với codebase, cần lưu ý các quy ch
 - **Chỉnh sửa XML Span-Based (Lossless XML Editing)**:
   Pentaho MCP sử dụng `fast-xml-parser` kết hợp định vị byte span trong `src/core/span.js` để chỉ thay thế chính xác những byte cần chỉnh sửa. Giữ nguyên 100% định dạng ban đầu, thứ tự trường, ghi chú (comments), khoảng trắng và ký tự xuống dòng (CRLF/LF) của Pentaho Spoon.
 - **Biên chứa chuẩn tắc (Canonical Workspace Containment)**:
-  Mọi thao tác đọc/ghi file đều được bảo vệ bởi `src/workspace/boundary.js`. Tuyệt đối không cho phép truy cập file ngoài thư mục `KETTLE_ROOT` (tự động phát hiện hoặc chỉ định rõ). Mọi thủ thuật path traversal (`..`), sibling directory escape hay symlink/junction trỏ ra ngoài đều bị chặn đứng.
+  Mọi thao tác đọc/ghi file đều được bảo vệ bởi `src/workspace/boundary.js`. Tuyệt đối không cho phép truy cập file ngoài workspace root (do `src/workspace/resolve-root.js` phát hiện tự động khi server khởi động). Mọi thủ thuật path traversal (`..`), sibling directory escape hay symlink/junction trỏ ra ngoài đều bị chặn đứng.
 - **Tiếp cận Knowledge-First**:
   AI agent tuyệt đối không được tự suy đoán cấu trúc XML của step hoặc job entry. Trước khi thêm hoặc sửa bất kỳ thành phần nào, bắt buộc phải tra cứu cấu trúc chuẩn thông qua `kettle_knowledge_get`.
 - **Cổng biến đổi kép (Dual Mutation Gate)**:

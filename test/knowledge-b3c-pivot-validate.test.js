@@ -97,17 +97,12 @@ function hasOwn(obj, key) {
 }
 
 let tmp;
-let prevRoot;
 
 beforeEach(() => {
   tmp = mkdtempSync(path.join(os.tmpdir(), 'kettle-b3c-'));
-  prevRoot = process.env.KETTLE_ROOT;
-  process.env.KETTLE_ROOT = tmp;
 });
 
 afterEach(() => {
-  if (prevRoot === undefined) delete process.env.KETTLE_ROOT;
-  else process.env.KETTLE_ROOT = prevRoot;
   rmSync(tmp, { recursive: true, force: true });
 });
 

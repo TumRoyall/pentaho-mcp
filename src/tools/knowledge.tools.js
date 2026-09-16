@@ -96,7 +96,7 @@ export function knowledgeTools(ctx = {}) {
     {
       name: 'kettle_knowledge_coverage',
       title: 'Knowledge coverage report',
-      description: 'Report canonical, observed, and missing step/entry type usage under KETTLE_ROOT',
+      description: 'Report canonical, observed, and missing step/entry type usage under the workspace root',
       annotations: { title: 'Knowledge coverage report', readOnlyHint: true },
       inputSchema: {
         type: 'object',

@@ -36,6 +36,10 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const buildDir = path.join(root, 'build');
 const distDir = path.join(root, 'dist');
 const EXE_NAME = 'dte-pentaho-mcp.exe';
+// Windows' bundled bsdtar, resolved by absolute path. A bare `tar.exe` goes
+// through PATH, where Git Bash/MSYS resolves it to GNU tar; GNU tar reads the
+// `C:/...` archive path as a remote host and fails with "Cannot connect to C:".
+const SYSTEM_TAR = path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe');
 // Stable virtual base for all bundled import.meta.url values (see bundleServer).
 const IMPORT_META_URL = 'file:///C:/dte-pentaho-mcp/src/index.js';
 
@@ -235,9 +239,9 @@ function assembleRelease(exePath, version) {
   const zipName = `dte-pentaho-mcp-${version}-win-x64.zip`;
   const zipPath = path.join(distDir, zipName);
   rmSync(zipPath, { force: true, maxRetries: 10, retryDelay: 100 });
-  // tar.exe ships with Windows 10/11 and produces a standard ZIP with -a -cf.
+  // Windows' bsdtar produces a standard ZIP with -a -cf.
   const entries = readdirSync(staging).sort();
-  run('tar.exe', ['-a', '-c', '-f', zipPath, '-C', staging, ...entries]);
+  run(SYSTEM_TAR, ['-a', '-c', '-f', zipPath, '-C', staging, ...entries]);
   if (!existsSync(zipPath)) fail('release ZIP was not produced');
 
   const digest = createHash('sha256').update(readFileSync(zipPath)).digest('hex');

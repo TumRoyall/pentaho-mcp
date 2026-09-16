@@ -14,7 +14,7 @@ export function readTools(ctx) {
     {
       name: 'kettle_list',
       title: 'List Kettle artifacts',
-      description: 'Inventory of Kettle jobs/transformations under a directory (default: KETTLE_ROOT)',
+      description: 'Inventory of Kettle jobs/transformations under a directory (default: the workspace root)',
       annotations: { title: 'List Kettle artifacts', readOnlyHint: true },
       inputSchema: {
         type: 'object',

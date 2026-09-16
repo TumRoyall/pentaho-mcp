@@ -6,16 +6,11 @@ import os from 'node:os';
 import { setFields, setFieldPath } from '../src/core/edit.js';
 
 let tmp;
-let prevRoot;
 
 beforeEach(() => {
   tmp = mkdtempSync(path.join(os.tmpdir(), 'kettle-fields-'));
-  prevRoot = process.env.KETTLE_ROOT;
-  process.env.KETTLE_ROOT = tmp;
 });
 afterEach(() => {
-  if (prevRoot === undefined) delete process.env.KETTLE_ROOT;
-  else process.env.KETTLE_ROOT = prevRoot;
   rmSync(tmp, { recursive: true, force: true });
 });
 
@@ -218,6 +213,6 @@ test('setFields rejects invalid list/item tag names before touching the file', (
   assert.equal(readFileSync(file, 'utf8'), before, 'file must be unchanged after rejection');
 });
 
-// The KETTLE_ROOT write boundary is now enforced by the tool-adapter layer
+// The workspace root write boundary is now enforced by the tool-adapter layer
 // (createWorkspaceBoundary), covered by test/workspace-boundary.test.js and
 // test/tool-boundary.test.js. Core edit functions are pure filesystem ops.

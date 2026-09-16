@@ -1,8 +1,8 @@
-import { test } from 'node:test';
+import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { PassThrough } from 'node:stream';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -12,6 +12,34 @@ import { runPdi } from '../src/runtime/run.js';
 import { runtimeTools } from '../src/tools/runtime.tools.js';
 import { createTailBuffer } from '../src/runtime/tail-buffer.js';
 import { assertSafeWindowsToken, assertParameterName } from '../src/runtime/windows-args.js';
+
+// runPdi resolves the workspace root through detectRepository, which defaults
+// its `environment` to the ambient process.env, so these in-process tests see
+// whatever the developer's shell exports. Point USERPROFILE and HOME at an
+// empty temp home for the duration of each test so detection finds no
+// ~/.kettle/repositories.xml there and stays out of repository mode; deleting
+// them would isolate nothing, because Node restores the real USERPROFILE when
+// it is absent on Windows. Each temp artifact below then runs in file mode,
+// in place, from its own directory.
+let savedUserProfile;
+let savedHome;
+let tempHome;
+
+beforeEach(() => {
+  savedUserProfile = process.env.USERPROFILE;
+  savedHome = process.env.HOME;
+  tempHome = mkdtempSync(path.join(os.tmpdir(), 'runtime-home-'));
+  process.env.USERPROFILE = tempHome;
+  process.env.HOME = tempHome;
+});
+
+afterEach(() => {
+  if (savedUserProfile === undefined) delete process.env.USERPROFILE;
+  else process.env.USERPROFILE = savedUserProfile;
+  if (savedHome === undefined) delete process.env.HOME;
+  else process.env.HOME = savedHome;
+  rmSync(tempHome, { recursive: true, force: true });
+});
 
 test('createTailBuffer retains only the last maxBytes across many appends', () => {
   const buffer = createTailBuffer(8);

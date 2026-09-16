@@ -9,7 +9,7 @@ Runbook cho operator. Nguồn sự thật: `packaging/doctor.ps1`, `scripts/*.mj
 | Windows `.exe` tự chứa | End user, máy offline | Không cần system Node; knowledge + companion skill kèm theo |
 | Source-mode Node 20+ | Developer, CI | `npm install`; knowledge từ repo |
 
-Cả hai đều tôn trọng `KETTLE_ROOT` (mặc định `process.cwd()`, luôn enforce); hành vi tool đồng nhất.
+Cả hai dùng chung workspace root được phát hiện tự động (`~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`) và luôn enforce biên; hành vi tool đồng nhất.
 
 ## Xác minh cài đặt
 
@@ -48,7 +48,7 @@ Bản packaged kèm companion skill dưới `skills/developing-pentaho-jobs/` (g
 
 ## `doctor.ps1`
 
-Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp lệ; báo PDI riêng (runtime phase-gated, thiếu PDI không fail). Đây là kiểm tra độc lập executable và MCP handshake, không đọc cấu hình Kiro/Claude Code/Codex và không kiểm tra `KETTLE_ROOT`. Dùng sau khi build/giải nén hoặc trước khi đổi đường dẫn executable trong cấu hình client; kiểm tra kết nối của từng client theo `docs/install.md`.
+Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp lệ; báo PDI riêng (runtime phase-gated, thiếu PDI không fail). Đây là kiểm tra độc lập executable và MCP handshake, không đọc cấu hình Kiro/Claude Code/Codex và không kiểm tra workspace root của client (root được phát hiện tự động khi server khởi động). Dùng sau khi build/giải nén hoặc trước khi đổi đường dẫn executable trong cấu hình client; kiểm tra kết nối của từng client theo `docs/install.md`.
 
 ## Log và khử nhạy cảm (runtime phase-gated)
 
@@ -56,7 +56,7 @@ Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp l�
 - Thư mục log giữ **100 file mới nhất** sau mỗi lần chạy (retention theo số lượng); file cũ hơn bị xóa.
 - `kettle_runtime_logs` nhận `name` (tùy chọn) và `limit` (1..100), trả **mới nhất trước**, tối đa **256 KiB mỗi file**, kiểm chứa canonical từng file (từ chối tên thoát khỏi thư mục log).
 - Server log stderr (`kettle-mcp-dte running on stdio ...`); tool failure là payload `{ok:false}` trong `text`, không phải protocol error.
-- Runtime log ghi dưới `<KETTLE_ROOT>/.pentaho-mcp/`; thư mục `.pentaho-mcp/` đã nằm trong `.gitignore` nên không lọt vào commit.
+- Runtime log ghi dưới `<workspace root>/.pentaho-mcp/` (root phát hiện tự động); thư mục `.pentaho-mcp/` đã nằm trong `.gitignore` nên không lọt vào commit.
 
 ## CI và bao bì phát hành
 
@@ -77,7 +77,7 @@ Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp l�
 
 ## Biên filesystem
 
-- Ghi/đọc giới hạn trong `KETTLE_ROOT` (mặc định `process.cwd()`, luôn enforce) qua `src/workspace/boundary.js`; chặn absolute ngoài root, `..`, sibling-prefix, symlink/junction escape.
+- Ghi/đọc giới hạn trong workspace root (phát hiện tự động bởi `src/workspace/resolve-root.js`, luôn enforce) qua `src/workspace/boundary.js`; chặn absolute ngoài root, `..`, sibling-prefix, symlink/junction escape.
 
 ## Gỡ cài đặt
 
@@ -91,7 +91,7 @@ Xóa mục/bảng `dte-pentaho` khỏi cấu hình client đang dùng và tùy c
 
 | Triệu chứng | Xử lý |
 |-------------|-------|
-| Đường ngoài `KETTLE_ROOT` bị từ chối | Đưa target vào trong root; tránh `..`, sibling-prefix, symlink/junction escape |
+| Đường ngoài workspace root bị từ chối | Đưa target vào trong root; tránh `..`, sibling-prefix, symlink/junction escape |
 | Tuyệt đối bị từ chối | Dùng tương đối, hoặc tuyệt đối bên trong root |
 | Runtime báo không khả dụng | Đặt `PENTAHO_HOME` trỏ thư mục PDI chứa `Kitchen.bat`/`Pan.bat` |
 
@@ -104,6 +104,6 @@ Chi tiết biên xem `docs/configuration.md`.
 ## Triage sự cố
 
 1. `doctor.ps1` fail handshake → kiểm tra `.exe` bị chặn, `mcp.json` trỏ đúng path, reconnect MCP.
-2. Tool trả `{ok:false}` → đọc `error`: đường ngoài `KETTLE_ROOT` / validation fail → sửa path hoặc artifact.
-3. Runtime `FAIL`/`TIMEOUT` (tùy chọn) → `kettle_runtime_logs` xem log khử dưới `<KETTLE_ROOT>/.pentaho-mcp/runtime-logs/`; kiểm tra `PENTAHO_ENABLE_EXECUTE`, `confirmed`, `timeoutMs`, `PENTAHO_HOME`, structural validation. `EXECUTE_DISABLED` = server chưa opt-in; `CONFIRM_REQUIRED` = thiếu `confirmed`.
+2. Tool trả `{ok:false}` → đọc `error`: đường ngoài workspace root / validation fail → sửa path hoặc artifact.
+3. Runtime `FAIL`/`TIMEOUT` (tùy chọn) → `kettle_runtime_logs` xem log khử dưới `<workspace root>/.pentaho-mcp/runtime-logs/`; kiểm tra `PENTAHO_ENABLE_EXECUTE`, `confirmed`, `timeoutMs`, `PENTAHO_HOME`, structural validation. `EXECUTE_DISABLED` = server chưa opt-in; `CONFIRM_REQUIRED` = thiếu `confirmed`.
 4. Giữ `git status --short` sạch khỏi artifact tạm; server không bao giờ commit/push.

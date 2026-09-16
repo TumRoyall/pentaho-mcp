@@ -94,17 +94,12 @@ function assertTagOrder(block, order, label) {
 }
 
 let tmp;
-let prevRoot;
 
 beforeEach(() => {
   tmp = mkdtempSync(path.join(os.tmpdir(), 'kettle-b7b-'));
-  prevRoot = process.env.KETTLE_ROOT;
-  process.env.KETTLE_ROOT = tmp;
 });
 
 afterEach(() => {
-  if (prevRoot === undefined) delete process.env.KETTLE_ROOT;
-  else process.env.KETTLE_ROOT = prevRoot;
   rmSync(tmp, { recursive: true, force: true });
 });
 

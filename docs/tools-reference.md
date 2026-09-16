@@ -6,7 +6,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ## Quy ước chung
 
-- **Biên workspace**: mọi đường dẫn hoặc tương đối `KETTLE_ROOT`, hoặc tuyệt đối **nằm trong** `KETTLE_ROOT`. `KETTLE_ROOT` mặc định `process.cwd()` khi unset và luôn được enforce (`src/workspace/boundary.js`). Đường ngoài `KETTLE_ROOT` (absolute ngoài root, `..`, sibling-prefix, symlink/junction escape) → từ chối.
+- **Biên workspace**: mọi đường dẫn hoặc tương đối workspace root, hoặc tuyệt đối **nằm trong** workspace root. Workspace root được phát hiện tự động (`src/workspace/resolve-root.js`: `~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`) và luôn được enforce (`src/workspace/boundary.js`). Đường ngoài workspace root (absolute ngoài root, `..`, sibling-prefix, symlink/junction escape) → từ chối.
 - **Transport**: stdio JSON-RPC. `tools/list` liệt kê `{name, description, inputSchema}`; `tools/call` trả envelope trên.
 - **Edit tool** trả unified diff của đúng bytes đã đổi và validate trước khi commit nơi áp dụng được. `kettle_add_element` trả thêm `{diff, catalogStatus, manualReviewRequired}`.
 
@@ -14,7 +14,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ### `kettle_list`
 
-- Mục đích: liệt kê job/transformation dưới một thư mục (mặc định `KETTLE_ROOT`).
+- Mục đích: liệt kê job/transformation dưới một thư mục (mặc định workspace root).
 - Tham số: `directory?` (string).
 - Output: danh sách artifact. Không ghi. Lỗi: thư mục ngoài scope.
 - Ví dụ: `{ "directory": "etl-pentaho" }`
@@ -36,7 +36,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 ### `kettle_search`
 
 - Mục đích: tìm kiếm toàn cây `.kjb`/`.ktr`.
-- Tham số: `query` (bắt buộc, không rỗng sau khi trim); `kind?` enum `text|table|connection|variable|step_type|entry_type` (mặc định `text`); `directory?` (mặc định `KETTLE_ROOT`); `limit?` số nguyên `1..500` (mặc định `100`).
+- Tham số: `query` (bắt buộc, không rỗng sau khi trim); `kind?` enum `text|table|connection|variable|step_type|entry_type` (mặc định `text`); `directory?` (mặc định workspace root); `limit?` số nguyên `1..500` (mặc định `100`).
 - Output: một `SearchReport`: `{ matches, limit, truncated, scannedFiles, scanIssues }`. `matches` là danh sách match; lỗi đọc/parse từng file nằm trong `scanIssues` (không chiếm slot match); `truncated: true` khi số match vượt `limit`. Chỉ đọc.
 - Thay đổi response-shape (pre-1.0): tool trước đây trả về một mảng match trần; nay trả về object `SearchReport`. Số match mặc định bị giới hạn ở 100 (`limit`).
 - Query rỗng bị từ chối trước khi duyệt filesystem.
@@ -142,7 +142,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ### `kettle_validate`
 
-- Mục đích: lint một file (hoặc toàn cây `KETTLE_ROOT` khi bỏ `path`). Structural + catalog coverage. Đây là ranh giới hoàn tất của workflow: zero structural error cho từng artifact và toàn cây.
+- Mục đích: lint một file (hoặc toàn cây workspace root khi bỏ `path`). Structural + catalog coverage. Đây là ranh giới hoàn tất của workflow: zero structural error cho từng artifact và toàn cây.
 - Tham số: `path?`; `checkCatalog?` (boolean, mặc định `true`).
 - Structural (error): XML hỏng, tên trùng, hop thiếu đích, job thiếu đúng một start, file tham chiếu thiếu, connection chưa khai báo, stale step reference, unreachable, biến chưa khai báo.
 - Catalog (mềm): unknown type → warning; documented-nhưng-không-canonical → info; không bao giờ error.
@@ -173,7 +173,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ### `kettle_knowledge_coverage`
 
-- Mục đích: báo cáo canonical/observed/missing usage dưới `KETTLE_ROOT`.
+- Mục đích: báo cáo canonical/observed/missing usage dưới workspace root.
 - Tham số: `directory?`; `includeExamples?` (mặc định `true`).
 - Output: `{summary: {files, parsedFiles, scanIssues, typeUsages, distinctTypes, canonical, observed, missing}, types, issues}`. Chỉ đọc, resilient trước file hỏng.
 - Ví dụ: `{ "directory": "etl-pentaho" }`
@@ -259,7 +259,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ## Nhóm runtime (4, phase-gated, tùy chọn PDI)
 
-> Nhóm runtime **thuộc workflow** nhưng **phase-gated**: chỉ dùng **sau khi validation tĩnh pass**; `kettle_runtime_execute` còn cần user duyệt riêng cho lần chạy đó và `confirmed: true`. Các tool này dùng đúng biên `KETTLE_ROOT` và không nhận tham số chọn project riêng cho từng lời gọi. Xem `docs/workflow-guide.md` Pha 5.
+> Nhóm runtime **thuộc workflow** nhưng **phase-gated**: chỉ dùng **sau khi validation tĩnh pass**; `kettle_runtime_execute` còn cần user duyệt riêng cho lần chạy đó và `confirmed: true`. Các tool này dùng đúng biên workspace root và không nhận tham số chọn project riêng cho từng lời gọi. Xem `docs/workflow-guide.md` Pha 5.
 
 ### `kettle_runtime_detect`
 
@@ -271,19 +271,19 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 ### `kettle_runtime_loadcheck`
 
 - Mục đích: validation tĩnh rồi nhờ Kitchen/Pan load artifact, không deploy.
-- Tham số: `artifact` (path tương đối `KETTLE_ROOT`, chỉ `.kjb`/`.ktr`) (bắt buộc); `parameters?`, `timeoutMs?`.
+- Tham số: `artifact` (path tương đối workspace root, chỉ `.kjb`/`.ktr`) (bắt buộc); `parameters?`, `timeoutMs?`.
 - Output: `UNAVAILABLE` (thiếu PDI), `STATIC_VALIDATION_FAILED`, `PASS`/`FAIL`/`TIMEOUT` kèm stdout/stderr đã khử + `logFile`.
 - Ví dụ: `{ "artifact": "jobs/main.kjb" }`
 
 ### `kettle_runtime_execute`
 
-- Mục đích: execute bằng Kitchen/Pan; **luôn cần `confirmed: true`** (không tên môi trường nào bỏ qua bước này). Giới hạn cwd, param, env, output 256KB, timeout (mặc định 120s). Log khử trong `<KETTLE_ROOT>/.pentaho-mcp/runtime-logs/`.
+- Mục đích: execute bằng Kitchen/Pan; **luôn cần `confirmed: true`** (không tên môi trường nào bỏ qua bước này). Giới hạn cwd, param, env, output 256KB, timeout (mặc định 120s). Log khử trong `<workspace root>/.pentaho-mcp/runtime-logs/`.
 - Tham số: `artifact` (bắt buộc); `parameters?`, `timeoutMs?`, `confirmed?` (boolean).
 - Ví dụ: `{ "artifact": "jobs/main.kjb", "confirmed": true }`
 
 ### `kettle_runtime_logs`
 
-- Mục đích: đọc log đã khử dưới `<KETTLE_ROOT>/.pentaho-mcp/runtime-logs/`.
+- Mục đích: đọc log đã khử dưới `<workspace root>/.pentaho-mcp/runtime-logs/`.
 - Tham số: không có.
 - Output: `{files: [{name, content}]}`; `{files: []}` khi thư mục log chưa tồn tại.
 - Ví dụ: `{}`

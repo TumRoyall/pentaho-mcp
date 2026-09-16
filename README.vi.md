@@ -51,7 +51,7 @@ Hệ thống được thiết kế theo triết lý **Deterministic Primitives +
 - 🎯 **Chỉnh sửa XML Span-Based ít mất mát (Lossless Editing)**: Sử dụng parser XML để định vị byte-span và chỉ thay thế đúng các byte cần sửa. Giữ nguyên 100% định dạng ban đầu, thứ tự trường, ghi chú (comments), khoảng trắng và ký tự xuống dòng (CRLF/LF) của Pentaho Spoon.
 - 🧠 **Tri thức nhúng sẵn (Knowledge-First Design)**: Tích hợp sẵn catalog (`catalog.yaml`) và thư viện đặc tả Markdown (`src/knowledge/pentaho/`) cho hàng chục loại step/entry. AI agent không bao giờ phải "bịa" cấu trúc XML mà luôn tra cứu template chuẩn trước khi tạo/sửa.
 - ⚡ **Zero-PDI Core Dependency**: Toàn bộ tính năng đọc, tạo file, sửa trường, sửa hop, kiểm tra liên kết, quản lý repository và validation tĩnh chạy hoàn toàn trên Node.js thuần túy — **không cần cài đặt Pentaho Data Integration hay máy ảo Java**.
-- 🛡️ **Biên Workspace chuẩn tắc (Canonical Containment)**: Bảo vệ an toàn tuyệt đối với cơ chế `canonical containment`. Chặn đứng mọi nỗ lực path traversal (`..`), sibling-prefix escape hay symlink/junction trỏ ra ngoài thư mục `KETTLE_ROOT`.
+- 🛡️ **Biên Workspace chuẩn tắc (Canonical Containment)**: Bảo vệ an toàn tuyệt đối với cơ chế `canonical containment`. Chặn đứng mọi nỗ lực path traversal (`..`), sibling-prefix escape hay symlink/junction trỏ ra ngoài thư mục workspace đã resolve.
 - 🗄️ **Quản lý Repository & Connection**: Hỗ trợ đầy đủ Pentaho File Repository, ánh xạ đường dẫn nội bộ (`${Internal.Entry.Current.Directory}`), quản lý file connection `.kdb` và tự động phát hiện `repositories.xml` của Spoon.
 - 🚦 **Thực thi phân pha có kiểm soát (Phase-Gated Runtime)**: Hỗ trợ gọi Kitchen/Pan cục bộ để chạy thử nghiệm, nhưng chỉ cho phép sau khi đã vượt qua bước validation tĩnh, có biến môi trường bật (`PENTAHO_ENABLE_EXECUTE=1`) và người dùng xác nhận (`confirmed: true`).
 
@@ -183,6 +183,8 @@ Giải nén file ZIP thu được trong `dist/` vào một thư mục cố đị
 
 ## 🔌 Cấu hình trên các AI Client
 
+> **Thư mục workspace (workspace root):** không có biến môi trường nào thiết lập thư mục workspace. Server tự động phát hiện khi khởi động, mô phỏng đúng cách Spoon tìm file repository: repository khai báo trong `~/.kettle/repositories.xml` (repository mặc định `is_default=Y` được chọn, nếu không có thì lấy repository đầu tiên có `base_directory` tồn tại), ngược lại là `repositories.xml` bên trong `PENTAHO_HOME`, cuối cùng là thư mục làm việc (working directory) của tiến trình server. Vì không còn biến môi trường để ghi đè, cách duy nhất để cố định workspace là đăng ký project vào `~/.kettle/repositories.xml`, hoặc khởi động client với project làm thư mục làm việc. Mọi đường dẫn truyền vào tool vẫn được kiểm tra containment dựa trên root đã resolve.
+
 ### Claude Code
 
 Thêm vào file `.mcp.json` tại thư mục gốc của project cần làm việc:
@@ -194,7 +196,6 @@ Thêm vào file `.mcp.json` tại thư mục gốc của project cần làm vi�
       "command": "node",
       "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/path/to/your/workspace",
         "PENTAHO_HOME": "C:/Pentaho/data-integration",
         "PENTAHO_ENABLE_EXECUTE": "0"
       }
@@ -216,7 +217,6 @@ Thêm vào file cấu hình MCP của Cursor (hoặc giao diện Settings -> MCP
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
@@ -235,7 +235,7 @@ Thêm vào file `~/.codeium/windsurf/mcp_config.json`:
       "command": "node",
       "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace"
+        "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
   }
@@ -253,7 +253,7 @@ Cấu hình tại `.kiro/settings/mcp.json` (theo workspace) hoặc `%USERPROFIL
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace"
+        "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
   }
@@ -270,7 +270,6 @@ command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
 args = []
 
 [mcp_servers.dte-pentaho.env]
-KETTLE_ROOT = "C:/Projects/kettle-workspace"
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 
@@ -280,10 +279,12 @@ PENTAHO_HOME = "C:/Pentaho/data-integration"
 
 | Biến | Ý nghĩa | Mặc định | Bắt buộc? |
 |------|---------|----------|:---------:|
-| `KETTLE_ROOT` | Thư mục biên làm việc. Mọi đường dẫn tương đối sẽ resolve tại đây; đường dẫn tuyệt đối bắt buộc phải nằm bên trong root này. | Tự phát hiện repository hoặc `process.cwd()` | Khuyến nghị đặt |
-| `PENTAHO_HOME` | Đường dẫn thư mục cài đặt Pentaho Data Integration cục bộ (chứa `Kitchen.bat` / `Pan.bat`). | Không đặt | Chỉ cần khi dùng Runtime |
+| `PENTAHO_HOME` | Đường dẫn thư mục cài đặt Pentaho Data Integration cục bộ (chứa `Kitchen.bat` / `Pan.bat`). Cũng được kiểm tra `repositories.xml` trong quá trình tự phát hiện workspace root. | Không đặt | Chỉ cần khi dùng Runtime |
+| `PENTAHO_REPOSITORY_NAME` | Ghi đè tên repository (tùy chọn). Nếu không đặt, dùng tên repository phát hiện được từ `repositories.xml`. | Phát hiện từ `repositories.xml` | Tùy chọn |
 | `PENTAHO_ENABLE_EXECUTE` | Cổng opt-in qua biến môi trường cho phép thực thi thật. Chỉ nhận giá trị đúng `"1"`. Mọi giá trị khác đều tắt thực thi. | `"0"` (tắt) | Tùy chọn |
 | `KETTLE_KNOWLEDGE_DIR` | Đường dẫn tùy chỉnh ghi đè catalog tri thức mặc định. | `src/knowledge/pentaho` | Tùy chọn |
+
+Thư mục workspace được **tự động phát hiện mỗi lần khởi động và không thể thiết lập bằng biến môi trường** — xem [Cấu hình trên các AI Client](#-cấu-hình-trên-các-ai-client). Mọi đường dẫn trong tool đều bị giới hạn trong root đó: đường dẫn tương đối resolve theo root, còn đường dẫn tuyệt đối chỉ hợp lệ khi nằm bên trong root.
 
 👉 Xem hướng dẫn bảo mật và quy tắc containment tại [Tài liệu cấu hình (`docs/configuration.md`)](docs/configuration.md).
 

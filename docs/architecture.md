@@ -33,7 +33,7 @@ Phần cài đặt lifecycle BA cũ đã được **gỡ bỏ khỏi source**; k
 
 ## Biên workspace (chia sẻ)
 
-`src/workspace/boundary.js` export `createWorkspaceBoundary`, chính sách chứa (canonical containment) chia sẻ duy nhất cho các factory read/edit/validate/coverage. `KETTLE_ROOT` mặc định `process.cwd()` khi unset và **luôn** được enforce: đường tuyệt đối chỉ hợp lệ khi nằm trong root; `..`, sibling-prefix và symlink/junction thoát root đều bị từ chối.
+`src/workspace/boundary.js` export `createWorkspaceBoundary`, chính sách chứa (canonical containment) chia sẻ duy nhất cho các factory read/edit/validate/coverage. Root do `src/workspace/resolve-root.js` (`resolveWorkspaceRoot`) phát hiện tự động theo thứ tự: repository trong `~/.kettle/repositories.xml`, rồi `PENTAHO_HOME/repositories.xml`, cuối cùng `process.cwd()` (file mode). Biên **luôn** được enforce: đường tuyệt đối chỉ hợp lệ khi nằm trong root; `..`, sibling-prefix và symlink/junction thoát root đều bị từ chối.
 
 Cơ chế `assertWritable` cũ (dựa biến môi trường trong `src/core/edit.js`) đã được gỡ. Hàm XML lõi giờ là filesystem op thuần túy; lớp tool adapter sở hữu biên qua boundary chung.
 
@@ -43,10 +43,11 @@ Cơ chế `assertWritable` cũ (dựa biến môi trường trong `src/core/edit
 |--------|---------|-------|
 | `src/server.js` | Wiring MCP: `ListTools`, `CallTool`; `initialize` khai báo `capabilities = { tools: {} }` (không prompt/resource); envelope `{ok, data/error}` | `src/server.js` |
 | `src/tools/registry.js` | `buildTools(ctx)` gộp 7 factory: read/edit/validate/knowledge/runtime/artifact/removal; chặn trùng tên | `src/tools/registry.js` |
+| `src/workspace/resolve-root.js` | `resolveWorkspaceRoot` — phát hiện workspace root tự động (`~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`); trả `{root, mode, source, repository}` | `src/workspace/resolve-root.js` |
 | `src/workspace/boundary.js` | `createWorkspaceBoundary` — chính sách biên workspace chia sẻ (canonical containment) | `src/workspace/boundary.js` |
 | `src/core/` | `model.js`, `span.js`, `edit.js`, `artifact-edit.js`, `remove.js`, `search.js`, `validate.js`, `summarize.js`, `knowledge-intake.js`, `knowledge-coverage.js` — engine thuần túy, filesystem op | `src/core/*.js` |
 | `src/knowledge/` | `loader.js` (parse `catalog.yaml`, resolve reference, `KETTLE_KNOWLEDGE_DIR` override), `catalog-check.js` | `src/knowledge/loader.js` |
-| `src/runtime/` | `detect.js`, `policy.js`, `run.js`, `redact.js` — dò PDI theo `PENTAHO_HOME`, chính sách thực thi confirm-only, spawn có timeout, khử nhạy cảm; **tùy chọn, phase-gated** (chỉ sau validation tĩnh), dùng chung biên `KETTLE_ROOT` | `src/runtime/*.js` |
+| `src/runtime/` | `detect.js`, `policy.js`, `run.js`, `redact.js` — dò PDI theo `PENTAHO_HOME`, chính sách thực thi confirm-only, spawn có timeout, khử nhạy cảm; **tùy chọn, phase-gated** (chỉ sau validation tĩnh), dùng chung biên workspace root | `src/runtime/*.js` |
 | `scripts/`, `packaging/` | `build-release.mjs` (esbuild + SEA + postject + ZIP), `verify-production-profile.mjs`, `doctor.ps1` plus client-neutral manual configuration in docs/install.md | `scripts/*`, `packaging/*` |
 
 ```mermaid
@@ -118,7 +119,7 @@ Runtime **thuộc workflow** nhưng bị giới hạn theo pha: chỉ dùng sau 
 
 ## Biên an toàn
 
-- Mọi đường ghi/đọc giới hạn trong `KETTLE_ROOT` (mặc định `process.cwd()`, luôn enforce) qua `src/workspace/boundary.js`; chặn absolute ngoài root, `..`, sibling-prefix, symlink/junction escape.
+- Mọi đường ghi/đọc giới hạn trong workspace root (phát hiện tự động bởi `src/workspace/resolve-root.js`, luôn enforce) qua `src/workspace/boundary.js`; chặn absolute ngoài root, `..`, sibling-prefix, symlink/junction escape.
 - Runtime (phase-gated): `execute` **luôn** cần `confirmed: true` (không có auto theo tên môi trường); `loadcheck`/`execute` luôn validation tĩnh trước; spawn giới hạn, output 256KB, timeout mặc định 120s, redaction credential/tham số nhạy cảm.
 - Git chỉ đọc; không commit/push/amend.
 

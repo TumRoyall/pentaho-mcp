@@ -59,7 +59,6 @@ Cấu hình MCP của Kiro nằm tại `.kiro/settings/mcp.json` cho workspace h
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/work/my-pentaho-project",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       },
       "disabled": false,
@@ -78,7 +77,6 @@ Cấu hình MCP của Kiro nằm tại `.kiro/settings/mcp.json` cho workspace h
       "command": "node",
       "args": ["C:/src/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/work/my-pentaho-project",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       },
       "disabled": false,
@@ -106,7 +104,6 @@ File `.mcp.json` tại project root:
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/work/my-pentaho-project",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
@@ -126,7 +123,6 @@ File `.mcp.json` tại project root:
       "command": "node",
       "args": ["C:/src/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/work/my-pentaho-project",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
@@ -157,7 +153,6 @@ command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
 args = []
 
 [mcp_servers.dte-pentaho.env]
-KETTLE_ROOT = "C:/work/my-pentaho-project"
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 
@@ -169,7 +164,6 @@ command = "node"
 args = ["C:/src/pentaho-mcp-server/src/index.js"]
 
 [mcp_servers.dte-pentaho.env]
-KETTLE_ROOT = "C:/work/my-pentaho-project"
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 
@@ -195,8 +189,8 @@ Cây nguồn và ZIP đều chứa `skills/developing-pentaho-jobs/`, nhưng đ�
 
 ## Runtime dùng chung
 
-- `KETTLE_ROOT` nên đặt cho mọi cách cài đặt; khi unset, mặc định là `process.cwd()` và luôn được enforce. Xem `docs/configuration.md`.
-- `PENTAHO_HOME` là tùy chọn và chỉ bật nhóm tool runtime PDI cục bộ.
+- Root workspace được **tự động phát hiện**, không có biến môi trường nào chỉ định root. Xem mục "Biên workspace" bên dưới và `docs/configuration.md`.
+- `PENTAHO_HOME` là tùy chọn: vừa tham gia bước 2 của dò root, vừa bật nhóm tool runtime PDI cục bộ.
 - `PENTAHO_ENABLE_EXECUTE="1"` là tùy chọn và phải thêm trực tiếp vào khối `env` của client đang dùng mới cho phép thực thi thật; bỏ hẳn để chặn.
 
 ## Kiểm tra server độc lập client
@@ -227,8 +221,29 @@ Vì chỉ có 2 runtime dependency, có 2 lựa chọn đã kiểm chứng:
 
 ## Biên workspace
 
-- `KETTLE_ROOT` mặc định `process.cwd()` khi unset và luôn được enforce; đường tuyệt đối chỉ hợp lệ khi nằm trong root, `..`/sibling-prefix/symlink escape bị từ chối. Chi tiết xem `docs/configuration.md`.
-- `PENTAHO_HOME` chỉ cần cho các tool runtime tùy chọn; không còn file cấu hình YAML theo project.
+Root workspace được **tự động phát hiện**, không có biến môi trường nào để chỉ định. Thứ tự dò:
+
+1. `%USERPROFILE%/.kettle/repositories.xml` (hoặc `$HOME`) → chế độ repository.
+2. `PENTAHO_HOME/repositories.xml` → chế độ repository.
+3. Thư mục làm việc của tiến trình server → chế độ file.
+
+Trong một `repositories.xml`, repository mặc định (`is_default=Y`) thắng; nếu không có, chọn repository đầu tiên có `base_directory` tồn tại.
+
+Hai bước đầu **thắng** bước 3: nếu `%USERPROFILE%/.kettle/repositories.xml` đã khai báo một repository dùng được thì thư mục làm việc của tiến trình server bị bỏ qua hoàn toàn.
+
+Vì không còn knob môi trường, chỉ có ba cách ghim workspace:
+
+1. Khai báo project như một file repository trong `%USERPROFILE%/.kettle/repositories.xml`.
+2. Đặt một `repositories.xml` trong `PENTAHO_HOME`.
+3. Khởi chạy tiến trình MCP với chính project đó làm thư mục làm việc.
+
+Nếu project **chưa** được đăng ký trong file repository của Spoon, phải khởi chạy client với project làm thư mục làm việc. Một số client MCP không cho đặt thư mục làm việc của server — khi đó đăng ký project trong `%USERPROFILE%/.kettle/repositories.xml` là đường tin cậy.
+
+Khi khởi động, server in ra stderr dòng `kettle-mcp-dte running on stdio (root=<path>, mode=<mode>, source=<source>)`; dùng dòng này để xác nhận root đã dò được.
+
+Biên vẫn **luôn được enforce**: đường tương đối resolve theo root; đường tuyệt đối chỉ hợp lệ khi nằm trong root; `..`, sibling-prefix (ví dụ `C:\ws-other` khi root là `C:\ws`) và symlink/junction escape đều bị từ chối. Không có cách tắt biên.
+
+`PENTAHO_HOME` chỉ **cần** cho các tool runtime tùy chọn; khi được đặt, nó cũng tham gia bước 2 của dò root. Không còn file cấu hình YAML theo project.
 
 ## An toàn thực thi và không tự commit Git
 

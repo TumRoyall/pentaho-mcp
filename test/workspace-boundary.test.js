@@ -46,10 +46,10 @@ test('rejects traversal and sibling-prefix paths', () => {
   const boundary = createWorkspaceBoundary(root);
   assert.throws(
     () => boundary.resolveRead(path.join(root, '..', path.basename(root) + '-outside')),
-    /outside KETTLE_ROOT/i,
+    /outside the workspace root/i,
   );
-  assert.throws(() => boundary.resolveWrite(path.join(root, '..', 'escape.ktr')), /outside KETTLE_ROOT/i);
-  assert.throws(() => boundary.resolveRead(path.resolve(root, '..', 'outside.kjb')), /outside KETTLE_ROOT/i);
+  assert.throws(() => boundary.resolveWrite(path.join(root, '..', 'escape.ktr')), /outside the workspace root/i);
+  assert.throws(() => boundary.resolveRead(path.resolve(root, '..', 'outside.kjb')), /outside the workspace root/i);
 });
 
 test('rejects non-string and empty inputs; undefined requests the root', () => {
@@ -63,12 +63,12 @@ test('rejects non-string and empty inputs; undefined requests the root', () => {
 });
 
 test('rejects a non-existent or non-directory root', () => {
-  assert.throws(() => createWorkspaceBoundary(''), /KETTLE_ROOT must be/i);
-  assert.throws(() => createWorkspaceBoundary(42), /KETTLE_ROOT must be/i);
+  assert.throws(() => createWorkspaceBoundary(''), /workspace root must be/i);
+  assert.throws(() => createWorkspaceBoundary(42), /workspace root must be/i);
   const root = workspace();
   assert.throws(
     () => createWorkspaceBoundary(path.join(root, 'does-not-exist')),
-    /KETTLE_ROOT must be an existing directory/i,
+    /workspace root must be an existing directory/i,
   );
 });
 
@@ -88,6 +88,6 @@ test('rejects a link inside the workspace that resolves outside it', t => {
     throw err;
   }
   const boundary = createWorkspaceBoundary(root);
-  assert.throws(() => boundary.resolveRead(path.join('external', 'file.ktr')), /outside KETTLE_ROOT/i);
-  assert.throws(() => boundary.resolveWrite(path.join('external', 'new.ktr')), /outside KETTLE_ROOT/i);
+  assert.throws(() => boundary.resolveRead(path.join('external', 'file.ktr')), /outside the workspace root/i);
+  assert.throws(() => boundary.resolveWrite(path.join('external', 'new.ktr')), /outside the workspace root/i);
 });

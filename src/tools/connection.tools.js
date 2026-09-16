@@ -8,7 +8,7 @@ export function connectionTools(ctx) {
     {
       name: 'kettle_connection_list',
       title: 'List shared database connections (.kdb)',
-      description: 'List all .kdb connections in KETTLE_ROOT with sanitized definitions and password statuses.',
+      description: 'List all .kdb connections in the workspace root with sanitized definitions and password statuses.',
       annotations: { title: 'List shared database connections (.kdb)', readOnlyHint: true },
       inputSchema: { type: 'object', properties: {}, additionalProperties: false },
       handler: () => {

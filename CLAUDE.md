@@ -23,7 +23,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - Run in source mode: `node src/index.js`
 - Relevant environment variables:
-  - `KETTLE_ROOT`: Explicit workspace directory boundary (defaults to auto-detected repository root or `process.cwd()`).
+  - No environment variable sets the workspace root: it is auto-detected at start-up by `src/workspace/resolve-root.js` (`~/.kettle/repositories.xml` -> `PENTAHO_HOME/repositories.xml` -> `process.cwd()`).
   - `PENTAHO_HOME`: Path to Pentaho Data Integration directory containing `Kitchen.bat` / `Pan.bat` (required only for optional runtime tools).
   - `PENTAHO_ENABLE_EXECUTE`: Set to `1` to opt into runtime execution (any other value leaves execution disabled).
   - `KETTLE_KNOWLEDGE_DIR`: Override path for the embedded knowledge base.

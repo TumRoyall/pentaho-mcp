@@ -37,7 +37,7 @@ Before contributing code, please review these core architectural invariants:
    - All mutations must use byte-offset span replacements (`src/core/span.js`), preserving whitespace, tag order, comments, and CRLF line endings.
 3. **Canonical Workspace Boundary Containment**:
    - All file operations must go through `src/workspace/boundary.js` (`createWorkspaceBoundary`).
-   - Absolute paths must resolve within `KETTLE_ROOT`. Path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the root are strictly rejected.
+   - Absolute paths must resolve within the resolved workspace root. Path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the root are strictly rejected.
 4. **Zero-PDI Core Dependency**:
    - Core capabilities (read, create, edit, remove, repository, connection, static validation, knowledge) must only depend on pure Node.js (>= 20) with no Java or PDI installation.
    - Local PDI runtime execution (`Kitchen.bat` / `Pan.bat`) is optional, phase-gated, and requires explicit user confirmation (`confirmed: true`).

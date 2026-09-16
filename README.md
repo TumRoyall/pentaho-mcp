@@ -51,7 +51,7 @@ The system follows a strict architectural separation: **Deterministic Primitives
 - 🎯 **Lossless Span-Based XML Editing**: Uses `fast-xml-parser` to pinpoint element byte offsets and only modifies the targeted byte spans. Preserves 100% of the original tag ordering, formatting, XML comments, whitespace, and CRLF/LF line endings expected by Pentaho Spoon.
 - 🧠 **Embedded Knowledge-First Catalog**: Bundles a rich knowledge catalog (`catalog.yaml` and Markdown specifications in `src/knowledge/pentaho/`). AI agents never hallucinate Pentaho XML tags; they inspect canonical templates via `kettle_knowledge_get` before creating or updating steps/entries.
 - ⚡ **Zero-PDI Core Dependency**: All read, create, edit, hop wiring, parameter modification, repository tracking, and static validation operations run on pure Node.js — **no Java, PDI, or Spoon installation required** for core features.
-- 🛡️ **Canonical Workspace Boundary Containment**: Enforces strict directory boundaries via `src/workspace/boundary.js`. Rejects path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the resolved `KETTLE_ROOT`.
+- 🛡️ **Canonical Workspace Boundary Containment**: Enforces strict directory boundaries via `src/workspace/boundary.js`. Rejects path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the resolved workspace root.
 - 🗄️ **Full Repository & Database Connection Support**: Native handling for Pentaho File Repositories, internal path resolution (`${Internal.Entry.Current.Directory}`), `.kdb` shared database connection files, and automatic Spoon `repositories.xml` detection.
 - 🚦 **Phase-Gated Runtime Execution**: Optional local PDI execution (`Kitchen.bat` / `Pan.bat`) protected by dual safeguards: environment opt-in (`PENTAHO_ENABLE_EXECUTE=1`), invocation-level confirmation (`confirmed: true`), and mandatory pre-run static validation.
 
@@ -183,6 +183,8 @@ Extract the release ZIP from `dist/` into a stable path (e.g. `C:\Tools\dte-pent
 
 ## 🔌 Client Configuration
 
+> **Workspace root:** no environment variable sets the workspace root. The server auto-detects it on startup, mirroring Spoon: a file repository declared in `~/.kettle/repositories.xml` (the default repository wins, otherwise the first repository whose `base_directory` exists), else a `repositories.xml` inside `PENTAHO_HOME`, else the server process's working directory. Because there is no env override, the only ways to pin a project are to register it in `~/.kettle/repositories.xml`, or to start the client with the project as its working directory. All paths passed to tools are still validated against the resolved root by the workspace boundary.
+
 ### Claude Code
 
 Add to your project's `.mcp.json`:
@@ -194,7 +196,6 @@ Add to your project's `.mcp.json`:
       "command": "node",
       "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/path/to/your/kettle-workspace",
         "PENTAHO_HOME": "C:/Pentaho/data-integration",
         "PENTAHO_ENABLE_EXECUTE": "0"
       }
@@ -216,7 +217,6 @@ Add to `.cursor/mcp.json` (or via Settings -> MCP Servers):
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace",
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
@@ -235,7 +235,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
       "command": "node",
       "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace"
+        "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
   }
@@ -253,7 +253,7 @@ Configure in `.kiro/settings/mcp.json` (workspace) or `%USERPROFILE%/.kiro/setti
       "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
       "args": [],
       "env": {
-        "KETTLE_ROOT": "C:/Projects/kettle-workspace"
+        "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
     }
   }
@@ -270,7 +270,6 @@ command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
 args = []
 
 [mcp_servers.dte-pentaho.env]
-KETTLE_ROOT = "C:/Projects/kettle-workspace"
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 
@@ -280,10 +279,12 @@ PENTAHO_HOME = "C:/Pentaho/data-integration"
 
 | Variable | Description | Default | Required |
 |----------|-------------|---------|:--------:|
-| `KETTLE_ROOT` | Target workspace boundary. Relative paths resolve here; absolute paths must be contained within. | Auto-detected repository or `process.cwd()` | Recommended |
-| `PENTAHO_HOME` | Path to local Pentaho Data Integration directory containing `Kitchen.bat` / `Pan.bat`. | Unset | Only for Runtime |
+| `PENTAHO_HOME` | Path to local Pentaho Data Integration directory containing `Kitchen.bat` / `Pan.bat`. Also checked for a `repositories.xml` during workspace root detection. | Unset | Only for Runtime |
+| `PENTAHO_REPOSITORY_NAME` | Optional repository name override. Falls back to the repository name detected from `repositories.xml`. | Detected from `repositories.xml` | Optional |
 | `PENTAHO_ENABLE_EXECUTE` | Opt-in gate for executing pipelines. Only `"1"` enables execution; all other values disable it. | `"0"` (disabled) | Optional |
 | `KETTLE_KNOWLEDGE_DIR` | Custom override path for the embedded knowledge base directory. | `src/knowledge/pentaho` | Optional |
+
+The workspace root is **auto-detected per start-up and cannot be set by an environment variable** — see [Client Configuration](#-client-configuration). All tool paths stay confined to that root by the workspace boundary; relative paths resolve against it, and absolute paths are valid only when contained within it.
 
 👉 For containment rules and security details, see the [Configuration Guide (`docs/configuration.md`)](docs/configuration.md).
 

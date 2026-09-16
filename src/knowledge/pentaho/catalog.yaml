@@ -68,6 +68,7 @@ components:
     - {type: GET_POP, xml_type: GET_POP, file: job/GET_POP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: HTTP, xml_type: HTTP, file: job/HTTP.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: MAIL_VALIDATOR, xml_type: MAIL_VALIDATOR, file: job/MAIL_VALIDATOR.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CATEGORY_MAIL_VALIDATOR, xml_type: JobCategory.Category.Mail_VALIDATOR, file: job/MAIL_VALIDATOR.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: MSGBOX_INFO, xml_type: MSGBOX_INFO, file: job/MSGBOX_INFO.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: MSSQL_BULK_LOAD, xml_type: MSSQL_BULK_LOAD, file: job/MSSQL_BULK_LOAD.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: MS_ACCESS_BULK_LOAD, xml_type: MS_ACCESS_BULK_LOAD, file: job/MS_ACCESS_BULK_LOAD.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -94,6 +95,8 @@ components:
     - {type: GET_VARIABLE, xml_type: GetVariable, file: trans/GetVariable.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FILTER_ROWS, xml_type: FilterRows, file: trans/FilterRows.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: SCRIPT, xml_type: ScriptValueMod, file: trans/ScriptValueMod.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SCRIPT_VALUE, xml_type: ScriptValue, file: trans/ScriptValueMod.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SCRIPT_VALUES_MOD, xml_type: ScriptValuesMod, file: trans/ScriptValueMod.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: GROUP_BY, xml_type: GroupBy, file: trans/GroupBy.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: JSON_INPUT, xml_type: JsonInput, file: trans/JsonInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: REST, xml_type: Rest, file: trans/Rest.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -221,6 +224,7 @@ components:
     - {type: FILE_STREAM, xml_type: FileStream, file: trans/FileStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FIXED_INPUT, xml_type: FixedInput, file: trans/FixedInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FLATTENER, xml_type: Flattener, file: trans/Flattener.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FLATTERNER, xml_type: Flatterner, file: trans/Flattener.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FORMULA, xml_type: Formula, file: trans/Formula.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FUZZY_MATCH, xml_type: FuzzyMatch, file: trans/FuzzyMatch.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: GET_FILES_ROWS_COUNT, xml_type: GetFilesRowsCount, file: trans/GetFilesRowsCount.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -280,6 +284,7 @@ components:
     - {type: SYSLOG_MESSAGE, xml_type: SyslogMessage, file: trans/SyslogMessage.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: TABLE_COMPARE, xml_type: TableCompare, file: trans/TableCompare.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: TERA_FAST, xml_type: TeraFast, file: trans/TeraFast.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TERA_FAST_PLUGIN, xml_type: TeraFastPlugin, file: trans/TeraFast.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: EDI_2_XML, xml_type: TypeExitEdi2XmlStep, file: trans/TypeExitEdi2XmlStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: GOOGLE_ANALYTICS_INPUT, xml_type: TypeExitGoogleAnalyticsInputStep, file: trans/TypeExitGoogleAnalyticsInputStep.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: VALIDATOR, xml_type: Validator, file: trans/Validator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

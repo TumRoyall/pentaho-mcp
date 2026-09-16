@@ -9,12 +9,23 @@ PDI 9.4.
 
 ## Counts
 
-- Total catalog rows: **111** (38 job + 73 transformation)
-- Rows with explicit PDI 9.4 target evidence: **110**
+- Total catalog rows: **163** (43 job + 120 transformation)
+- Rows with explicit PDI 9.4 target evidence: **162**
 - Rows without PDI 9.4 evidence (downgraded/kept observed): **1**
-- `status: canonical`: **110**
-- `status: observed`: **1**
-- Generator-eligible (canonical + eligible + 9.4 verified): **110**
+- `status: canonical`: **155**
+- `status: observed`: **8** (1 without evidence + 7 deprecated with 9.4 evidence, ineligible)
+- Generator-eligible (canonical + eligible + 9.4 verified): **155**
+
+> Bổ sung B7a (2026-09-16): 7 trans deprecated (AggregateRows, DummyStep,
+> OldTextFileInput, Script, TextFileOutputLegacy, GetPreviousRowField,
+> ElasticSearchBulk) — 7/7 `source_reviewed` PDI 9.4 NHƯNG giữ
+> `status: observed` + `generator_eligible: false` (chỉ đọc/bảo trì, không
+> phát sinh mới), xem per-row cuối bảng. Số tổng đếm trực tiếp từ
+> `catalog.yaml`.
+
+> Bổ sung B6-2 (2026-09-16): 36 ID services/directory/scripting/stats/
+> file-utility (33 trans + 3 job) — 36/36 `source_reviewed` PDI 9.4, xem
+> per-row cuối bảng. Số tổng đếm trực tiếp từ `catalog.yaml`.
 
 > Bổ sung B2b (2026-09-15): trans `SortedMerge`, trans `MemoryGroupBy`,
 > trans `AnalyticQuery` — 3/3 `source_reviewed` PDI 9.4, xem per-row cuối
@@ -35,12 +46,22 @@ PDI 9.4.
 
 ### Verification breakdown (rows with 9.4 evidence)
 
-- `source_reviewed` (PDI 9.4 `getXML()` source reference): **102**
+- `source_reviewed` (PDI 9.4 `getXML()` source reference): **155** (148 canonical + 7 deprecated observed)
 - `spoon_loaded` (Spoon PDI 9.4-saved artifact): **8**
 
 ### Rows kept observed (no target evidence, not promoted)
 
 - trans / SetSessionVariableStep: No PDI 9.4 evidence located (not_established)
+
+### Rows kept observed (deprecated in source 9.4 — read/maintain only, not promoted)
+
+- trans / AggregateRows: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / DummyStep: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / OldTextFileInput: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / Script: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / TextFileOutputLegacy: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / GetPreviousRowField: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
+- trans / ElasticSearchBulk: PDI 9.4 evidence located (source_reviewed), kept observed per B7 policy
 
 ## Per-row evidence
 
@@ -153,3 +174,46 @@ PDI 9.4.
 | trans | SortedMerge | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — fields-only block of name/ascending, merges pre-sorted streams (see trans/SortedMerge.md) |
 | trans | MemoryGroupBy | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — give_back_row/group/fields order, string typeGroupCode, COUNT_* give-back fallback (see trans/MemoryGroupBy.md) |
 | trans | AnalyticQuery | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, group/fields order, LEAD/LAG with int valuefield offset (see trans/AnalyticQuery.md) |
+| trans | SalesforceInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, SalesforceStepMeta superclass + condition/specifyQuery/fields/limit order, repeat-missing-TRUE pitfall (see trans/SalesforceInput.md) |
+| trans | SalesforceInsert | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — batchSize/salesforceIDFieldName/fields(name/field/useExternalId)/rollback order (see trans/SalesforceInsert.md) |
+| trans | SalesforceUpdate | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — no salesforceIDFieldName, empty getFields passthrough (see trans/SalesforceUpdate.md) |
+| trans | SalesforceUpsert | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — lowercase upsertfield + batchSize/salesforceIDFieldName/fields order (see trans/SalesforceUpsert.md) |
+| trans | SalesforceDelete | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — capital DeleteField only, no fields block (see trans/SalesforceDelete.md) |
+| trans | PGPEncryptStream | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — gpglocation/keyname/keynameInField/keynameFieldName/streamfield/resultfieldname order (see trans/PGPEncryptStream.md) |
+| trans | PGPDecryptStream | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — typo tag passhrase (one s), passphraseFromField pair (see trans/PGPDecryptStream.md) |
+| trans | SymmetricCryptoTrans | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — encrypt/decrypt string codes, DES default, Binary output flag (see trans/SymmetricCryptoTrans.md) |
+| trans | SecretKeyGenerator | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — fields-first order, secretKeyLen tag, duplicate algorithmFieldName emit quirk (see trans/SecretKeyGenerator.md) |
+| job | PGP_ENCRYPT_FILES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — asciiMode + fields(action_type/userid) order, encrypt/sign/signandencrypt codes (see job/PGP_ENCRYPT_FILES.md) |
+| job | PGP_DECRYPT_FILES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — no asciiMode/action_type, per-field encrypted passphrase (see job/PGP_DECRYPT_FILES.md) |
+| job | PGP_VERIFY_FILES | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — 4 tags only (gpglocation/filename/detachedfilename/useDetachedSignature), no fields (see job/PGP_VERIFY_FILES.md) |
+| trans | LDAPInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, typo dynamicseachfieldname, object/onelevel/subtree codes, int limit/timelimit (see trans/LDAPInput.md) |
+| trans | LDAPOutput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — update-missing-TRUE pitfall, searchBase capital B, 6 operation codes (see trans/LDAPOutput.md) |
+| trans | LDIFInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — flat file block counted by name, attribut (no e), repeat-missing-TRUE (see trans/LDIFInput.md) |
+| trans | AccessInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — annotation-registered plugin, filename_Field capital F, isaddresult-missing-TRUE (see trans/AccessInput.md) |
+| trans | AccessOutput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — 8 tags, table (not table_name), commit_size 500, no fields block (see trans/AccessOutput.md) |
+| trans | PaloCellInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — deprecated, connection/cube/cubemeasure/fields order, empty setDefault (see trans/PaloCellInput.md) |
+| trans | PaloCellOutput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — deprecated, clearcube NPE-guard required, measures block single-measure load (see trans/PaloCellOutput.md) |
+| trans | PaloDimInput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — deprecated, levels/level with int levelnumber (see trans/PaloDimInput.md) |
+| trans | PaloDimOutput | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — deprecated, createdimension/cleardimension NPE-guards, consolidationfieldname (see trans/PaloDimOutput.md) |
+| trans | Janino | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — formula blocks direct under step (no fields), field_name/formula_string/value_type order (see trans/Janino.md) |
+| trans | JavaFilter | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — send_true_to/send_false_to target streams + condition (default true) (see trans/JavaFilter.md) |
+| trans | UserDefinedJavaClass | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — 6 lowercase blocks, strict class_type, clear_result_fields-missing-TRUE (see trans/UserDefinedJavaClass.md) |
+| trans | RuleAccumulator | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — hyphen tags column-name/column-type/rule-file/rule-definition, accumulate-once semantics (see trans/RuleAccumulator.md) |
+| trans | RuleExecutor | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — same hyphen serializer as Accumulator, per-row execution (see trans/RuleExecutor.md) |
+| trans | SampleRows | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — linesrange/linenumfield pair, 1-based filtering (see trans/SampleRows.md) |
+| trans | ReservoirSampling | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — reservoir_sampling wrapper with string sample_size/seed (see trans/ReservoirSampling.md) |
+| trans | UnivariateStats | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — univariate_stats direct blocks, every flag tag required (NPE guard) (see trans/UnivariateStats.md) |
+| trans | StepsMetrics | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — nested steps/step items + 9 step field tags (see trans/StepsMetrics.md) |
+| trans | FieldsChangeSequence | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — camelCase resultfieldName, name-only field items (see trans/FieldsChangeSequence.md) |
+| trans | FileExists | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — Boolean result + optional filetype pair (see trans/FileExists.md) |
+| trans | FileLocked | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — 3 tags only, no filetype pair (see trans/FileLocked.md) |
+| trans | ExecProcess | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — column-driven command, 2-level argumentFields nesting, String/Integer outputs (see trans/ExecProcess.md) |
+| trans | ZipFile | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — operation_type codes empty/move/delete, column-driven paths (see trans/ZipFile.md) |
+| trans | ChangeFileEncoding | 9.4 | 9.4 | canonical | pentaho-kettle source 9.4 getXML() reference — missing-e result tags, machine-dependent source default pinned (see trans/ChangeFileEncoding.md) |
+| trans | AggregateRows | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, fields-only, type is i18n string (unknown→NONE), getFields clears row (see trans/AggregateRows.md) |
+| trans | DummyStep | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, distinct from trans Dummy, values/value via ValueMetaAndData, setDefault Number 123.456 (see trans/DummyStep.md) |
+| trans | OldTextFileInput | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, replacement TextFileInput (new class), full tag order, missing-tag defaults differ from setDefault (see trans/OldTextFileInput.md) |
+| trans | Script | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, replacement ScriptValueMod, jsScript_type INT (missing throws), field type STRING (see trans/Script.md) |
+| trans | TextFileOutputLegacy | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, replacement TextFileOutput, parent tags + trailing file/is_command, extention/SpecifyFormat spellings (see trans/TextFileOutputLegacy.md) |
+| trans | GetPreviousRowField | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, fields-only in_stream/out_stream, schema rep-only, NVL defaults (see trans/GetPreviousRowField.md) |
+| trans | ElasticSearchBulk | 9.4 | 9.4 | observed | pentaho-kettle source 9.4 getXML() reference — DEPRECATED, general/fields/servers/settings, case-sensitive Y bools, conditional tags, port fallback 9300 (see trans/ElasticSearchBulk.md) |

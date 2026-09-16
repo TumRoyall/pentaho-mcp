@@ -50,6 +50,9 @@ components:
     - {type: TABLE_EXISTS, xml_type: TABLE_EXISTS, file: job/TABLE_EXISTS.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: WAIT_FOR_SQL, xml_type: WAIT_FOR_SQL, file: job/WAIT_FOR_SQL.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: COLUMNS_EXIST, xml_type: COLUMNS_EXIST, file: job/COLUMNS_EXIST.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PGP_ENCRYPT_FILES, xml_type: PGP_ENCRYPT_FILES, file: job/PGP_ENCRYPT_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PGP_DECRYPT_FILES, xml_type: PGP_DECRYPT_FILES, file: job/PGP_DECRYPT_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PGP_VERIFY_FILES, xml_type: PGP_VERIFY_FILES, file: job/PGP_VERIFY_FILES.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
 
   transformation:
     - {type: TABLE_INPUT, xml_type: TableInput, file: trans/TableInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
@@ -132,3 +135,43 @@ components:
     - {type: SPLIT_FIELD_TO_ROWS3, xml_type: SplitFieldToRows3, file: trans/SplitFieldToRows3.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: FIELD_SPLITTER, xml_type: FieldSplitter, file: trans/FieldSplitter.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
     - {type: UNIQUE_ROWS_BY_HASH_SET, xml_type: UniqueRowsByHashSet, file: trans/UniqueRowsByHashSet.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SALESFORCE_INPUT, xml_type: SalesforceInput, file: trans/SalesforceInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SALESFORCE_INSERT, xml_type: SalesforceInsert, file: trans/SalesforceInsert.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SALESFORCE_UPDATE, xml_type: SalesforceUpdate, file: trans/SalesforceUpdate.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SALESFORCE_UPSERT, xml_type: SalesforceUpsert, file: trans/SalesforceUpsert.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SALESFORCE_DELETE, xml_type: SalesforceDelete, file: trans/SalesforceDelete.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PGP_ENCRYPT_STREAM, xml_type: PGPEncryptStream, file: trans/PGPEncryptStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PGP_DECRYPT_STREAM, xml_type: PGPDecryptStream, file: trans/PGPDecryptStream.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SYMMETRIC_CRYPTO_TRANS, xml_type: SymmetricCryptoTrans, file: trans/SymmetricCryptoTrans.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SECRET_KEY_GENERATOR, xml_type: SecretKeyGenerator, file: trans/SecretKeyGenerator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: LDAP_INPUT, xml_type: LDAPInput, file: trans/LDAPInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: LDAP_OUTPUT, xml_type: LDAPOutput, file: trans/LDAPOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: LDIF_INPUT, xml_type: LDIFInput, file: trans/LDIFInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ACCESS_INPUT, xml_type: AccessInput, file: trans/AccessInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ACCESS_OUTPUT, xml_type: AccessOutput, file: trans/AccessOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_CELL_INPUT, xml_type: PaloCellInput, file: trans/PaloCellInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_CELL_OUTPUT, xml_type: PaloCellOutput, file: trans/PaloCellOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_DIM_INPUT, xml_type: PaloDimInput, file: trans/PaloDimInput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: PALO_DIM_OUTPUT, xml_type: PaloDimOutput, file: trans/PaloDimOutput.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: JANINO, xml_type: Janino, file: trans/Janino.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: JAVA_FILTER, xml_type: JavaFilter, file: trans/JavaFilter.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: USER_DEFINED_JAVA_CLASS, xml_type: UserDefinedJavaClass, file: trans/UserDefinedJavaClass.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RULE_ACCUMULATOR, xml_type: RuleAccumulator, file: trans/RuleAccumulator.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RULE_EXECUTOR, xml_type: RuleExecutor, file: trans/RuleExecutor.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SAMPLE_ROWS, xml_type: SampleRows, file: trans/SampleRows.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: RESERVOIR_SAMPLING, xml_type: ReservoirSampling, file: trans/ReservoirSampling.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: UNIVARIATE_STATS, xml_type: UnivariateStats, file: trans/UnivariateStats.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: STEPS_METRICS, xml_type: StepsMetrics, file: trans/StepsMetrics.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FIELDS_CHANGE_SEQUENCE, xml_type: FieldsChangeSequence, file: trans/FieldsChangeSequence.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILE_EXISTS, xml_type: FileExists, file: trans/FileExists.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: FILE_LOCKED, xml_type: FileLocked, file: trans/FileLocked.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: EXEC_PROCESS, xml_type: ExecProcess, file: trans/ExecProcess.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ZIP_FILE_STEP, xml_type: ZipFile, file: trans/ZipFile.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: CHANGE_FILE_ENCODING, xml_type: ChangeFileEncoding, file: trans/ChangeFileEncoding.md, status: canonical, generator_eligible: true, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: AGGREGATE_ROWS, xml_type: AggregateRows, file: trans/AggregateRows.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: DUMMY_STEP, xml_type: DummyStep, file: trans/DummyStep.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: OLD_TEXT_FILE_INPUT, xml_type: OldTextFileInput, file: trans/OldTextFileInput.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: SCRIPT_DEPRECATED, xml_type: Script, file: trans/Script.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: TEXT_FILE_OUTPUT_LEGACY, xml_type: TextFileOutputLegacy, file: trans/TextFileOutputLegacy.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: GET_PREVIOUS_ROW_FIELD, xml_type: GetPreviousRowField, file: trans/GetPreviousRowField.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}
+    - {type: ELASTIC_SEARCH_BULK, xml_type: ElasticSearchBulk, file: trans/ElasticSearchBulk.md, status: observed, generator_eligible: false, source_version: "9.4", verified_versions: "9.4", verification: source_reviewed}

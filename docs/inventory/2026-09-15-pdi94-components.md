@@ -138,32 +138,32 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 | [ ] | job | `MSSQL_BULK_LOAD` | BulkLoading | `org.pentaho.di.job.entries.mssqlbulkload.JobEntryMssqlBulkLoad` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `MYSQL_BULK_FILE` | BulkLoading | `org.pentaho.di.job.entries.mysqlbulkfile.JobEntryMysqlBulkFile` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `MYSQL_BULK_LOAD` | BulkLoading | `org.pentaho.di.job.entries.mysqlbulkload.JobEntryMysqlBulkLoad` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | job | `PGP_DECRYPT_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpdecryptfiles.JobEntryPGPDecryptFiles` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | job | `PGP_ENCRYPT_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpencryptfiles.JobEntryPGPEncryptFiles` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | job | `PGP_VERIFY_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpverify.JobEntryPGPVerify` — `engine/src/main/resources/kettle-job-entries.xml` |
+| [x] | job | `PGP_DECRYPT_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpdecryptfiles.JobEntryPGPDecryptFiles` — `engine/src/main/resources/kettle-job-entries.xml` |
+| [x] | job | `PGP_ENCRYPT_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpencryptfiles.JobEntryPGPEncryptFiles` — `engine/src/main/resources/kettle-job-entries.xml` |
+| [x] | job | `PGP_VERIFY_FILES` | FileEncryption | `org.pentaho.di.job.entries.pgpverify.JobEntryPGPVerify` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `PING` | Utility | `org.pentaho.di.job.entries.ping.JobEntryPing` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `SEND_NAGIOS_PASSIVE_CHECK` | Utility | `org.pentaho.di.job.entries.sendnagiospassivecheck.JobEntrySendNagiosPassiveCheck` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `SNMP_TRAP` | Utility | `org.pentaho.di.job.entries.snmptrap.JobEntrySNMPTrap` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `SYSLOG` | Utility | `org.pentaho.di.job.entries.syslog.JobEntrySyslog` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `TELNET` | Utility | `org.pentaho.di.job.entries.telnet.JobEntryTelnet` — `engine/src/main/resources/kettle-job-entries.xml` |
 | [ ] | job | `WEBSERVICE_AVAILABLE` | Conditions | `org.pentaho.di.job.entries.webserviceavailable.JobEntryWebServiceAvailable` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | trans | `AccessInput` | Input | `org.pentaho.di.trans.steps.accessinput.AccessInputMeta` — `plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessinput/AccessInputMeta.java` |
-| [ ] | trans | `AccessOutput` | Output | `org.pentaho.di.trans.steps.accessoutput.AccessOutputMeta` — `plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessoutput/AccessOutputMeta.java` |
+| [x] | trans | `AccessInput` | Input | `org.pentaho.di.trans.steps.accessinput.AccessInputMeta` — `plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessinput/AccessInputMeta.java` |
+| [x] | trans | `AccessOutput` | Output | `org.pentaho.di.trans.steps.accessoutput.AccessOutputMeta` — `plugins/ms-access/impl/src/main/java/org/pentaho/di/trans/steps/accessoutput/AccessOutputMeta.java` |
 | [ ] | trans | `AutoDoc` | Output | `org.pentaho.di.trans.steps.autodoc.AutoDocMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/autodoc/AutoDocMeta.java` |
 | [ ] | trans | `AvroInputNew` | BigData | `org.pentaho.di.trans.steps.avro.input.AvroInputMeta` — `plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/input/AvroInputMeta.java` |
 | [ ] | trans | `AvroOutput` | BigData | `org.pentaho.di.trans.steps.avro.output.AvroOutputMeta` — `plugins/avro-format/core/src/main/java/org/pentaho/di/trans/steps/avro/output/AvroOutputMeta.java` |
-| [ ] | trans | `ChangeFileEncoding` | Utility | `org.pentaho.di.trans.steps.changefileencoding.ChangeFileEncodingMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/changefileencoding/ChangeFileEncodingMeta.java` |
+| [x] | trans | `ChangeFileEncoding` | Utility | `org.pentaho.di.trans.steps.changefileencoding.ChangeFileEncodingMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/changefileencoding/ChangeFileEncodingMeta.java` |
 | [ ] | trans | `ClosureGenerator` | Transform | `org.pentaho.di.trans.steps.closure.ClosureGeneratorMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/closure/ClosureGeneratorMeta.java` |
 | [ ] | trans | `CreditCardValidator` | Validation | `org.pentaho.di.trans.steps.creditcardvalidator.CreditCardValidatorMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `CubeInput` | Input | `org.pentaho.di.trans.steps.cubeinput.CubeInputMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeinput/CubeInputMeta.java` |
 | [ ] | trans | `CubeOutput` | Output | `org.pentaho.di.trans.steps.cubeoutput.CubeOutputMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/cubeoutput/CubeOutputMeta.java` |
 | [ ] | trans | `Delay` | Utility | `org.pentaho.di.trans.steps.delay.DelayMeta` — `plugins/core/impl/src/main/java/org/pentaho/di/trans/steps/delay/DelayMeta.java` |
 | [ ] | trans | `DynamicSQLRow` | Lookup | `org.pentaho.di.trans.steps.dynamicsqlrow.DynamicSQLRowMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `ExecProcess` | Utility | `org.pentaho.di.trans.steps.execprocess.ExecProcessMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `ExecProcess` | Utility | `org.pentaho.di.trans.steps.execprocess.ExecProcessMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `ExecSQLRow` | Scripting | `org.pentaho.di.trans.steps.execsqlrow.ExecSQLRowMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `FieldsChangeSequence` | Transform | `org.pentaho.di.trans.steps.fieldschangesequence.FieldsChangeSequenceMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `FileExists` | Lookup | `org.pentaho.di.trans.steps.fileexists.FileExistsMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `FileLocked` | Lookup | `org.pentaho.di.trans.steps.filelocked.FileLockedMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `FieldsChangeSequence` | Transform | `org.pentaho.di.trans.steps.fieldschangesequence.FieldsChangeSequenceMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `FileExists` | Lookup | `org.pentaho.di.trans.steps.fileexists.FileExistsMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `FileLocked` | Lookup | `org.pentaho.di.trans.steps.filelocked.FileLockedMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `FileStream` | Streaming | `org.pentaho.di.trans.step.filestream.FileStreamMeta` — `plugins/file-stream/src/main/java/org/pentaho/di/trans/step/filestream/FileStreamMeta.java` |
 | [ ] | trans | `FuzzyMatch` | Lookup | `org.pentaho.di.trans.steps.fuzzymatch.FuzzyMatchMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `GetRepositoryNames` | Input | `org.pentaho.di.trans.steps.getrepositorynames.GetRepositoryNamesMeta` — `engine/src/main/resources/kettle-steps.xml` |
@@ -173,13 +173,13 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 | [ ] | trans | `HL7Input` | Input | `org.pentaho.di.trans.steps.hl7input.HL7InputMeta` — `plugins/hl7/core/src/main/java/org/pentaho/di/trans/steps/hl7input/HL7InputMeta.java` |
 | [ ] | trans | `InfobrightOutput` | Bulk | `org.pentaho.di.trans.steps.infobrightoutput.InfobrightLoaderMeta` — `plugins/infobright-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/infobrightoutput/InfobrightLoaderMeta.java` |
 | [ ] | trans | `Injector` | Inline | `org.pentaho.di.trans.steps.injector.InjectorMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `Janino` | Scripting | `org.pentaho.di.trans.steps.janino.JaninoMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `JavaFilter` | Flow | `org.pentaho.di.trans.steps.javafilter.JavaFilterMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `Janino` | Scripting | `org.pentaho.di.trans.steps.janino.JaninoMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `JavaFilter` | Flow | `org.pentaho.di.trans.steps.javafilter.JavaFilterMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `Jms2Consumer` | Streaming | `org.pentaho.di.trans.step.jms.JmsConsumerMeta` — `plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsConsumerMeta.java` |
 | [ ] | trans | `Jms2Producer` | Streaming | `org.pentaho.di.trans.step.jms.JmsProducerMeta` — `plugins/streaming/impls/jms/src/main/java/org/pentaho/di/trans/step/jms/JmsProducerMeta.java` |
-| [ ] | trans | `LDAPInput` | Input | `org.pentaho.di.trans.steps.ldapinput.LDAPInputMeta` — `plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapinput/LDAPInputMeta.java` |
-| [ ] | trans | `LDAPOutput` | Output | `org.pentaho.di.trans.steps.ldapoutput.LDAPOutputMeta` — `plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapoutput/LDAPOutputMeta.java` |
-| [ ] | trans | `LDIFInput` | Input | `org.pentaho.di.trans.steps.ldifinput.LDIFInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `LDAPInput` | Input | `org.pentaho.di.trans.steps.ldapinput.LDAPInputMeta` — `plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapinput/LDAPInputMeta.java` |
+| [x] | trans | `LDAPOutput` | Output | `org.pentaho.di.trans.steps.ldapoutput.LDAPOutputMeta` — `plugins/ldap/impl/src/main/java/org/pentaho/di/trans/steps/ldapoutput/LDAPOutputMeta.java` |
+| [x] | trans | `LDIFInput` | Input | `org.pentaho.di.trans.steps.ldifinput.LDIFInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `Mail` | Utility | `org.pentaho.di.trans.steps.mail.MailMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `MailInput` | Input | `org.pentaho.di.trans.steps.mailinput.MailInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `MailValidator` | Validation | `org.pentaho.di.trans.steps.mailvalidator.MailValidatorMeta` — `engine/src/main/resources/kettle-steps.xml` |
@@ -193,25 +193,25 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 | [ ] | trans | `ParallelGzipCsvInput` | Input | `org.pentaho.di.trans.steps.parallelgzipcsv.ParGzipCsvInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `PentahoReportingOutput` | Output | `org.pentaho.di.trans.steps.pentahoreporting.PentahoReportingOutputMeta` — `plugins/pentaho-reporting/impl/src/main/java/org/pentaho/di/trans/steps/pentahoreporting/PentahoReportingOutputMeta.java` |
 | [ ] | trans | `PGBulkLoader` | Bulk | `org.pentaho.di.trans.steps.pgbulkloader.PGBulkLoaderMeta` — `plugins/postgresql-db-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/pgbulkloader/PGBulkLoaderMeta.java` |
-| [ ] | trans | `PGPDecryptStream` | Cryptography | `org.pentaho.di.trans.steps.pgpdecryptstream.PGPDecryptStreamMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `PGPEncryptStream` | Cryptography | `org.pentaho.di.trans.steps.pgpencryptstream.PGPEncryptStreamMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `PGPDecryptStream` | Cryptography | `org.pentaho.di.trans.steps.pgpdecryptstream.PGPDecryptStreamMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `PGPEncryptStream` | Cryptography | `org.pentaho.di.trans.steps.pgpencryptstream.PGPEncryptStreamMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `PrioritizeStreams` | Flow | `org.pentaho.di.trans.steps.prioritizestreams.PrioritizeStreamsMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `RandomCCNumberGenerator` | Input | `org.pentaho.di.trans.steps.randomccnumber.RandomCCNumberGeneratorMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `RecordsFromStream` | Streaming | `org.pentaho.di.trans.steps.recordsfromstream.RecordsFromStreamMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `ReservoirSampling` | Statistics | `org.pentaho.di.trans.steps.reservoirsampling.ReservoirSamplingMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `ReservoirSampling` | Statistics | `org.pentaho.di.trans.steps.reservoirsampling.ReservoirSamplingMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `RssInput` | Input | `org.pentaho.di.trans.steps.rssinput.RssInputMeta` — `plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssinput/RssInputMeta.java` |
 | [ ] | trans | `RssOutput` | Output | `org.pentaho.di.trans.steps.rssoutput.RssOutputMeta` — `plugins/rss/impl/src/main/java/org/pentaho/di/trans/steps/rssoutput/RssOutputMeta.java` |
-| [ ] | trans | `RuleAccumulator` | Scripting | `org.pentaho.di.trans.steps.rules.RulesAccumulatorMeta` — `plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesAccumulatorMeta.java` |
-| [ ] | trans | `RuleExecutor` | Scripting | `org.pentaho.di.trans.steps.rules.RulesExecutorMeta` — `plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesExecutorMeta.java` |
+| [x] | trans | `RuleAccumulator` | Scripting | `org.pentaho.di.trans.steps.rules.RulesAccumulatorMeta` — `plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesAccumulatorMeta.java` |
+| [x] | trans | `RuleExecutor` | Scripting | `org.pentaho.di.trans.steps.rules.RulesExecutorMeta` — `plugins/drools/core/src/main/java/org/pentaho/di/trans/steps/rules/RulesExecutorMeta.java` |
 | [ ] | trans | `S3CSVINPUT` | Input | `org.pentaho.di.trans.steps.s3csvinput.S3CsvInputMeta` — `plugins/s3csvinput/core/src/main/java/org/pentaho/di/trans/steps/s3csvinput/S3CsvInputMeta.java` |
-| [ ] | trans | `SalesforceDelete` | Output | `org.pentaho.di.trans.steps.salesforcedelete.SalesforceDeleteMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforcedelete/SalesforceDeleteMeta.java` |
-| [ ] | trans | `SalesforceInput` | Input | `org.pentaho.di.trans.steps.salesforceinput.SalesforceInputMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinput/SalesforceInputMeta.java` |
-| [ ] | trans | `SalesforceInsert` | Output | `org.pentaho.di.trans.steps.salesforceinsert.SalesforceInsertMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinsert/SalesforceInsertMeta.java` |
-| [ ] | trans | `SalesforceUpdate` | Output | `org.pentaho.di.trans.steps.salesforceupdate.SalesforceUpdateMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupdate/SalesforceUpdateMeta.java` |
-| [ ] | trans | `SalesforceUpsert` | Output | `org.pentaho.di.trans.steps.salesforceupsert.SalesforceUpsertMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupsert/SalesforceUpsertMeta.java` |
-| [ ] | trans | `SampleRows` | Statistics | `org.pentaho.di.trans.steps.samplerows.SampleRowsMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `SalesforceDelete` | Output | `org.pentaho.di.trans.steps.salesforcedelete.SalesforceDeleteMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforcedelete/SalesforceDeleteMeta.java` |
+| [x] | trans | `SalesforceInput` | Input | `org.pentaho.di.trans.steps.salesforceinput.SalesforceInputMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinput/SalesforceInputMeta.java` |
+| [x] | trans | `SalesforceInsert` | Output | `org.pentaho.di.trans.steps.salesforceinsert.SalesforceInsertMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceinsert/SalesforceInsertMeta.java` |
+| [x] | trans | `SalesforceUpdate` | Output | `org.pentaho.di.trans.steps.salesforceupdate.SalesforceUpdateMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupdate/SalesforceUpdateMeta.java` |
+| [x] | trans | `SalesforceUpsert` | Output | `org.pentaho.di.trans.steps.salesforceupsert.SalesforceUpsertMeta` — `plugins/salesforce/core/src/main/java/org/pentaho/di/trans/steps/salesforceupsert/SalesforceUpsertMeta.java` |
+| [x] | trans | `SampleRows` | Statistics | `org.pentaho.di.trans.steps.samplerows.SampleRowsMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `SASInput` | Input | `org.pentaho.di.trans.steps.sasinput.SasInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `SecretKeyGenerator` | Cryptography | `org.pentaho.di.trans.steps.symmetriccrypto.secretkeygenerator.SecretKeyGeneratorMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `SecretKeyGenerator` | Cryptography | `org.pentaho.di.trans.steps.symmetriccrypto.secretkeygenerator.SecretKeyGeneratorMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `SFTPPut` | Experimental | `org.pentaho.di.trans.steps.sftpput.SFTPPutMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `ShapeFileReader` | Input | `org.pentaho.di.shapefilereader.ShapeFileReaderMeta` — `plugins/shapefilereader/core/src/main/java/org/pentaho/di/shapefilereader/ShapeFileReaderMeta.java` |
 | [ ] | trans | `SocketReader` | Inline | `org.pentaho.di.trans.steps.socketreader.SocketReaderMeta` — `engine/src/main/resources/kettle-steps.xml` |
@@ -219,20 +219,20 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 | [ ] | trans | `SQLFileOutput` | Output | `org.pentaho.di.trans.steps.sqlfileoutput.SQLFileOutputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `SSH` | Utility | `org.pentaho.di.trans.steps.ssh.SSHMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `StepMetastructure` | Utility | `org.pentaho.di.trans.steps.stepmeta.StepMetastructureMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `StepsMetrics` | Statistics | `org.pentaho.di.trans.steps.stepsmetrics.StepsMetricsMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `SymmetricCryptoTrans` | Cryptography | `org.pentaho.di.trans.steps.symmetriccrypto.symmetriccryptotrans.SymmetricCryptoTransMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `StepsMetrics` | Statistics | `org.pentaho.di.trans.steps.stepsmetrics.StepsMetricsMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `SymmetricCryptoTrans` | Cryptography | `org.pentaho.di.trans.steps.symmetriccrypto.symmetriccryptotrans.SymmetricCryptoTransMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `SyslogMessage` | Utility | `org.pentaho.di.trans.steps.syslog.SyslogMessageMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `TableCompare` | Name | `org.pentaho.di.trans.steps.tablecompare.TableCompareMeta` — `engine/src/main/java/org/pentaho/di/trans/steps/tablecompare/TableCompareMeta.java` |
 | [ ] | trans | `TypeExitEdi2XmlStep` | Utility | `org.pentaho.di.trans.steps.edi2xml.Edi2XmlMeta` — `plugins/edi2xml/impl/src/main/java/org/pentaho/di/trans/steps/edi2xml/Edi2XmlMeta.java` |
 | [ ] | trans | `TypeExitGoogleAnalyticsInputStep` | Input | `org.pentaho.di.trans.steps.googleanalytics.GaInputStepMeta` — `plugins/google-analytics/core/src/main/java/org/pentaho/di/trans/steps/googleanalytics/GaInputStepMeta.java` |
-| [ ] | trans | `UnivariateStats` | Statistics | `org.pentaho.di.trans.steps.univariatestats.UnivariateStatsMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `UserDefinedJavaClass` | Scripting | `org.pentaho.di.trans.steps.userdefinedjavaclass.UserDefinedJavaClassMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `UnivariateStats` | Statistics | `org.pentaho.di.trans.steps.univariatestats.UnivariateStatsMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `UserDefinedJavaClass` | Scripting | `org.pentaho.di.trans.steps.userdefinedjavaclass.UserDefinedJavaClassMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `VectorWiseBulkLoader` | Bulk | `org.pentaho.di.trans.steps.ivwloader.IngresVectorwiseLoaderMeta` — `plugins/ivw-bulk-loader/impl/src/main/java/org/pentaho/di/trans/steps/ivwloader/IngresVectorwiseLoaderMeta.java` |
 | [ ] | trans | `WebServiceAvailable` | Lookup | `org.pentaho.di.trans.steps.webserviceavailable.WebServiceAvailableMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `WebServiceLookup` | Lookup | `org.pentaho.di.trans.steps.webservices.WebServiceMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `XBaseInput` | Input | `org.pentaho.di.trans.steps.xbaseinput.XBaseInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `XMLInputStream` | category | `org.pentaho.di.trans.steps.xmlinputstream.XMLInputStreamMeta` — `plugins/xml/core/src/main/java/org/pentaho/di/trans/steps/xmlinputstream/XMLInputStreamMeta.java` |
-| [ ] | trans | `ZipFile` | Utility | `org.pentaho.di.trans.steps.zipfile.ZipFileMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `ZipFile` | Utility | `org.pentaho.di.trans.steps.zipfile.ZipFileMeta` — `engine/src/main/resources/kettle-steps.xml` |
 
 ## B7 — 21 ID chưa có catalog
 
@@ -240,23 +240,23 @@ Mỗi đợt chia thành gói 3–5 ID có quan hệ; B6/B7 không giao thành m
 |---|---|---|---|---|
 | [ ] | job | `MS_ACCESS_BULK_LOAD` | Deprecated | `org.pentaho.di.job.entries.msaccessbulkload.JobEntryMSAccessBulkLoad` — `plugins/ms-access/impl/src/main/java/org/pentaho/di/job/entries/msaccessbulkload/JobEntryMSAccessBulkLoad.java` |
 | [ ] | job | `TALEND_JOB_EXEC` | Deprecated | `org.pentaho.di.job.entries.talendjobexec.JobEntryTalendJobExec` — `engine/src/main/resources/kettle-job-entries.xml` |
-| [ ] | trans | `AggregateRows` | Deprecated | `org.pentaho.di.trans.steps.aggregaterows.AggregateRowsMeta` — `plugins/aggregate-rows/core/src/main/java/org/pentaho/di/trans/steps/aggregaterows/AggregateRowsMeta.java` |
-| [ ] | trans | `DummyStep` | Deprecated | `org.pentaho.di.be.ibridge.kettle.dummy.DummyPluginMeta` — `plugins/dummy/core/src/main/java/org/pentaho/di/be/ibridge/kettle/dummy/DummyPluginMeta.java` |
-| [ ] | trans | `ElasticSearchBulk` | Deprecated | `org.pentaho.di.trans.steps.elasticsearchbulk.ElasticSearchBulkMeta` — `plugins/elasticsearch-bulk-insert/core/src/main/java/org/pentaho/di/trans/steps/elasticsearchbulk/ElasticSearchBulkMeta.java` |
-| [ ] | trans | `GetPreviousRowField` | Deprecated | `org.pentaho.di.trans.steps.getpreviousrowfield.GetPreviousRowFieldMeta` — `plugins/get-previous-row-field/core/src/main/java/org/pentaho/di/trans/steps/getpreviousrowfield/GetPreviousRowFieldMeta.java` |
+| [x] | trans | `AggregateRows` | Deprecated | `org.pentaho.di.trans.steps.aggregaterows.AggregateRowsMeta` — `plugins/aggregate-rows/core/src/main/java/org/pentaho/di/trans/steps/aggregaterows/AggregateRowsMeta.java` |
+| [x] | trans | `DummyStep` | Deprecated | `org.pentaho.di.be.ibridge.kettle.dummy.DummyPluginMeta` — `plugins/dummy/core/src/main/java/org/pentaho/di/be/ibridge/kettle/dummy/DummyPluginMeta.java` |
+| [x] | trans | `ElasticSearchBulk` | Deprecated | `org.pentaho.di.trans.steps.elasticsearchbulk.ElasticSearchBulkMeta` — `plugins/elasticsearch-bulk-insert/core/src/main/java/org/pentaho/di/trans/steps/elasticsearchbulk/ElasticSearchBulkMeta.java` |
+| [x] | trans | `GetPreviousRowField` | Deprecated | `org.pentaho.di.trans.steps.getpreviousrowfield.GetPreviousRowFieldMeta` — `plugins/get-previous-row-field/core/src/main/java/org/pentaho/di/trans/steps/getpreviousrowfield/GetPreviousRowFieldMeta.java` |
 | [ ] | trans | `GPBulkLoader` | Deprecated | `org.pentaho.di.trans.steps.gpbulkloader.GPBulkLoaderMeta` — `plugins/gp-bulk-loader/core/src/main/java/org/pentaho/di/trans/steps/gpbulkloader/GPBulkLoaderMeta.java` |
 | [ ] | trans | `LucidDBStreamingLoader` | Deprecated | `org.pentaho.di.trans.steps.luciddbstreamingloader.LucidDBStreamingLoaderMeta` — `plugins/lucid-db-streaming-loader/core/src/main/java/org/pentaho/di/trans/steps/luciddbstreamingloader/LucidDBStreamingLoaderMeta.java` |
-| [ ] | trans | `OldTextFileInput` | Deprecated | `org.pentaho.di.trans.steps.textfileinput.TextFileInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `OldTextFileInput` | Deprecated | `org.pentaho.di.trans.steps.textfileinput.TextFileInputMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `OpenERPObjectDelete` | Deprecated | `org.pentaho.di.trans.steps.openerp.objectdelete.OpenERPObjectDeleteMeta` — `plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectdelete/OpenERPObjectDeleteMeta.java` |
 | [ ] | trans | `OpenERPObjectInput` | Deprecated | `org.pentaho.di.trans.steps.openerp.objectinput.OpenERPObjectInputMeta` — `plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectinput/OpenERPObjectInputMeta.java` |
 | [ ] | trans | `OpenERPObjectOutputImport` | Deprecated | `org.pentaho.di.trans.steps.openerp.objectoutput.OpenERPObjectOutputMeta` — `plugins/openerp/core/src/main/java/org/pentaho/di/trans/steps/openerp/objectoutput/OpenERPObjectOutputMeta.java` |
-| [ ] | trans | `PaloCellInput` | Deprecated | `org.pentaho.di.trans.steps.palo.cellinput.PaloCellInputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/cellinput/PaloCellInputMeta.java` |
-| [ ] | trans | `PaloCellOutput` | Deprecated | `org.pentaho.di.trans.steps.palo.celloutput.PaloCellOutputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/celloutput/PaloCellOutputMeta.java` |
-| [ ] | trans | `PaloDimInput` | Deprecated | `org.pentaho.di.trans.steps.palo.diminput.PaloDimInputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/diminput/PaloDimInputMeta.java` |
-| [ ] | trans | `PaloDimOutput` | Deprecated | `org.pentaho.di.trans.steps.palo.dimoutput.PaloDimOutputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/dimoutput/PaloDimOutputMeta.java` |
+| [x] | trans | `PaloCellInput` | Deprecated | `org.pentaho.di.trans.steps.palo.cellinput.PaloCellInputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/cellinput/PaloCellInputMeta.java` |
+| [x] | trans | `PaloCellOutput` | Deprecated | `org.pentaho.di.trans.steps.palo.celloutput.PaloCellOutputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/celloutput/PaloCellOutputMeta.java` |
+| [x] | trans | `PaloDimInput` | Deprecated | `org.pentaho.di.trans.steps.palo.diminput.PaloDimInputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/diminput/PaloDimInputMeta.java` |
+| [x] | trans | `PaloDimOutput` | Deprecated | `org.pentaho.di.trans.steps.palo.dimoutput.PaloDimOutputMeta` — `plugins/palo/core/src/main/java/org/pentaho/di/trans/steps/palo/dimoutput/PaloDimOutputMeta.java` |
 | [ ] | trans | `SAPINPUT` | Deprecated | `org.pentaho.di.trans.steps.sapinput.SapInputMeta` — `plugins/sap/core/src/main/java/org/pentaho/di/trans/steps/sapinput/SapInputMeta.java` |
-| [ ] | trans | `Script` | Deprecated | `org.pentaho.di.trans.steps.script.ScriptMeta` — `engine/src/main/resources/kettle-steps.xml` |
-| [ ] | trans | `TextFileOutputLegacy` | Deprecated | `org.pentaho.di.trans.steps.textfileoutputlegacy.TextFileOutputLegacyMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `Script` | Deprecated | `org.pentaho.di.trans.steps.script.ScriptMeta` — `engine/src/main/resources/kettle-steps.xml` |
+| [x] | trans | `TextFileOutputLegacy` | Deprecated | `org.pentaho.di.trans.steps.textfileoutputlegacy.TextFileOutputLegacyMeta` — `engine/src/main/resources/kettle-steps.xml` |
 | [ ] | trans | `XMLInput` | Deprecated | `org.pentaho.di.trans.steps.xmlinput.XMLInputMeta` — `plugins/xml-input/core/src/main/java/org/pentaho/di/trans/steps/xmlinput/XMLInputMeta.java` |
 | [ ] | trans | `XMLInputSax` | Deprecated | `org.pentaho.di.trans.steps.xmlinputsax.XMLInputSaxMeta` — `plugins/xml-input-stream/core/src/main/java/org/pentaho/di/trans/steps/xmlinputsax/XMLInputSaxMeta.java` |
 

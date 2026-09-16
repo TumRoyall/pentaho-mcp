@@ -63,8 +63,17 @@ test('stdio smoke: initialize, 41 tools, and tool calls', async () => {
     path.join(root, 'add.ktr'),
     '<transformation><info><name>x</name></info><order/></transformation>',
   );
+  // No manual KETTLE_ROOT: the server auto-detects its workspace. With no
+  // repository registry reachable (home/PENTAHO_HOME blanked), it falls back
+  // to the working directory, so we run it with cwd set to the temp root.
+  const env = { ...process.env };
+  delete env.KETTLE_ROOT;
+  delete env.USERPROFILE;
+  delete env.HOME;
+  delete env.PENTAHO_HOME;
   const proc = spawn(process.execPath, [path.join(here, '..', 'src', 'index.js')], {
-    env: { ...process.env, KETTLE_ROOT: root },
+    cwd: root,
+    env,
     stdio: ['pipe', 'pipe', 'pipe'],
   });
   proc.stdin.write([

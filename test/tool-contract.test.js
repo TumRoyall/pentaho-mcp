@@ -91,8 +91,16 @@ test('read-only tools carry readOnlyHint, runtime execute is destructive+openWor
 test('stdio: missing file, unknown tool, and bad arguments all set isError', async () => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'kettle-contract-'));
   copyFileSync(path.join(here, 'fixtures', 'mini.ktr'), path.join(root, 'mini.ktr'));
+  // Auto-detected workspace: blank the repository-registry sources so
+  // detection falls back to the working directory (the temp root).
+  const env = { ...process.env };
+  delete env.KETTLE_ROOT;
+  delete env.USERPROFILE;
+  delete env.HOME;
+  delete env.PENTAHO_HOME;
   const proc = spawn(process.execPath, [path.join(repoRoot, 'src', 'index.js')], {
-    env: { ...process.env, KETTLE_ROOT: root },
+    cwd: root,
+    env,
     stdio: ['pipe', 'pipe', 'pipe'],
   });
   proc.stdin.write([

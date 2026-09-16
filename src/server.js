@@ -1,8 +1,11 @@
 /**
  * MCP server wiring for kettle-mcp-dte.
  *
- * KETTLE_ROOT: default scope for list/search/validate and the write boundary
- * for edit tools. Relative tool paths resolve against it.
+ * The workspace root is auto-detected (see workspace/resolve-root.js): a file
+ * repository declared in ~/.kettle/repositories.xml, else one in
+ * PENTAHO_HOME/repositories.xml, else the current working directory. It is the
+ * default scope for list/search/validate and the write boundary for edit
+ * tools; relative tool paths resolve against it.
  * KETTLE_KNOWLEDGE_DIR: optional override for the embedded knowledge base.
  *
  * Every result is `text` content containing {ok, data|error} JSON, so tool
@@ -17,22 +20,40 @@ import {
 import { buildTools } from './tools/registry.js';
 import { validateToolArguments } from './tools/schema.js';
 import { createWorkspaceBoundary } from './workspace/boundary.js';
+import { resolveWorkspaceRoot } from './workspace/resolve-root.js';
 import { createRepositoryPaths } from './repository/paths.js';
 import { SERVER_VERSION } from './version.js';
 
 export function makeContext({
-  root = process.env.KETTLE_ROOT ?? process.cwd(),
+  root,
   pentahoHome = process.env.PENTAHO_HOME,
   repositoryName = process.env.PENTAHO_REPOSITORY_NAME,
 } = {}) {
+  // Resolve the workspace root when one is not supplied explicitly (tests and
+  // programmatic callers may pass one). Detection mirrors Spoon's repository
+  // lookup and falls back to the working directory.
+  let workspaceMode = 'file';
+  let workspaceSource = 'explicit';
+  let detectedRepositoryName = null;
+  if (root == null) {
+    const detected = resolveWorkspaceRoot({ pentahoHome });
+    root = detected.root;
+    workspaceMode = detected.mode;
+    workspaceSource = detected.source;
+    detectedRepositoryName = detected.repository?.name ?? null;
+  }
+
   const boundary = createWorkspaceBoundary(root);
   const repositoryPaths = createRepositoryPaths(boundary);
+  const resolvedRepositoryName = typeof repositoryName === 'string' && repositoryName.trim()
+    ? repositoryName.trim()
+    : detectedRepositoryName;
   return {
     ...boundary,
     repositoryPaths,
-    repositoryName: typeof repositoryName === 'string' && repositoryName.trim()
-      ? repositoryName.trim()
-      : null,
+    workspaceMode,
+    workspaceSource,
+    repositoryName: resolvedRepositoryName,
     pentahoHome: typeof pentahoHome === 'string' && pentahoHome.trim()
       ? pentahoHome.trim()
       : null,
@@ -88,5 +109,5 @@ export async function startServer() {
   const { server, ctx } = createServer();
   process.on('SIGINT', () => { void server.close(); process.exit(0); });
   await server.connect(new StdioServerTransport());
-  console.error(`kettle-mcp-dte running on stdio (KETTLE_ROOT=${ctx.root})`);
+  console.error(`kettle-mcp-dte running on stdio (root=${ctx.root}, mode=${ctx.workspaceMode}, source=${ctx.workspaceSource})`);
 }

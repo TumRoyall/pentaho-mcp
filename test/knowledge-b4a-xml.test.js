@@ -435,7 +435,10 @@ test('XSLT template follows XsltMeta.getXML: scalars, paired parameters with fie
     assert.ok(hasOwn(p, 'field'), 'every <parameter> must carry <field> (row field)');
     assert.ok(hasOwn(p, 'name'), 'every <parameter> must carry <name> (stylesheet parameter)');
   }
-  assertTagOrder(block, ['<parameters>', '<field>', '<name>'], 'XSLT parameter field-first');
+  // Scope to the <parameters> region so the assertion does not collide with
+  // the step's own top-level <name> tag; within a <parameter>, <field> precedes <name>.
+  const paramsRegion = block.slice(block.indexOf('<parameters>'), block.indexOf('</parameters>'));
+  assertTagOrder(paramsRegion, ['<parameters>', '<field>', '<name>'], 'XSLT parameter field-first');
   const props = parsed.step.outputproperties;
   assert.ok(props, 'XSLT template must carry a paired <outputproperties> wrapper per getXML()');
   assert.ok(block.includes('</parameters>'), '<parameters> must be paired');
@@ -506,7 +509,7 @@ test('XMLInputStream template follows XMLInputStreamMeta.getXML: 34 scalars with
       '<xmlDataValueField>'],
     'XMLInputStream columns');
   assert.equal(parsed.step.encoding, 'UTF-8', 'encoding defaults UTF-8 (setDefault)');
-  assert.equal(parsed.step.defaultStringLen, '1024',
+  assert.equal(String(parsed.step.defaultStringLen), '1024',
     'defaultStringLen defaults "1024" (setDefault)');
   assert.equal(parsed.step.enableTrim, 'Y', 'enableTrim defaults Y (setDefault true)');
   assert.equal(parsed.step.includeXmlPathField, 'Y',

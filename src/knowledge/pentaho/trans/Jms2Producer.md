@@ -88,6 +88,45 @@ Producer KHÔNG có prop streaming-base (không `TRANSFORMATION_PATH`).
         <property group="SSL_GROUP" name="SSL_ENABLED">
           <value>false</value>
         </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_PATH">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_TYPE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_PASSWORD">
+          <value>${SSL_KEYSTORE_PASSWORD}</value>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_PATH">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_TYPE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_PASSWORD">
+          <value>${SSL_TRUSTSTORE_PASSWORD}</value>
+        </property>
+        <property group="SSL_GROUP" name="SSL_CONTEXT_ALGORITHM">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_CIPHERSUITE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="IBM_SSL_FIPSREQUIRED">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_PROVIDER">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_VERIFY_HOST">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_TRUST_ALL">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_USE_DEFAULT_CONTEXT">
+          <value>false</value>
+        </property>
       </group>
     </step-props>
     <attributes/>

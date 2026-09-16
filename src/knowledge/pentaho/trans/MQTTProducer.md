@@ -20,7 +20,7 @@ streaming-base.
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <step-props secure="">
+    <step-props secure="PASSWORD SSL_VALUES">
       <group name="">
         <property group="" name="MQTT_SERVER">
           <value>${MQTT_SERVER}</value>

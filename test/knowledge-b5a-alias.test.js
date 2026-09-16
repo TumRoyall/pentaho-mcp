@@ -103,13 +103,13 @@ afterEach(() => {
   rmSync(tmp, { recursive: true, force: true });
 });
 
-function minimalKtr(name = 'b5a', withConnection = false) {
+function minimalKtr(name = 'b5a', withConnection = false, connectionName = '${CONN}') {
   const file = path.join(tmp, `${name}.ktr`);
   writeFileSync(file, [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<transformation>',
     `  <info><name>${name}</name></info>`,
-    ...(withConnection ? ['  <connection><name>${CONN}</name></connection>'] : []),
+    ...(withConnection ? [`  <connection><name>${connectionName}</name></connection>`] : []),
     '  <order/>',
     '</transformation>',
   ].join('\n'));
@@ -261,8 +261,9 @@ test('TeraFast template follows the property serializer: alphabetical tags inclu
   assert.equal(parsed.step.truncate_table, 'Y', 'truncate_table defaults Y (setDefault true)');
 
   // Non-default configuration: staging table with four comma-joined columns.
-  // Fixture MUST declare ${CONN} (undefined-connection rule).
-  const file = minimalKtr('b5a-terafast', true);
+  // Fixture MUST declare the connection the step references (undefined-connection
+  // rule) — here ${TERADATA_CONN} to match the setFieldPath below.
+  const file = minimalKtr('b5a-terafast', true, '${TERADATA_CONN}');
   addElement(file, 'TeraFastPlugin', 'Bulk load staging');
   setFieldPath(file, 'Bulk load staging', 'connection', '${TERADATA_CONN}');
   setFieldPath(file, 'Bulk load staging', 'target_table', '${TARGET_TABLE}_${RUN_ID}');

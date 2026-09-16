@@ -20,7 +20,7 @@ dòng với 2 cột (`MSG_OUTPUT_NAME`, `TOPIC_OUTPUT_NAME`, mặc định
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <step-props secure="">
+    <step-props secure="PASSWORD SSL_VALUES">
       <group name="">
         <property group="" name="MQTT_SERVER">
           <value>${MQTT_SERVER}</value>
@@ -79,8 +79,17 @@ dòng với 2 cột (`MSG_OUTPUT_NAME`, `TOPIC_OUTPUT_NAME`, mặc định
         <property group="" name="NUM_MESSAGES">
           <value>1000</value>
         </property>
+        <property group="" name="PREFETCH_COUNT">
+          <value>100000</value>
+        </property>
         <property group="" name="DURATION">
           <value>1000</value>
+        </property>
+        <property group="" name="SUB_STEP">
+          <value>{{SUB_STEP}}</value>
+        </property>
+        <property group="" name="PARALLELISM">
+          <value>1</value>
         </property>
       </group>
       <group name="SSL">
@@ -121,7 +130,7 @@ dòng với 2 cột (`MSG_OUTPUT_NAME`, `TOPIC_OUTPUT_NAME`, mặc định
 | `USERNAME` / `PASSWORD` | N | Credential (`${VAR}`). |
 | `KEEP_ALIVE_INTERVAL` / `MAX_INFLIGHT` / `CONNECTION_TIMEOUT` / `CLEAN_SESSION` / `STORAGE_LEVEL` / `SERVER_URIS` / `MQTT_VERSION` / `AUTOMATIC_RECONNECT` | N | Tùy chọn client Paho (trống = default lib). |
 | `MESSAGE_DATA_TYPE` | N | Kiểu dữ liệu message (mặc định String). |
-| `TRANSFORMATION_PATH` / `NUM_MESSAGES` / `DURATION` | Sub-trans Y | Như `Jms2Consumer` (kế thừa base-stream). |
+| `TRANSFORMATION_PATH` / `NUM_MESSAGES` / `PREFETCH_COUNT` / `DURATION` / `SUB_STEP` / `PARALLELISM` | Sub-trans Y / N | Kế thừa `BaseStreamStepMeta` dòng 67–83: path, batch `"1000"`, prefetch `"100000"`, duration `"1000"`, sub-step, parallelism `"1"`. |
 | `SSL`: `USE_SSL` / `SSL_KEYS` / `SSL_VALUES` | N | SSL; 2 list song song key↔value. |
 
 ## 3. YAML→XML Mapping

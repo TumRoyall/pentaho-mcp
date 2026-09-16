@@ -226,20 +226,39 @@ function minimalKjb(name = 'b61') {
 // setFieldPath cannot address repeated <property> tags by attribute).
 function setStepProp(file, propName, value) {
   const xml = readFileSync(file, 'utf8');
-  const re = new RegExp(
-    `(<property\\b[^>]*\\bname="${propName}"[^>]*>\\s*<value\\b[^>]*>)([\\s\\S]*?)(</value>)`,
+  // A <property> default value is either paired (<value>text</value>) or, for
+  // empty defaults, self-closing (<value/> or <value xsi:type="..."/>) — the
+  // JAXB serializer writes empties self-closing. Handle both forms so setting a
+  // property with an empty default (e.g. AUTOMATIC_RECONNECT) does not run the
+  // greedy match into the next property's </value>.
+  const selfClosing = new RegExp(
+    `(<property\\b[^>]*\\bname="${propName}"[^>]*>\\s*)<value\\b([^>]*?)/>`,
   );
-  assert.ok(re.test(xml), `property ${propName} present for splice`);
-  writeFileSync(file, xml.replace(re, (m, p1, p2, p3) => `${p1}${value}${p3}`));
+  const paired = new RegExp(
+    `(<property\\b[^>]*\\bname="${propName}"[^>]*>\\s*)<value\\b([^>]*?)(?<!/)>([\\s\\S]*?)</value>`,
+  );
+  let next;
+  if (selfClosing.test(xml)) {
+    next = xml.replace(selfClosing, (m, p1, attrs) => `${p1}<value${attrs}>${value}</value>`);
+  } else if (paired.test(xml)) {
+    next = xml.replace(paired, (m, p1, attrs) => `${p1}<value${attrs}>${value}</value>`);
+  } else {
+    assert.ok(false, `property ${propName} present for splice`);
+  }
+  writeFileSync(file, next);
 }
 
 function stepPropValue(file, propName) {
   const xml = readFileSync(file, 'utf8');
-  const m = new RegExp(
+  const paired = new RegExp(
     `<property\\b[^>]*\\bname="${propName}"[^>]*>\\s*<value\\b[^>]*>([\\s\\S]*?)</value>`,
   ).exec(xml);
-  assert.ok(m, `property ${propName} present`);
-  return m[1];
+  if (paired) return paired[1];
+  const selfClosing = new RegExp(
+    `<property\\b[^>]*\\bname="${propName}"[^>]*>\\s*<value\\b[^>]*/>`,
+  ).exec(xml);
+  assert.ok(selfClosing, `property ${propName} present`);
+  return '';
 }
 
 test('B6-1 catalog rows exist, are canonical, and are generator-eligible for PDI 9.4', () => {

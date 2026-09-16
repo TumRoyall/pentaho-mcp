@@ -403,8 +403,12 @@ test('RssInput template follows RssInputMeta.getXML order with url_Field case', 
       '<include_url>', '<url_Field>', '<read_from>', '<urls>', '<fields>',
       '<limit>'],
     'RssInput');
-  assert.ok(block.includes('<url_Field>'),
+  // The default template emits the empty tag self-closing (<url_Field/>);
+  // assert the capital-F casing regardless of open vs self-closing form.
+  assert.ok(/<url_Field(?:\s|\/?>)/.test(block),
     'RssInput template must keep the capital-F <url_Field> tag');
+  assert.ok(!/<url_field(?:\s|\/?>)/.test(block),
+    'RssInput template must not use lowercase <url_field> for the URL output column');
   const firstField = block.slice(block.indexOf('<fields>'));
   assertTagOrder(firstField,
     ['<name>', '<column>', '<type>', '<repeat>'],
@@ -625,16 +629,23 @@ test('PrioritizeStreams template follows PrioritizeStreamsMeta.getXML steps/step
   const stepsBlock = block.slice(block.indexOf('<steps>'));
   assertTagOrder(stepsBlock, ['<step>', '<name>'], 'PrioritizeStreams steps');
 
-  // Non-default configuration: two prioritized source steps.
+  // NOTE: no edit-API writes here. The item tag <step> collides with the
+  // root element tag <step>, so setFields()/findChildSpan cannot locate a
+  // <steps> list scoped to this step (same failure class documented for
+  // StepsMetrics in b6-2). The non-default config is asserted from the
+  // reference's second fenced block instead.
+  const blocks = [...ref.content.matchAll(/```xml\r?\n([\s\S]*?)```/g)].map((m) => m[1].trim());
+  assert.ok(blocks.length >= 2, 'reference carries a non-default example block');
+  const nonDefault = blocks[blocks.length - 1];
+  const stepsExample = nonDefault.slice(nonDefault.indexOf('<steps>'));
+  assertTagOrder(stepsExample, ['<step>', '<name>'], 'PrioritizeStreams example');
+  assert.equal((stepsExample.match(/<step>/g) || []).length, 2, 'example prioritizes two steps');
+  assert.ok(/<name>HIGH_PRIORITY_SOURCE<\/name>/.test(nonDefault), 'high priority source');
+  assert.ok(/<name>LOW_PRIORITY_SOURCE<\/name>/.test(nonDefault), 'low priority source');
+
+  // The default template still inserts and validates clean.
   const file = minimalKtr('b6-3-prioritizestreams');
   addElement(file, 'PrioritizeStreams', 'Order streams');
-  setFields(file, 'Order streams', 'steps', 'step', [
-    { name: 'HIGH_PRIORITY_SOURCE' },
-    { name: 'LOW_PRIORITY_SOURCE' },
-  ]);
-  const after = readFileSync(file, 'utf8');
-  assert.match(after, /<name>HIGH_PRIORITY_SOURCE<\/name>/);
-  assert.match(after, /<name>LOW_PRIORITY_SOURCE<\/name>/);
   assert.equal(validateFile(file).summary.errors, 0);
 });
 
@@ -1338,11 +1349,29 @@ test('TypeExitGoogleAnalyticsInputStep template follows GaInputStepMeta.getXML w
     'TypeExitGoogleAnalyticsInputStep');
   assert.ok(!/<fields>/.test(block),
     'GA template must not wrap feeds in <fields> (bare <feedField> items)');
-  const firstFeed = block.slice(block.indexOf('<feedField>'));
-  assertTagOrder(firstFeed,
-    ['<feedFieldType>', '<feedField>', '<outField>', '<type>',
-      '<conversionMask>'],
-    'GA feedField');
+  // Each feed item is a <feedField> WRAPPER whose inner name-tag is also
+  // <feedField> (source quirk). Scope to the wrapper's inner content so the
+  // wrapper open tag does not collide with the inner <feedField> in the order
+  // check. Inner order: feedFieldType, feedField, outField, type, conversionMask.
+  // A feed item is a <feedField> WRAPPER whose inner name-tag is ALSO
+  // <feedField> (source quirk). Slicing by </feedField> would stop at the
+  // inner name-tag's close, and assertTagOrder's prefix regex cannot tell the
+  // wrapper/name-tag apart. So assert the item's child order using the tags
+  // that are unique within the item: feedFieldType -> outField -> type ->
+  // conversionMask. Presence of the inner <feedField> name-tag (between
+  // feedFieldType and outField) is checked separately.
+  const firstFeed = block.slice(block.indexOf('<feedFieldType>'));
+  const gPosType = firstFeed.indexOf('<feedFieldType>');
+  const gPosOut = firstFeed.indexOf('<outField>');
+  const gPosT = firstFeed.search(/<type(?:\s|\/?>)/);
+  const gPosMask = firstFeed.search(/<conversionMask(?:\s|\/?>)/);
+  assert.ok(gPosType === 0, 'GA: item starts with feedFieldType');
+  assert.ok(gPosOut > gPosType, 'GA: outField after feedFieldType');
+  assert.ok(gPosT > gPosOut, 'GA: type after outField');
+  assert.ok(gPosMask > gPosT, 'GA: conversionMask after type');
+  // The inner name-tag <feedField> sits between feedFieldType and outField.
+  const nameTag = firstFeed.slice(0, gPosOut).search(/<feedField>/);
+  assert.ok(nameTag > gPosType, 'GA: inner <feedField> name-tag before outField');
   assert.equal(parsed.step.samplingLevel, 'DEFAULT',
     'samplingLevel defaults DEFAULT');
 

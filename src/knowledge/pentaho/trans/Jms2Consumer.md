@@ -73,15 +73,60 @@ chứa `<group>`/`<property name="INJECTION_NAME">` (không phải tag phẳng).
         <property group="" name="NUM_MESSAGES">
           <value>1000</value>
         </property>
+        <property group="" name="PREFETCH_COUNT">
+          <value>100000</value>
+        </property>
         <property group="" name="DURATION">
           <value>1000</value>
         </property>
         <property group="" name="SUB_STEP">
           <value>{{SUB_STEP}}</value>
         </property>
+        <property group="" name="PARALLELISM">
+          <value>1</value>
+        </property>
       </group>
       <group name="SSL_GROUP">
         <property group="SSL_GROUP" name="SSL_ENABLED">
+          <value>false</value>
+        </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_PATH">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_TYPE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_KEYSTORE_PASSWORD">
+          <value>${SSL_KEYSTORE_PASSWORD}</value>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_PATH">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_TYPE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_TRUSTSTORE_PASSWORD">
+          <value>${SSL_TRUSTSTORE_PASSWORD}</value>
+        </property>
+        <property group="SSL_GROUP" name="SSL_CONTEXT_ALGORITHM">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_CIPHERSUITE">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="IBM_SSL_FIPSREQUIRED">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_PROVIDER">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_VERIFY_HOST">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="AMQ_SSL_TRUST_ALL">
+          <value/>
+        </property>
+        <property group="SSL_GROUP" name="SSL_USE_DEFAULT_CONTEXT">
           <value>false</value>
         </property>
       </group>
@@ -116,9 +161,9 @@ chứa `<group>`/`<property name="INJECTION_NAME">` (không phải tag phẳng).
 | `DESTINATION_FIELD_NAME` | N | Tên cột destination; mặc định `destination`. |
 | `MESSAGE_ID` / `JMS_TIMESTAMP` / `JMS_REDELIVERED` | N | Tên 3 cột metadata; mặc định `messageId`/`jmsTimestamp`/`jmsRedelivered`. |
 | `TRANSFORMATION_PATH` | Y | Sub-transformation xử lý message (`${VAR}`/đường dẫn). |
-| `NUM_MESSAGES` / `DURATION` | N | Batch message / ms; mặc định `"1000"` cả hai. |
-| `SUB_STEP` | Y | Tên step trong sub-trans nhận message. |
-| `SSL_*` (`SSL_GROUP`) | N | SSL keystore/truststore; `SSL_ENABLED` boolean `false`. |
+| `NUM_MESSAGES` / `PREFETCH_COUNT` / `DURATION` | N | Batch message / prefetch / ms; mặc định `"1000"` / `"100000"` / `"1000"` (`BaseStreamStepMeta` dòng 67–77). |
+| `SUB_STEP` / `PARALLELISM` | Y / N | Tên step trong sub-trans nhận message / song song; mặc định `"1"`. |
+| `SSL_*` (`SSL_GROUP`) | N | 14 prop delegate (`JmsDelegate` dòng 80–108): `SSL_ENABLED` boolean `false` + keystore/truststore/cipher/provider/host-verify/trust-all/default-context; password luôn `${VAR}`. |
 
 ## 3. YAML→XML Mapping
 

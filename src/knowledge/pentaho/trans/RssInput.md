@@ -26,7 +26,7 @@ descriptiontext, ...). Có cột URL nguồn và rownum tùy chọn.
     <rownum_field/>
     <include_url>N</include_url>
     <url_Field/>
-    <read_from>0</read_from>
+    <read_from/>
     <urls>
       <url>${RSS_URL}</url>
     </urls>

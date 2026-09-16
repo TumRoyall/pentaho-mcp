@@ -1,4 +1,4 @@
-# Pentaho MCP Server (`pentaho-mcp-server`)
+# Pentaho MCP
 
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
 [![MCP Protocol](https://img.shields.io/badge/MCP-stdio-blue.svg)](https://modelcontextprotocol.io/)
@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](docs/install.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-> **Production-grade Model Context Protocol (MCP) server for Pentaho Kettle (`.kjb` / `.ktr`) artifacts**: Lossless span-based XML inspection and editing, embedded Pentaho knowledge catalog, static structural validation, file repository management, and optional phase-gated local PDI runtime execution.
+> **Production-grade Model Context Protocol (MCP) for Pentaho Kettle (`.kjb` / `.ktr`) artifacts**: Lossless span-based XML inspection and editing, embedded Pentaho knowledge catalog, static structural validation, file repository management, and optional phase-gated local PDI runtime execution.
 >
 > 🌐 **Language / Ngôn ngữ**: **English** | [Tiếng Việt](README.vi.md)
 
@@ -38,11 +38,11 @@
 
 ## 💡 Overview
 
-`pentaho-mcp-server` (advertised as `kettle-mcp-dte` on stdio) is a specialized **Model Context Protocol (MCP) server** that enables AI coding assistants (such as Claude Code, Cursor, Windsurf, Kiro, and Codex) to safely inspect, create, edit, validate, and execute Pentaho Data Integration (PDI / Kettle) **Jobs (`.kjb`)** and **Transformations (`.ktr`)**.
+**Pentaho MCP** (advertised as `kettle-mcp-dte` on stdio) is a specialized **Model Context Protocol (MCP)** tool suite that enables AI coding assistants (such as Claude Code, Cursor, Windsurf, Kiro, and Codex) to safely inspect, create, edit, validate, and execute Pentaho Data Integration (PDI / Kettle) **Jobs (`.kjb`)** and **Transformations (`.ktr`)**.
 
-The server follows a strict architectural separation: **Deterministic Primitives + External Reasoning**:
-- **The MCP Server** provides deterministic, lossless primitives: byte-exact XML span editing, hop coordinate calculations, schema-compliant step insertion, static graph validation, and repository reference migration.
-- **The AI Client / Superpowers Workflow** performs the high-level reasoning: requirement analysis, design brainstorming, formal specification, and execution planning.
+The system follows a strict architectural separation: **Deterministic Primitives + External Reasoning**:
+- **Pentaho MCP**: Provides deterministic, lossless primitives: byte-exact XML span editing, hop coordinate calculations, schema-compliant step insertion, static graph validation, and repository reference migration.
+- **The AI Client / Superpowers Workflow**: Performs the high-level reasoning: requirement analysis, design brainstorming, formal specification, and execution planning.
 
 ---
 
@@ -53,7 +53,7 @@ The server follows a strict architectural separation: **Deterministic Primitives
 - ⚡ **Zero-PDI Core Dependency**: All read, create, edit, hop wiring, parameter modification, repository tracking, and static validation operations run on pure Node.js — **no Java, PDI, or Spoon installation required** for core features.
 - 🛡️ **Canonical Workspace Boundary Containment**: Enforces strict directory boundaries via `src/workspace/boundary.js`. Rejects path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the resolved `KETTLE_ROOT`.
 - 🗄️ **Full Repository & Database Connection Support**: Native handling for Pentaho File Repositories, internal path resolution (`${Internal.Entry.Current.Directory}`), `.kdb` shared database connection files, and automatic Spoon `repositories.xml` detection.
-- 🚦 **Phase-Gated Runtime Execution**: Optional local PDI execution (`Kitchen.bat` / `Pan.bat`) protected by dual safeguards: server-level opt-in (`PENTAHO_ENABLE_EXECUTE=1`), invocation-level confirmation (`confirmed: true`), and mandatory pre-run static validation.
+- 🚦 **Phase-Gated Runtime Execution**: Optional local PDI execution (`Kitchen.bat` / `Pan.bat`) protected by dual safeguards: environment opt-in (`PENTAHO_ENABLE_EXECUTE=1`), invocation-level confirmation (`confirmed: true`), and mandatory pre-run static validation.
 
 ---
 
@@ -86,9 +86,9 @@ flowchart LR
         SP[Superpowers / Companion Skill] -. guides .-> AI
     end
 
-    subgraph MCP_Server[pentaho-mcp-server / kettle-mcp-dte]
+    subgraph MCP_Layer[Pentaho MCP / kettle-mcp-dte]
         STDIO[Stdio Transport JSON-RPC]
-        SRV[Server Core: src/server.js]
+        SRV[Protocol Core: src/server.js]
         REG[Registry: 9 Tool Factories]
         BND[Boundary Policy: src/workspace/boundary.js]
         
@@ -161,13 +161,13 @@ npm install
 npm test
 npm run verify:profile
 
-# 3. Start the server on stdio
+# 3. Run on stdio
 node src/index.js
 ```
 
 ### 2. Self-Contained Windows Executable (.exe, For End Users)
 
-No local Node.js or `npm install` needed. The server, all runtime dependencies, and the full knowledge base are bundled into a single binary.
+No local Node.js or `npm install` needed. Pentaho MCP, all runtime dependencies, and the full knowledge base are bundled into a single binary.
 
 ```powershell
 # 1. Build release package
@@ -282,7 +282,7 @@ PENTAHO_HOME = "C:/Pentaho/data-integration"
 |----------|-------------|---------|:--------:|
 | `KETTLE_ROOT` | Target workspace boundary. Relative paths resolve here; absolute paths must be contained within. | Auto-detected repository or `process.cwd()` | Recommended |
 | `PENTAHO_HOME` | Path to local Pentaho Data Integration directory containing `Kitchen.bat` / `Pan.bat`. | Unset | Only for Runtime |
-| `PENTAHO_ENABLE_EXECUTE` | Server-level opt-in for executing pipelines. Only `"1"` enables execution; all other values disable it. | `"0"` (disabled) | Optional |
+| `PENTAHO_ENABLE_EXECUTE` | Opt-in gate for executing pipelines. Only `"1"` enables execution; all other values disable it. | `"0"` (disabled) | Optional |
 | `KETTLE_KNOWLEDGE_DIR` | Custom override path for the embedded knowledge base directory. | `src/knowledge/pentaho` | Optional |
 
 👉 For containment rules and security details, see the [Configuration Guide (`docs/configuration.md`)](docs/configuration.md).
@@ -302,11 +302,11 @@ This repository includes a specialized companion skill located at **`skills/deve
 
 ## 🚫 Non-Goals & Safety Invariants
 
-To keep the server deterministic, robust, and safe:
-- ❌ **No Automated Deployments or Git Mutations**: The server never commits, pushes, or alters Git branches.
+To keep Pentaho MCP deterministic, robust, and safe:
+- ❌ **No Automated Deployments or Git Mutations**: Pentaho MCP never commits, pushes, or alters Git branches.
 - ❌ **No Runtime Knowledge Mutation**: The embedded knowledge catalog is immutable and read-only.
 - ❌ **No Business Data Validation**: `kettle_validate` verifies structural XML correctness for Spoon/Kitchen execution; it does not audit ETL data business logic.
-- ❌ **No MCP Prompts or Resources**: The server advertises `capabilities = { tools: {} }` only, with no prompts or resources.
+- ❌ **No MCP Prompts or Resources**: Pentaho MCP advertises `capabilities = { tools: {} }` only, with no prompts or resources.
 
 ---
 

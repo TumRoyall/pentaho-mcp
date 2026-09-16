@@ -1,4 +1,4 @@
-# Pentaho MCP Server (`pentaho-mcp-server`)
+# Pentaho MCP
 
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
 [![MCP Protocol](https://img.shields.io/badge/MCP-stdio-blue.svg)](https://modelcontextprotocol.io/)
@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](docs/install.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-> **MCP Stdio Server chuẩn cho Pentaho Kettle (`.kjb` / `.ktr`)**: Kiểm tra và chỉnh sửa XML span-based ít mất mát, tri thức Pentaho Kettle nhúng sẵn, kiểm tra hợp lệ tĩnh (static validation), quản lý file repository và hỗ trợ thực thi runtime cục bộ có kiểm soát.
+> **Bộ công cụ Model Context Protocol (MCP) chuẩn cho Pentaho Kettle (`.kjb` / `.ktr`)**: Kiểm tra và chỉnh sửa XML span-based ít mất mát, tri thức Pentaho Kettle nhúng sẵn, kiểm tra hợp lệ tĩnh (static validation), quản lý file repository và hỗ trợ thực thi runtime cục bộ có kiểm soát.
 >
 > 🌐 **Ngôn ngữ / Language**: [English](README.md) | **Tiếng Việt**
 
@@ -38,11 +38,11 @@
 
 ## 💡 Tổng quan
 
-`pentaho-mcp-server` (tên dịch vụ stdio: `kettle-mcp-dte`) là một **Model Context Protocol (MCP) server** chuyên dụng, giúp các trợ lý AI (như Claude Code, Cursor, Windsurf, Codex, Kiro) có thể đọc hiểu, tạo mới, chỉnh sửa, validate và vận hành các luồng ETL Pentaho Data Integration (Kettle) bao gồm **Job (`.kjb`)** và **Transformation (`.ktr`)**.
+**Pentaho MCP** (tên dịch vụ stdio: `kettle-mcp-dte`) là bộ công cụ **Model Context Protocol (MCP)** chuyên dụng, giúp các trợ lý AI (như Claude Code, Cursor, Windsurf, Codex, Kiro) có thể đọc hiểu, tạo mới, chỉnh sửa, validate và vận hành các luồng ETL Pentaho Data Integration (Kettle) bao gồm **Job (`.kjb`)** và **Transformation (`.ktr`)**.
 
 Hệ thống được thiết kế theo triết lý **Deterministic Primitives + External Reasoning**:
-- **MCP Server** chịu trách nhiệm thực thi các tác vụ kỹ thuật xác định (deterministic primitives): bóc tách XML, kiểm tra tọa độ hop, thêm/sửa step/job entry đúng chuẩn schema, validate cấu trúc, và quản lý repository.
-- **AI Client / Superpowers Workflow** đảm nhận các bước suy luận nghiệp vụ (brainstorming, duyệt thiết kế, viết đặc tả và lập kế hoạch).
+- **Pentaho MCP**: Chịu trách nhiệm thực thi các tác vụ kỹ thuật xác định (deterministic primitives): bóc tách XML, kiểm tra tọa độ hop, thêm/sửa step/job entry đúng chuẩn schema, validate cấu trúc, và quản lý repository.
+- **AI Client / Superpowers Workflow**: Đảm nhận các bước suy luận nghiệp vụ (brainstorming, duyệt thiết kế, viết đặc tả và lập kế hoạch).
 
 ---
 
@@ -59,7 +59,7 @@ Hệ thống được thiết kế theo triết lý **Deterministic Primitives +
 
 ## 🛠️ Bề mặt 41 công cụ (Tool Catalog)
 
-Bề mặt sản xuất của máy chủ bao gồm **chính xác 41 công cụ** (được kiểm soát set-equality bởi `verify:profile`), chia thành 8 nhóm chuyên biệt:
+Bề mặt sản xuất bao gồm **chính xác 41 công cụ** (được kiểm soát set-equality bởi `verify:profile`), chia thành 8 nhóm chuyên biệt:
 
 | Nhóm | Số lượng | Công cụ tiêu biểu | Vai trò chính |
 |------|:--------:|-------------------|---------------|
@@ -86,9 +86,9 @@ flowchart LR
         SP[Superpowers / Skills: Phân tích & Lập kế hoạch] -. hướng dẫn .-> AI
     end
 
-    subgraph MCP_Server[pentaho-mcp-server / kettle-mcp-dte]
+    subgraph MCP_Layer[Pentaho MCP / kettle-mcp-dte]
         STDIO[Stdio Transport JSON-RPC]
-        SRV[Server Core: src/server.js]
+        SRV[Protocol Core: src/server.js]
         REG[Registry: 9 Tool Factories]
         BND[Boundary Policy: src/workspace/boundary.js]
         
@@ -161,13 +161,13 @@ npm install
 npm test
 npm run verify:profile
 
-# 3. Khởi chạy thử nghiệm server
+# 3. Khởi chạy thử nghiệm trên stdio
 node src/index.js
 ```
 
 ### 2. Bản Windows tự chứa (.exe, cho End User)
 
-Không cần cài đặt Node.js hay chạy `npm install`. Toàn bộ server, dependencies và knowledge base đã được đóng gói thành một file `.exe` duy nhất.
+Không cần cài đặt Node.js hay chạy `npm install`. Toàn bộ ứng dụng, dependencies và knowledge base đã được đóng gói thành một file `.exe` duy nhất.
 
 ```powershell
 # 1. Đóng gói release Windows
@@ -282,7 +282,7 @@ PENTAHO_HOME = "C:/Pentaho/data-integration"
 |------|---------|----------|:---------:|
 | `KETTLE_ROOT` | Thư mục biên làm việc. Mọi đường dẫn tương đối sẽ resolve tại đây; đường dẫn tuyệt đối bắt buộc phải nằm bên trong root này. | Tự phát hiện repository hoặc `process.cwd()` | Khuyến nghị đặt |
 | `PENTAHO_HOME` | Đường dẫn thư mục cài đặt Pentaho Data Integration cục bộ (chứa `Kitchen.bat` / `Pan.bat`). | Không đặt | Chỉ cần khi dùng Runtime |
-| `PENTAHO_ENABLE_EXECUTE` | Cổng opt-in phía server cho phép thực thi thật. Chỉ nhận giá trị đúng `"1"`. Mọi giá trị khác đều tắt thực thi. | `"0"` (tắt) | Tùy chọn |
+| `PENTAHO_ENABLE_EXECUTE` | Cổng opt-in qua biến môi trường cho phép thực thi thật. Chỉ nhận giá trị đúng `"1"`. Mọi giá trị khác đều tắt thực thi. | `"0"` (tắt) | Tùy chọn |
 | `KETTLE_KNOWLEDGE_DIR` | Đường dẫn tùy chỉnh ghi đè catalog tri thức mặc định. | `src/knowledge/pentaho` | Tùy chọn |
 
 👉 Xem hướng dẫn bảo mật và quy tắc containment tại [Tài liệu cấu hình (`docs/configuration.md`)](docs/configuration.md).
@@ -304,11 +304,11 @@ Skill chứa:
 
 ## 🚫 Giới hạn và Non-Goals
 
-Nhằm giữ cho máy chủ luôn an toàn, tin cậy và có tính xác định cao, các tính năng sau **nằm ngoài phạm vi của server (non-goals)**:
-- ❌ **Không tự động deploy hay thao tác Git**: Server không bao giờ tự commit, push hay switch branch.
+Nhằm giữ cho Pentaho MCP luôn an toàn, tin cậy và có tính xác định cao, các tính năng sau **nằm ngoài phạm vi (non-goals)**:
+- ❌ **Không tự động deploy hay thao tác Git**: Pentaho MCP không bao giờ tự commit, push hay switch branch.
 - ❌ **Không sửa đổi tri thức tại runtime**: Catalog tri thức là bất biến và chỉ đọc; không có tool tự "học" hay ghi đè catalog khi chạy.
 - ❌ **Không thẩm định đúng đắn dữ liệu nghiệp vụ**: `kettle_validate` tập trung vào tính đúng đắn cấu trúc XML để Spoon/Kitchen có thể nạp và chạy được, không thay thế kiểm thử logic dữ liệu ETL.
-- ❌ **Không quảng bá MCP Prompts hay Resources**: Server chỉ cung cấp công cụ (`capabilities = { tools: {} }`).
+- ❌ **Không quảng bá MCP Prompts hay Resources**: Pentaho MCP chỉ cung cấp công cụ (`capabilities = { tools: {} }`).
 
 ---
 

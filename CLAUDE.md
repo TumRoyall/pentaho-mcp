@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Verify production profile: `npm run verify:profile` (asserts exact 41-tool set equality, no lifecycle prompts/resources, no learning/promotion tools)
 - Build Windows release executable: `npm run build:release -- --version <semver>` (bundles via esbuild, generates Node Single Executable Application blob, injects via postject, packages ZIP with doctor script and companion skills)
 
-### Running the Server
+### Running on stdio
 
 - Run in source mode: `node src/index.js`
 - Relevant environment variables:
@@ -30,7 +30,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture & Code Structure
 
-`pentaho-mcp-server` is an MCP stdio server providing deterministic, knowledge-first inspection, span-based lossless XML editing, static validation, and optional runtime execution for Pentaho Kettle (`.kjb` and `.ktr`) files. High-level reasoning (brainstorming, design, specification, plan approval) is handled outside MCP (e.g. by Superpowers / AI agent); the MCP server exposes 41 primitive tools.
+`pentaho-mcp` is an MCP stdio integration providing deterministic, knowledge-first inspection, span-based lossless XML editing, static validation, and optional runtime execution for Pentaho Kettle (`.kjb` and `.ktr`) files. High-level reasoning (brainstorming, design, specification, plan approval) is handled outside MCP (e.g. by Superpowers / AI agent); Pentaho MCP exposes 41 primitive tools.
 
 ### Core Modules
 
@@ -55,11 +55,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Runtime Execution (`src/runtime/`)**:
   - Optional, phase-gated execution via `Kitchen.bat` / `Pan.bat`.
-  - `policy.js`: Enforces two-layer execution gating: server-level `PENTAHO_ENABLE_EXECUTE=1` AND call-level `confirmed: true`.
+  - `policy.js`: Enforces two-layer execution gating: environment `PENTAHO_ENABLE_EXECUTE=1` AND call-level `confirmed: true`.
   - `run.js` & `tail-buffer.js`: Spawns PDI processes with tree-kill timeouts (`taskkill /T /F` on Windows) and fixed 256 KiB stream tail-buffers to avoid memory exhaustion.
   - `windows-args.js` & `redact.js`: Windows command token sanitization and credential/variable redaction in logs.
 
-- **Tools & MCP Server (`src/tools/` & `src/server.js`)**:
+- **Tools & Protocol Engine (`src/tools/` & `src/server.js`)**:
   - 9 tool factories in `src/tools/*.tools.js` combined via `registry.js` into exactly 41 tools across 8 functional groups: Read (4), Edit (9), Artifact (2), Removal (2), Connections (6), Repository (9), Validate (1), Knowledge (4), Runtime (4).
   - `server.js`: MCP protocol handler using `@modelcontextprotocol/sdk`. All tool calls return `{ ok: true, data }` or `{ ok: false, error }` JSON strings inside text content with `isError: true` on failure (never protocol-level RPC errors). Capabilities declare `{ tools: {} }` without prompts or resources.
 

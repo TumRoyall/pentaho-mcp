@@ -1,6 +1,6 @@
-# Contributing to Pentaho MCP Server
+# Contributing to Pentaho MCP
 
-Thank you for your interest in contributing to **Pentaho MCP Server** (`pentaho-mcp-server`)!
+Thank you for your interest in contributing to **Pentaho MCP**!
 
 We welcome contributions, bug reports, feature requests, and improvements to our embedded Pentaho component knowledge base.
 
@@ -30,7 +30,7 @@ Please be respectful, collaborative, and constructive when interacting with main
 Before contributing code, please review these core architectural invariants:
 
 1. **Deterministic Primitives + External Reasoning**:
-   - The MCP server exposes deterministic, lossless operations (byte-exact span editing, schema validation, repository mapping).
+   - Pentaho MCP exposes deterministic, lossless operations (byte-exact span editing, schema validation, repository mapping).
    - High-level reasoning, brainstorming, and execution planning belong to the AI client and Superpowers companion skills (`skills/developing-pentaho-jobs/`).
 2. **Lossless Span-Based XML Editing**:
    - Never use full-document XML serializers that rewrite or reformat the DOM.

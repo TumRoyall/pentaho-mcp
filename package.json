@@ -1,7 +1,7 @@
 {
   "name": "pentaho-mcp-server",
   "version": "0.1.0",
-  "description": "MCP server for knowledge-first Pentaho Kettle job/transformation inspection, editing, static validation, and optional local PDI runtime tools.",
+  "description": "Knowledge-first Pentaho Kettle job/transformation inspection, editing, static validation, and optional local PDI runtime tools via MCP.",
   "license": "MIT",
   "type": "module",
   "bin": {

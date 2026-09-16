@@ -1,6 +1,6 @@
 # Trung tâm tài liệu (Documentation Hub)
 
-Chào mừng bạn đến với hệ thống tài liệu kỹ thuật của **Pentaho MCP Server** (`pentaho-mcp-server` / `kettle-mcp-dte`). Thư mục `docs/` chứa toàn bộ kiến trúc chi tiết, quy chuẩn thiết kế, hướng dẫn vận hành, danh mục công cụ và quy trình kiểm chứng hệ thống.
+Chào mừng bạn đến với hệ thống tài liệu kỹ thuật của **Pentaho MCP** (`pentaho-mcp` / `kettle-mcp-dte`). Thư mục `docs/` chứa toàn bộ kiến trúc chi tiết, quy chuẩn thiết kế, hướng dẫn vận hành, danh mục công cụ và quy trình kiểm chứng hệ thống.
 
 ---
 
@@ -10,7 +10,7 @@ Tùy theo nhu cầu tiếp cận, bạn có thể tham khảo các lộ trình g
 
 ### 1. Dành cho người dùng / Tích hợp AI Client (End User / Client Integrator)
 
-Nếu bạn muốn cấu hình máy chủ MCP vào các AI Client (Claude Code, Cursor, Windsurf, Kiro, Codex) và bắt đầu làm việc với các file Kettle `.kjb`/`.ktr`:
+Nếu bạn muốn cấu hình Pentaho MCP vào các AI Client (Claude Code, Cursor, Windsurf, Kiro, Codex) và bắt đầu làm việc với các file Kettle `.kjb`/`.ktr`:
 
 1. [Hướng dẫn cài đặt (`install.md`)](install.md): Hướng dẫn kết nối file chạy `.exe` hoặc chế độ source vào client.
 2. [Cấu hình môi trường (`configuration.md`)](configuration.md): Thiết lập `KETTLE_ROOT` và phát hiện workspace tự động.
@@ -19,7 +19,7 @@ Nếu bạn muốn cấu hình máy chủ MCP vào các AI Client (Claude Code, 
 
 ### 2. Dành cho ETL Developer & Kỹ sư Giải pháp (Solution Architect)
 
-Nếu bạn muốn hiểu cách server phân tích, chỉnh sửa XML không mất mát và quản lý repository Kettle:
+Nếu bạn muốn hiểu cách Pentaho MCP phân tích, chỉnh sửa XML không mất mát và quản lý repository Kettle:
 
 1. [Kiến trúc hệ thống (`architecture.md`)](architecture.md): Mô hình chỉnh sửa span-based, module map, luồng xử lý JSON-RPC và biên an toàn.
 2. [Tra cứu 41 Tool MCP (`tools-reference.md`)](tools-reference.md): Bảng phân nhóm tính năng (Read, Edit, Artifact, Removal, Connections, Repository, Validate, Knowledge, Runtime).
@@ -28,11 +28,11 @@ Nếu bạn muốn hiểu cách server phân tích, chỉnh sửa XML không m�
 
 ### 3. Dành cho Quản trị viên Vận hành / DevOps (Operator / SysAdmin)
 
-Nếu bạn chịu trách nhiệm triển khai, giám sát an toàn và duy trì hoạt động của MCP server trong tổ chức:
+Nếu bạn chịu trách nhiệm triển khai, giám sát an toàn và duy trì hoạt động của Pentaho MCP trong tổ chức:
 
 1. [Hướng dẫn vận hành (`operations.md`)](operations.md): Triển khai, nâng cấp/rollback, kiểm tra sức khỏe bằng `doctor.ps1`, quản lý log và xử lý sự cố.
 2. [Chính sách cấu hình & an toàn (`configuration.md`)](configuration.md): Cơ chế cô lập biên workspace (`canonical containment`), khử thông tin nhạy cảm và chính sách gating thực thi PDI (`PENTAHO_ENABLE_EXECUTE`).
-3. [Hướng dẫn cài đặt môi trường hạn chế (`install.md#mạng-nội-bộ-hạn-chế-không-ra-npm`)](install.md#mạng-nội-bộ-hạn-chế-không-ra-npm): Triển khai server trong môi trường mạng nội bộ (air-gapped/offline).
+3. [Hướng dẫn cài đặt môi trường hạn chế (`install.md#mạng-nội-bộ-hạn-chế-không-ra-npm`)](install.md#mạng-nội-bộ-hạn-chế-không-ra-npm): Triển khai Pentaho MCP trong môi trường mạng nội bộ (air-gapped/offline).
 
 ### 4. Dành cho Lập trình viên đóng góp (Contributor / Maintainer)
 
@@ -66,7 +66,7 @@ Nếu bạn muốn mở rộng tính năng, bổ sung component vào catalog ho�
 Khi đọc tài liệu và làm việc với codebase, cần lưu ý các quy chuẩn nền tảng sau:
 
 - **Chỉnh sửa XML Span-Based (Lossless XML Editing)**:
-  Server sử dụng `fast-xml-parser` kết hợp định vị byte span trong `src/core/span.js` để chỉ thay thế chính xác những byte cần chỉnh sửa. Giữ nguyên 100% định dạng ban đầu, thứ tự trường, ghi chú (comments), khoảng trắng và ký tự xuống dòng (CRLF/LF) của Pentaho Spoon.
+  Pentaho MCP sử dụng `fast-xml-parser` kết hợp định vị byte span trong `src/core/span.js` để chỉ thay thế chính xác những byte cần chỉnh sửa. Giữ nguyên 100% định dạng ban đầu, thứ tự trường, ghi chú (comments), khoảng trắng và ký tự xuống dòng (CRLF/LF) của Pentaho Spoon.
 - **Biên chứa chuẩn tắc (Canonical Workspace Containment)**:
   Mọi thao tác đọc/ghi file đều được bảo vệ bởi `src/workspace/boundary.js`. Tuyệt đối không cho phép truy cập file ngoài thư mục `KETTLE_ROOT` (tự động phát hiện hoặc chỉ định rõ). Mọi thủ thuật path traversal (`..`), sibling directory escape hay symlink/junction trỏ ra ngoài đều bị chặn đứng.
 - **Tiếp cận Knowledge-First**:
@@ -74,4 +74,4 @@ Khi đọc tài liệu và làm việc với codebase, cần lưu ý các quy ch
 - **Cổng biến đổi kép (Dual Mutation Gate)**:
   Trong luồng phát triển, không có công cụ chỉnh sửa (`kettle_add_element`, `kettle_set_field`, v.v.) nào được phép chạy cho đến khi **cả** bản đặc tả (Specification) **và** kế hoạch triển khai (Plan) đã được người dùng/BA phê duyệt rõ ràng.
 - **Thực thi Runtime phân pha (Phase-Gated Runtime)**:
-  Các công cụ thực thi PDI (`Kitchen.bat` / `Pan.bat`) chỉ được kích hoạt sau khi đã vượt qua bước kiểm tra cấu trúc tĩnh (`kettle_validate` báo zero structural error), có cấu hình `PENTAHO_ENABLE_EXECUTE=1` từ phía server và được người dùng xác nhận (`confirmed: true`).
+  Các công cụ thực thi PDI (`Kitchen.bat` / `Pan.bat`) chỉ được kích hoạt sau khi đã vượt qua bước kiểm tra cấu trúc tĩnh (`kettle_validate` báo zero structural error), có cấu hình `PENTAHO_ENABLE_EXECUTE=1` qua môi trường và được người dùng xác nhận (`confirmed: true`).

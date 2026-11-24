@@ -57,8 +57,8 @@ Before contributing code, please review these core architectural invariants:
 ### Clone and Install
 
 ```bash
-git clone https://github.com/TumRoyal/pentaho-mcp-server.git
-cd pentaho-mcp-server
+git clone https://github.com/TumRoyall/pentaho-mcp.git
+cd pentaho-mcp
 npm install
 ```
 
@@ -110,7 +110,7 @@ To add or update Pentaho step (`.ktr`) or job entry (`.kjb`) templates:
 
 1. **Source Authentic XML**:
    - Extract canonical XML from a working `.kjb`/`.ktr` artifact in Pentaho Spoon (version 9.4+ preferred).
-   - Sanitize all passwords, connection strings, hostnames, and paths using variables (e.g., `${VAR_HOST}`, `${Internal.Entry.Current.Directory}`).
+   - Sanitize all passwords, connection strings, hostnames, and paths using variables (e.g., `${VAR_HOST}`, `${VAR_DB_PASSWORD}`).
 2. **Analyze Candidate XML**:
    - Use `kettle_knowledge_analyze_xml` to inspect the candidate block and check for findings (hardcoded paths, plain credentials).
 3. **Add Component Specification**:

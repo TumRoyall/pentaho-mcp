@@ -10,7 +10,7 @@
   <attributes/>
   <specification_method>filename</specification_method>
   <trans_object_id/>
-  <filename>${Internal.Entry.Current.Directory}/etl_trans_example.ktr</filename>
+  <filename/>
   <transname/>
   <arg_from_previous>N</arg_from_previous>
   <params_from_previous>N</params_from_previous>
@@ -51,7 +51,7 @@
 | `<name>` | Y | **Phải trùng filename stem** của `.ktr` được gọi |
 | `<type>` | Y | Cố định `TRANS` |
 | `<specification_method>` | Y | `filename` |
-| `<filename>` | Y | `${Internal.Entry.Current.Directory}/<stem>.ktr` |
+| `<filename>` | Y | Đường dẫn **tuyệt đối** tới `.ktr` (ví dụ `C:\etl\batch\daily\trans\<stem>.ktr`), ghi bằng `kettle_set_reference`. Repository mode: để trống, dùng `rep_name` + `<transname>` + `<directory>` |
 | `<wait_until_finished>` | Y | `Y` |
 | `<run_configuration>` | Y | `Pentaho local` |
 | `<pass_all_parameters>` | Y | `Y` (truyền toàn bộ param từ job xuống trans) |
@@ -64,7 +64,7 @@
 |------|-----|---------|
 | `type: TRANSFORMATION` | `<type>TRANS</type>` | YAML dùng `TRANSFORMATION`, XML dùng `TRANS` |
 | `name` / `artifact_name` | `<name>` | Phải = filename stem |
-| `config.filename` | `<filename>` | Prefix `${Internal.Entry.Current.Directory}/` |
+| `config.filename` | `<filename>` | Đường dẫn tuyệt đối, không dùng biến thư mục nội bộ |
 | `config.wait_until_finished: true` | `<wait_until_finished>Y` | |
 | `config.pass_parameters: true` | `<pass_all_parameters>Y` | |
 

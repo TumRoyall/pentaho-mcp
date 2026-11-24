@@ -7,10 +7,16 @@ import { planArtifactMove, planMigration } from '../repository/operations.js';
 import { detectRepository, planRegistration } from '../repository/registration.js';
 import { artifactSelectorSchema, directorySelectorSchema, selectArtifact, selectDirectory } from './repository-schema.js';
 import { validateXml } from '../core/validate.js';
+import { createRepositoryPaths } from '../repository/paths.js';
 
 const str = d => ({ type: 'string', description: d });
 
-export function repositoryTools(ctx) {
+export function repositoryTools(baseCtx) {
+  // Callers may pass a bare workspace boundary; every repository tool needs the
+  // path resolver, so attach it once (same fallback as selectArtifact).
+  const ctx = baseCtx.repositoryPaths
+    ? baseCtx
+    : { ...baseCtx, repositoryPaths: createRepositoryPaths(baseCtx) };
   return [
     {
       name: 'kettle_repository_list',
@@ -122,10 +128,12 @@ export function repositoryTools(ctx) {
         }, { write: false });
 
         const before = readFileSync(ownerId.physicalPath, 'utf8');
+        const mode = ctx.workspaceMode === 'repository' ? 'repository' : 'file';
         const after = rewriteReference(before, {
           ownerKind: ownerId.artifactKind,
           elementName: a.elementName,
           target: targetId,
+          mode,
         });
 
         validateXml(after, ownerId.physicalPath);
@@ -136,7 +144,8 @@ export function repositoryTools(ctx) {
           elementName: a.elementName,
           targetRepositoryPath: targetId.repositoryPath,
           targetKind: targetId.artifactKind,
-          status: 'MANAGED_REPO_REFERENCE'
+          ...(mode === 'file' ? { targetFilename: targetId.physicalPath } : {}),
+          status: mode === 'file' ? 'FILE_REFERENCE' : 'MANAGED_REPO_REFERENCE'
         };
       },
     },

@@ -20,8 +20,8 @@
 - [System Architecture](#-system-architecture)
 - [Recommended 5-Phase Workflow](#-recommended-5-phase-workflow)
 - [Quickstart](#-quickstart)
-  - [1. Source Mode (For Developers)](#1-source-mode-for-developers)
-  - [2. Self-Contained Windows Executable (.exe)](#2-self-contained-windows-executable-exe-for-end-users)
+  - [1. Download the Windows Release (.exe)](#1-download-the-windows-release-exe-for-end-users)
+  - [2. Source Mode (For Developers)](#2-source-mode-for-developers)
 - [Client Configuration](#-client-configuration)
   - [Claude Code](#claude-code)
   - [Cursor](#cursor)
@@ -38,7 +38,7 @@
 
 ## 💡 Overview
 
-**Pentaho MCP** (advertised as `kettle-mcp-dte` on stdio) is a specialized **Model Context Protocol (MCP)** tool suite that enables AI coding assistants (such as Claude Code, Cursor, Windsurf, Kiro, and Codex) to safely inspect, create, edit, validate, and execute Pentaho Data Integration (PDI / Kettle) **Jobs (`.kjb`)** and **Transformations (`.ktr`)**.
+**Pentaho MCP** (advertised as `pentaho-mcp` on stdio) is a specialized **Model Context Protocol (MCP)** tool suite that enables AI coding assistants (such as Claude Code, Cursor, Windsurf, Kiro, and Codex) to safely inspect, create, edit, validate, and execute Pentaho Data Integration (PDI / Kettle) **Jobs (`.kjb`)** and **Transformations (`.ktr`)**.
 
 The system follows a strict architectural separation: **Deterministic Primitives + External Reasoning**:
 - **Pentaho MCP**: Provides deterministic, lossless primitives: byte-exact XML span editing, hop coordinate calculations, schema-compliant step insertion, static graph validation, and repository reference migration.
@@ -52,7 +52,7 @@ The system follows a strict architectural separation: **Deterministic Primitives
 - 🧠 **Embedded Knowledge-First Catalog**: Bundles a rich knowledge catalog (`catalog.yaml` and Markdown specifications in `src/knowledge/pentaho/`). AI agents never hallucinate Pentaho XML tags; they inspect canonical templates via `kettle_knowledge_get` before creating or updating steps/entries.
 - ⚡ **Zero-PDI Core Dependency**: All read, create, edit, hop wiring, parameter modification, repository tracking, and static validation operations run on pure Node.js — **no Java, PDI, or Spoon installation required** for core features.
 - 🛡️ **Canonical Workspace Boundary Containment**: Enforces strict directory boundaries via `src/workspace/boundary.js`. Rejects path traversals (`..`), sibling-prefix escapes, and symlink/junction escapes outside the resolved workspace root.
-- 🗄️ **Full Repository & Database Connection Support**: Native handling for Pentaho File Repositories, internal path resolution (`${Internal.Entry.Current.Directory}`), `.kdb` shared database connection files, and automatic Spoon `repositories.xml` detection.
+- 🗄️ **Full Repository & Database Connection Support**: Native handling for Pentaho File Repositories, repository-aware references (`rep_name` in repository mode, absolute `<filename>` otherwise), `.kdb` shared database connection files, and automatic Spoon `repositories.xml` detection.
 - 🚦 **Phase-Gated Runtime Execution**: Optional local PDI execution (`Kitchen.bat` / `Pan.bat`) protected by dual safeguards: environment opt-in (`PENTAHO_ENABLE_EXECUTE=1`), invocation-level confirmation (`confirmed: true`), and mandatory pre-run static validation.
 
 ---
@@ -86,7 +86,7 @@ flowchart LR
         SP[Superpowers / Companion Skill] -. guides .-> AI
     end
 
-    subgraph MCP_Layer[Pentaho MCP / kettle-mcp-dte]
+    subgraph MCP_Layer[Pentaho MCP]
         STDIO[Stdio Transport JSON-RPC]
         SRV[Protocol Core: src/server.js]
         REG[Registry: 9 Tool Factories]
@@ -147,64 +147,75 @@ flowchart TD
 
 ## 🚀 Quickstart
 
-### 1. Source Mode (For Developers)
+### 1. Download the Windows Release (.exe, For End Users)
+
+No Node.js or `npm install` needed: the server, its dependencies, the knowledge base, and the companion skill ship in one ZIP.
+
+1. Download `pentaho-mcp-<version>-win-x64.zip` and `checksums.sha256` from [GitHub Releases](https://github.com/TumRoyall/pentaho-mcp/releases).
+2. Verify, extract to a stable folder, unblock, and run the health check:
+
+```powershell
+$zip = 'pentaho-mcp-1.0.0-win-x64.zip'
+(Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()   # must match checksums.sha256
+Expand-Archive $zip -DestinationPath C:\Tools\pentaho-mcp -Force
+Get-ChildItem C:\Tools\pentaho-mcp -Recurse | Unblock-File
+powershell -ExecutionPolicy Bypass -File C:\Tools\pentaho-mcp\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
+```
+
+3. Register `C:/Tools/pentaho-mcp/pentaho-mcp.exe` with your AI client (below).
+
+👉 Step-by-step guide (download script, upgrade, uninstall): [Installation Manual (`docs/install.md`)](docs/install.md).
+
+### 2. Source Mode (For Developers)
 
 **Prerequisites**: Node.js >= 20.
 
 ```powershell
-# 1. Clone repository and install dependencies
-git clone https://github.com/TumRoyal/pentaho-mcp-server.git
-cd pentaho-mcp-server
+git clone https://github.com/TumRoyall/pentaho-mcp.git
+cd pentaho-mcp
 npm install
-
-# 2. Run full test suite and verify production tool profile
 npm test
 npm run verify:profile
-
-# 3. Run on stdio
 node src/index.js
 ```
 
-### 2. Self-Contained Windows Executable (.exe, For End Users)
-
-No local Node.js or `npm install` needed. Pentaho MCP, all runtime dependencies, and the full knowledge base are bundled into a single binary.
-
-```powershell
-# 1. Build release package
-npm run build:release -- --version 1.0.0
-
-# 2. Verify health and dependencies with the doctor script
-.\build\release\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
-```
-
-Extract the release ZIP from `dist/` into a stable path (e.g. `C:\Tools\dte-pentaho-mcp\`) to configure with your AI clients.
+Releases are published by pushing a `v*` tag (`.github/workflows/release.yml`).
 
 ---
 
 ## 🔌 Client Configuration
 
-> **Workspace root:** no environment variable sets the workspace root. The server auto-detects it on startup, mirroring Spoon: a file repository declared in `~/.kettle/repositories.xml` (the default repository wins, otherwise the first repository whose `base_directory` exists), else a `repositories.xml` inside `PENTAHO_HOME`, else the server process's working directory. Because there is no env override, the only ways to pin a project are to register it in `~/.kettle/repositories.xml`, or to start the client with the project as its working directory. All paths passed to tools are still validated against the resolved root by the workspace boundary.
+> **Workspace root:** no environment variable sets the workspace root. It follows the folder you open the client in. If that folder is (or is inside) a file repository registered in Spoon (`~/.kettle/repositories.xml` or `PENTAHO_HOME/repositories.xml`), or contains exactly one, the server works in repository mode at that repository; otherwise in file mode at the folder. A repository registered elsewhere never takes over the folder you opened. Repository mode writes `<directory>/batch/daily/job</directory>`-style headers and `rep_name` references; file mode writes `<directory>/</directory>` and absolute `<filename>` references. All paths passed to tools are still validated against the resolved root by the workspace boundary.
 
 ### Claude Code
 
-Add to your project's `.mcp.json`:
+Recommended: register once at **user scope** with the CLI (works in every project; the workspace root is the folder where you run `claude`). All options go before `--`:
+
+```powershell
+claude mcp add --scope user --transport stdio pentaho-mcp `
+  -e PENTAHO_HOME=C:/Pentaho/data-integration `
+  -- C:/Tools/pentaho-mcp/pentaho-mcp.exe
+claude mcp list   # pentaho-mcp should show ✓ Connected
+```
+
+To share with a team instead, commit a `.mcp.json` at the **Pentaho project root** (not inside `.claude/`); Claude Code asks for approval the first time:
 
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "node",
-      "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
+    "pentaho-mcp": {
+      "type": "stdio",
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
+      "args": [],
       "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration",
-        "PENTAHO_ENABLE_EXECUTE": "0"
+        "PENTAHO_HOME": "${PENTAHO_HOME:-C:/Pentaho/data-integration}"
       }
     }
   }
 }
 ```
 
-*(For the standalone `.exe`, set `command` to `C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe` and `args` to `[]`)*
+*(Source mode: use `-- node C:/path/to/pentaho-mcp/src/index.js`, or `"command": "node"` with that path in `args`. Add `PENTAHO_ENABLE_EXECUTE=1` only to allow real Kitchen/Pan runs.)*
 
 ### Cursor
 
@@ -213,8 +224,8 @@ Add to `.cursor/mcp.json` (or via Settings -> MCP Servers):
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
+    "pentaho-mcp": {
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
       "args": [],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
@@ -231,9 +242,9 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
+    "pentaho-mcp": {
       "command": "node",
-      "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
+      "args": ["C:/path/to/pentaho-mcp/src/index.js"],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
@@ -249,8 +260,8 @@ Configure in `.kiro/settings/mcp.json` (workspace) or `%USERPROFILE%/.kiro/setti
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
+    "pentaho-mcp": {
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
       "args": [],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
@@ -265,11 +276,11 @@ Configure in `.kiro/settings/mcp.json` (workspace) or `%USERPROFILE%/.kiro/setti
 Add to `.codex/config.toml`:
 
 ```toml
-[mcp_servers.dte-pentaho]
-command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
+[mcp_servers.pentaho-mcp]
+command = "C:/Tools/pentaho-mcp/pentaho-mcp.exe"
 args = []
 
-[mcp_servers.dte-pentaho.env]
+[mcp_servers.pentaho-mcp.env]
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 

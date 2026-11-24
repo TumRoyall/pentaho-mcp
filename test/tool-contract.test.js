@@ -188,7 +188,7 @@ test('validateToolArguments allows the open runtime parameters string-map', () =
 // -- Step 5: source-mode version fallback ------------------------------------
 
 test('SERVER_VERSION falls back to the package version in source mode', () => {
-  assert.equal(SERVER_VERSION, '0.1.0');
+  assert.equal(SERVER_VERSION, '1.0.0');
 });
 
 // -- Step 5: build-mode version injection through build-release define -------
@@ -218,7 +218,7 @@ test('build-release injects the requested version into serverInfo', () => {
     );
     assert.equal(build.status, 0, build.stderr || build.stdout);
 
-    const exe = path.join(work, 'build', 'dte-pentaho-mcp.exe');
+    const exe = path.join(work, 'build', 'pentaho-mcp.exe');
     const res = spawnSync(exe, [], {
       input: rpc(1, 'initialize', {
         protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'v', version: '1' },

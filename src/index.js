@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * pentaho-mcp-server entry point.
+ * pentaho-mcp entry point.
  *
  * MCP stdio server for Pentaho Kettle .kjb/.ktr files with an embedded
  * PDI knowledge base. Read, summarize, search, validate, edit, scaffold;

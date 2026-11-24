@@ -6,6 +6,7 @@ import {
   artifactSelectorSchema,
   sourceDestArtifactSelectorSchema,
   selectArtifact,
+  headerDirectoryFor,
 } from './repository-schema.js';
 
 const str = d => ({ type: 'string', description: d });
@@ -28,7 +29,11 @@ export function editTools(ctx) {
       },
       handler: a => {
         const id = selectArtifact(ctx, a, { write: true });
-        return createFile(id.physicalPath, { kind: a.kind || id.artifactKind, name: a.name });
+        return createFile(id.physicalPath, {
+          kind: a.kind || id.artifactKind,
+          name: a.name,
+          directory: headerDirectoryFor(ctx, id),
+        });
       },
     },
     {
@@ -241,7 +246,9 @@ export function editTools(ctx) {
       handler: a => {
         const srcId = selectArtifact(ctx, a, { prefix: 'source', physicalKey: 'sourcePath', write: false });
         const destId = selectArtifact(ctx, a, { prefix: 'dest', physicalKey: 'destPath', write: true });
-        return cloneFile(srcId.physicalPath, destId.physicalPath, a.name, a.replacements ?? []);
+        return cloneFile(srcId.physicalPath, destId.physicalPath, a.name, a.replacements ?? [], {
+          directory: headerDirectoryFor(ctx, destId),
+        });
       },
     },
   ];

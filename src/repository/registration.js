@@ -88,7 +88,8 @@ export function parseRepositoriesXml(xmlContent) {
         type: typeMatch ? typeMatch[1].trim() : 'KettleFileRepository',
         baseDirectory: baseDirMatch ? baseDirMatch[1].trim() : '',
         readOnly: readOnlyVal === 'Y' || readOnlyVal === 'TRUE',
-        isDefault: isDefaultMatch ? isDefaultMatch[1].trim().toUpperCase() === 'Y' : false,
+        // Spoon 9.x writes true/false; older registries use Y/N.
+        isDefault: isDefaultMatch ? ['Y', 'TRUE'].includes(isDefaultMatch[1].trim().toUpperCase()) : false,
         description: descriptionMatch ? descriptionMatch[1].trim() : '',
       });
     }

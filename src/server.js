@@ -1,5 +1,5 @@
 /**
- * MCP server wiring for kettle-mcp-dte.
+ * MCP server wiring for pentaho-mcp.
  *
  * The workspace root is auto-detected (see workspace/resolve-root.js): a file
  * repository declared in ~/.kettle/repositories.xml, else one in
@@ -26,20 +26,23 @@ import { SERVER_VERSION } from './version.js';
 
 export function makeContext({
   root,
+  workspaceMode: explicitMode = 'file',
   pentahoHome = process.env.PENTAHO_HOME,
   repositoryName = process.env.PENTAHO_REPOSITORY_NAME,
 } = {}) {
   // Resolve the workspace root when one is not supplied explicitly (tests and
   // programmatic callers may pass one). Detection mirrors Spoon's repository
   // lookup and falls back to the working directory.
-  let workspaceMode = 'file';
+  let workspaceMode = explicitMode === 'repository' ? 'repository' : 'file';
   let workspaceSource = 'explicit';
+  let workspaceMatch = 'explicit';
   let detectedRepositoryName = null;
   if (root == null) {
     const detected = resolveWorkspaceRoot({ pentahoHome });
     root = detected.root;
     workspaceMode = detected.mode;
     workspaceSource = detected.source;
+    workspaceMatch = detected.match;
     detectedRepositoryName = detected.repository?.name ?? null;
   }
 
@@ -53,6 +56,7 @@ export function makeContext({
     repositoryPaths,
     workspaceMode,
     workspaceSource,
+    workspaceMatch,
     repositoryName: resolvedRepositoryName,
     pentahoHome: typeof pentahoHome === 'string' && pentahoHome.trim()
       ? pentahoHome.trim()
@@ -82,7 +86,7 @@ export function createServer({ version = SERVER_VERSION } = {}) {
   }));
 
   const server = new Server(
-    { name: 'kettle-mcp-dte', version },
+    { name: 'pentaho-mcp', version },
     { capabilities: { tools: {} } },
   );
 
@@ -101,7 +105,7 @@ export function createServer({ version = SERVER_VERSION } = {}) {
     }
   });
 
-  server.onerror = err => console.error('[kettle-mcp-dte]', err);
+  server.onerror = err => console.error('[pentaho-mcp]', err);
   return { server, ctx, tools };
 }
 
@@ -109,5 +113,5 @@ export async function startServer() {
   const { server, ctx } = createServer();
   process.on('SIGINT', () => { void server.close(); process.exit(0); });
   await server.connect(new StdioServerTransport());
-  console.error(`kettle-mcp-dte running on stdio (root=${ctx.root}, mode=${ctx.workspaceMode}, source=${ctx.workspaceSource})`);
+  console.error(`pentaho-mcp running on stdio (root=${ctx.root}, mode=${ctx.workspaceMode}, source=${ctx.workspaceSource}, match=${ctx.workspaceMatch})`);
 }

@@ -54,14 +54,18 @@ test('knowledge-first primitive sequence builds a statically valid job+transform
   // 5. Normal transformation hop.
   await call(tools, 'kettle_edit_hops', { path: ktr, action: 'add', from: 'GENERATE_CUSTOMER', to: 'PASS_CUSTOMER' });
 
-  // 6. Add the TRANS entry and point its <filename> at the leaf transformation.
+  // 6. Add the TRANS entry and point it at the leaf transformation. Without a
+  // repository this writes specification_method=filename + the absolute path.
   await call(tools, 'kettle_add_element', { path: kjb, type: 'TRANS', name: 'LOAD_CUSTOMER' });
-  await call(tools, 'kettle_set_field', {
+  const ref = await call(tools, 'kettle_set_reference', {
     path: kjb,
-    name: 'LOAD_CUSTOMER',
-    field: 'filename',
-    value: '${Internal.Entry.Current.Directory}/load_customer.ktr',
+    elementName: 'LOAD_CUSTOMER',
+    targetRepositoryPath: '/load_customer',
   });
+  assert.equal(ref.status, 'FILE_REFERENCE');
+  const jobXml = readFileSync(path.join(root, kjb), 'utf8');
+  assert.ok(jobXml.includes(`<filename>${path.join(root, ktr)}</filename>`));
+  assert.ok(!jobXml.includes('Internal.Entry.Current.Directory'));
 
   // 7. START -> LOAD_CUSTOMER job hop.
   await call(tools, 'kettle_edit_hops', { path: kjb, action: 'add', from: 'START', to: 'LOAD_CUSTOMER' });

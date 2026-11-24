@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const version = '1.0.0';
-const zip = path.join(root, 'dist', `dte-pentaho-mcp-${version}-win-x64.zip`);
+const zip = path.join(root, 'dist', `pentaho-mcp-${version}-win-x64.zip`);
 // Windows' bundled bsdtar, resolved by absolute path. A bare `tar.exe` goes
 // through PATH, where Git Bash/MSYS resolves it to GNU tar; GNU tar reads the
 // `C:/...` archive path as a remote host and fails with "Cannot connect to C:".
@@ -108,7 +108,9 @@ test('current documentation has no removed installer workflow', () => {
 
 test('doctor documentation uses the built artifact path and states its actual scope', () => {
   const readme = readFileSync(path.join(root, 'README.md'), 'utf8');
-  assert.match(readme, /\.\\build\\release\\doctor\.ps1 -PentahoHome/);
+  // End users run doctor from the extracted release folder, not the build tree.
+  assert.match(readme, /C:\\Tools\\pentaho-mcp\\doctor\.ps1 -PentahoHome/);
+  assert.doesNotMatch(readme, /\\build\\release\\doctor\.ps1/);
   assert.doesNotMatch(readme, /^\.\\doctor\.ps1 -PentahoHome/m);
 
   const operations = readFileSync(path.join(root, 'docs', 'operations.md'), 'utf8');
@@ -130,7 +132,7 @@ test('versioned Windows release has exact inventory, checksum, and working MCP e
     'README.md',
     'VERSION',
     'doctor.ps1',
-    'dte-pentaho-mcp.exe',
+    'pentaho-mcp.exe',
     'skills/',
     'skills/developing-pentaho-jobs/',
     'skills/developing-pentaho-jobs/references/',
@@ -143,7 +145,19 @@ test('versioned Windows release has exact inventory, checksum, and working MCP e
   mkdirSync(extract, { recursive: true });
   const unpack = spawnSync(SYSTEM_TAR, ['-xf', zip, '-C', extract], { encoding: 'utf8' });
   assert.equal(unpack.status, 0, unpack.stderr);
-  const proc = spawn(path.join(extract, 'dte-pentaho-mcp.exe'), [], { stdio: ['pipe', 'pipe', 'pipe'] });
+
+  // The shipped README is the end-user install guide, not the repo README
+  // (whose docs/ links do not exist inside the ZIP).
+  const shippedReadme = readFileSync(path.join(extract, 'README.md'), 'utf8');
+  assert.match(shippedReadme, /claude mcp add --scope user/);
+  assert.match(shippedReadme, /\.kiro[\\/]settings[\\/]mcp\.json/);
+  assert.match(shippedReadme, /\[mcp_servers\.pentaho-mcp\]/);
+  assert.match(shippedReadme, /doctor\.ps1/);
+  assert.ok(shippedReadme.includes(`pentaho-mcp ${version}`), 'README names the release version');
+  assert.doesNotMatch(shippedReadme, /\]\(docs\//);
+  assert.doesNotMatch(shippedReadme, /Internal\.Entry\.Current\.Directory/);
+
+  const proc = spawn(path.join(extract, 'pentaho-mcp.exe'), [], { stdio: ['pipe', 'pipe', 'pipe'] });
   const rpc = (id, method, params) => JSON.stringify({ jsonrpc: '2.0', id, method, params });
   proc.stdin.end([
     rpc(1, 'initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'package-test', version: '1' } }),

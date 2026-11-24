@@ -96,7 +96,7 @@ Nguồn: pentaho-kettle source 9.4, commit
   `OutputType.valueOf(getTagValue)` trong try/catch → mọi exception
   (null/sai tên) fallback `PDF` (dòng 140–144).
 - Khởi tạo: `setDefault()` (dòng 107–119) — `outputType=PDF`;
-  `targetFilename="${Internal.Entry.Current.Directory}/kettle-autodoc.pdf"`;
+  `targetFilename` mặc định = thư mục entry hiện tại + `kettle-autodoc.pdf` (template luôn ghi `<target_file>` tường minh);
   `includingName/Description/ExtendedDescription/Created/Modified/Image/
   LoggingConfiguration=true`; `includingLastExecutionResult=true` rồi
   **ghi đè `=false` (dòng 118)** → giá trị cuối `false` (template giữ

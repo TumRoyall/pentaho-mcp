@@ -1,259 +1,247 @@
 # Cài đặt
 
-Tài liệu chuẩn cài đặt thủ công cho cả ba client: `Kiro`, `Claude Code` và `Codex`. Biên workspace và cấu hình runtime tùy chọn xem `docs/configuration.md`; vận hành xem `docs/operations.md`.
+Cách cài chuẩn cho end user: **tải bản ZIP phát hành từ GitHub Releases → giải nén → trỏ AI client tới `pentaho-mcp.exe`**. Máy đích không cần Node.js, không cần `npm install`; knowledge base và companion skill đã nằm sẵn trong ZIP.
 
-Máy chủ MCP chỉ có một artifact stdio duy nhất và một bộ biến môi trường runtime dùng chung. Việc cài đặt và gỡ bỏ là thao tác cấu hình client thủ công, không có script cài đặt.
+Biên workspace và cấu hình runtime tùy chọn xem `docs/configuration.md`; vận hành, nâng cấp xem `docs/operations.md`.
 
-## Chọn cách chạy server (độc lập client)
+## Yêu cầu
 
-### Cách A — bản `.exe` tự chứa cho end user
+- Windows 10/11 x64.
+- PowerShell 5.1 trở lên (có sẵn trên Windows).
+- Tùy chọn: Pentaho Data Integration (PDI) cục bộ, chỉ cần khi dùng 4 tool `kettle_runtime_*`.
 
-Không cần Node trên máy đích, không cần `npm install`; knowledge base và companion skill nằm trong bản phát hành.
+## Bước 1 — Tải bản phát hành
 
-1. Tải/copy file ZIP phát hành sang máy đích.
-2. Kiểm tra toàn vẹn:
-```powershell
-certutil -hashfile dte-pentaho-mcp-1.0.0-win-x64.zip SHA256
-type checksums.sha256
-```
-Đối chiếu SHA-256 hiển thị với nội dung `checksums.sha256` đi kèm ZIP.
-3. Giải nén ZIP ra một thư mục tuyệt đối ổn định, ví dụ `C:/Tools/dte-pentaho-mcp/`.
-4. Dùng đường dẫn `dte-pentaho-mcp.exe` vừa giải nén trong cấu hình client ở các mục bên dưới.
+Trang phát hành: <https://github.com/TumRoyall/pentaho-mcp/releases>
 
-Giữ nguyên thư mục giải nén vì cấu hình client trỏ trực tiếp tới executable. Di chuyển hoặc xóa thư mục chứa `.exe` sẽ làm hỏng các cấu hình còn trỏ tới nó.
+Mỗi phiên bản `vX.Y.Z` có hai file:
 
-### Cách B — source-mode cho developer
+| File | Nội dung |
+| --- | --- |
+| `pentaho-mcp-X.Y.Z-win-x64.zip` | `pentaho-mcp.exe`, `doctor.ps1`, `README.md` (hướng dẫn cài cho Claude Code / Kiro / Codex — đọc được ngay sau khi giải nén), `VERSION`, `skills/developing-pentaho-jobs/` |
+| `checksums.sha256` | SHA-256 của file ZIP |
 
-Yêu cầu: Node.js 20+.
+Tải bằng trình duyệt, hoặc bằng PowerShell (đổi `$v` thành phiên bản muốn cài):
 
 ```powershell
-npm install
-node src/index.js
+$v    = '1.0.0'
+$base = "https://github.com/TumRoyall/pentaho-mcp/releases/download/v$v"
+$zip  = "pentaho-mcp-$v-win-x64.zip"
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-WebRequest "$base/$zip"              -OutFile $zip              -UseBasicParsing
+Invoke-WebRequest "$base/checksums.sha256"  -OutFile checksums.sha256  -UseBasicParsing
 ```
 
-Dùng `node` cộng đường dẫn tuyệt đối `src/index.js` (ví dụ `C:/src/pentaho-mcp-server/src/index.js`) trong cấu hình client ở các mục bên dưới. **Hai** runtime dependency: `@modelcontextprotocol/sdk`, `fast-xml-parser`.
-
-### Lệnh build của maintainer
+## Bước 2 — Kiểm tra toàn vẹn
 
 ```powershell
-npm install
-npm run verify:profile
-npm run build:release -- --version 1.0.0
+$expected = ((Get-Content checksums.sha256 -TotalCount 1) -split '\s+')[0].ToLower()
+$actual   = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
+if ($actual -ne $expected) { throw "Checksum mismatch: $actual" } else { 'checksum OK' }
 ```
 
-Kết quả trong `dist/`:
+## Bước 3 — Giải nén và bỏ chặn
 
-- `dte-pentaho-mcp-<version>-win-x64.zip` — gồm đúng các mục: `README.md`, `VERSION`, `doctor.ps1`, `dte-pentaho-mcp.exe`, và companion skill `skills/developing-pentaho-jobs/SKILL.md` cùng hai mẫu `skills/developing-pentaho-jobs/references/pentaho-spec-template.md` và `skills/developing-pentaho-jobs/references/pentaho-plan-template.md`.
-- `checksums.sha256` — SHA-256 của ZIP, nằm cạnh ZIP.
+Giải nén ra một thư mục **cố định** (các client trỏ thẳng vào `.exe`; di chuyển/xóa thư mục này sẽ làm hỏng cấu hình):
 
-## Kiro
+```powershell
+$dest = 'C:\Tools\pentaho-mcp'
+Expand-Archive $zip -DestinationPath $dest -Force
+Get-ChildItem $dest -Recurse | Unblock-File   # tránh SmartScreen/AV chặn file tải từ Internet
+```
 
-Cấu hình MCP của Kiro nằm tại `.kiro/settings/mcp.json` cho workspace hoặc `%USERPROFILE%/.kiro/settings/mcp.json` cho user.
+## Bước 4 — Kiểm tra bằng `doctor.ps1`
 
-### Kiro với bản `.exe`
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\Tools\pentaho-mcp\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
+```
+
+Kỳ vọng kết thúc bằng `doctor: OK` (handshake MCP, đúng 41 tool, không có tool `pentaho_*`). Bỏ `-PentahoHome` nếu không dùng PDI — thiếu PDI không làm fail.
+
+## Bước 5 — Đăng ký vào AI client
+
+Mọi client dùng chung một mô hình:
+
+- `command`: `C:/Tools/pentaho-mcp/pentaho-mcp.exe` (dấu `/` để khỏi phải escape trong JSON/TOML).
+- `args`: rỗng.
+- `env`: chỉ `PENTAHO_HOME` (tùy chọn, cho runtime). Thêm `PENTAHO_ENABLE_EXECUTE=1` **chỉ khi** muốn cho phép thực thi Kitchen/Pan thật.
+- **Không có biến nào đặt workspace root** — xem mục "Workspace root" bên dưới.
+
+### Claude Code
+
+Khuyến nghị dùng CLI với **scope `user`**: cài một lần, dùng được ở mọi project. Workspace root sẽ là thư mục bạn chạy `claude`.
+
+```powershell
+claude mcp add --scope user --transport stdio pentaho-mcp `
+  -e PENTAHO_HOME=C:/Pentaho/data-integration `
+  -- C:/Tools/pentaho-mcp/pentaho-mcp.exe
+```
+
+- Mọi option (`--scope`, `--transport`, `-e`) phải đứng **trước** `--`; sau `--` là lệnh chạy server.
+- Muốn cho phép thực thi thật: thêm `-e PENTAHO_ENABLE_EXECUTE=1` (đặt trước `--`).
+- Không dùng PDI: bỏ dòng `-e PENTAHO_HOME=...`.
+
+Các scope của Claude Code:
+
+| Scope | Lưu ở đâu | Khi nào dùng |
+| --- | --- | --- |
+| `local` (mặc định) | `~/.claude.json`, gắn với project hiện tại | Chỉ bật cho một project trên máy bạn |
+| `user` | `~/.claude.json` | **Khuyến nghị** — dùng cho mọi project |
+| `project` | `.mcp.json` ở project root (commit vào git) | Chia sẻ cho cả team — mọi máy phải giải nén `.exe` cùng đường dẫn |
+
+Nếu muốn dùng `.mcp.json` (scope project), tạo file ở **root của project Pentaho** (không phải trong `.claude/`):
 
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
-      "args": [],
-      "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration"
-      },
-      "disabled": false,
-      "autoApprove": []
-    }
-  }
-}
-```
-
-### Kiro với source-mode
-
-```json
-{
-  "mcpServers": {
-    "dte-pentaho": {
-      "command": "node",
-      "args": ["C:/src/pentaho-mcp-server/src/index.js"],
-      "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration"
-      },
-      "disabled": false,
-      "autoApprove": []
-    }
-  }
-}
-```
-
-Lưu file rồi reconnect/kiểm tra `dte-pentaho` trong MCP panel của Kiro.
-
-## Claude Code
-
-Cấu hình MCP project của Claude Code là `.mcp.json` tại project root; thư mục `.claude/` dùng cho companion skill, không dùng cho mục MCP server.
-
-### Claude Code với bản `.exe`
-
-File `.mcp.json` tại project root:
-
-```json
-{
-  "mcpServers": {
-    "dte-pentaho": {
+    "pentaho-mcp": {
       "type": "stdio",
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
       "args": [],
       "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration"
+        "PENTAHO_HOME": "${PENTAHO_HOME:-C:/Pentaho/data-integration}"
       }
     }
   }
 }
 ```
 
-### Claude Code với source-mode
-
-File `.mcp.json` tại project root:
-
-```json
-{
-  "mcpServers": {
-    "dte-pentaho": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["C:/src/pentaho-mcp-server/src/index.js"],
-      "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration"
-      }
-    }
-  }
-}
-```
-
-`.mcp.json` ở phạm vi project có thể yêu cầu workspace trust/approval khi mở project.
+`.mcp.json` hỗ trợ `${VAR}` và `${VAR:-mặc định}`, nên mỗi máy có thể tự đặt `PENTAHO_HOME` riêng. Lần đầu mở project, Claude Code sẽ hỏi phê duyệt server trong `.mcp.json`; đặt lại lựa chọn bằng `claude mcp reset-project-choices`.
 
 Kiểm tra:
 
 ```powershell
-claude mcp list
-claude mcp get dte-pentaho
+claude mcp list              # pentaho-mcp phải ở trạng thái ✓ Connected
+claude mcp get pentaho-mcp
 ```
 
-Hoặc dùng `/mcp` trong phiên Claude Code tương tác.
+Trong phiên Claude Code: gõ `/mcp` để xem trạng thái, rồi nhờ Claude gọi `kettle_list` để xác nhận nó đang thấy đúng các file `.kjb`/`.ktr` của project. Gỡ: `claude mcp remove pentaho-mcp --scope user`.
 
-## Codex
+### Kiro
 
-Cấu hình MCP của Codex nằm tại project `.codex/config.toml` hoặc user `%USERPROFILE%/.codex/config.toml`.
+File `.kiro/settings/mcp.json` (workspace) hoặc `%USERPROFILE%/.kiro/settings/mcp.json` (user):
 
-### Codex với bản `.exe`
+```json
+{
+  "mcpServers": {
+    "pentaho-mcp": {
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
+      "args": [],
+      "env": {
+        "PENTAHO_HOME": "C:/Pentaho/data-integration"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+Lưu file rồi reconnect `pentaho-mcp` trong MCP panel của Kiro.
+
+### Codex
+
+File `.codex/config.toml` (project) hoặc `%USERPROFILE%/.codex/config.toml` (user):
 
 ```toml
-[mcp_servers.dte-pentaho]
-command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
+[mcp_servers.pentaho-mcp]
+command = "C:/Tools/pentaho-mcp/pentaho-mcp.exe"
 args = []
 
-[mcp_servers.dte-pentaho.env]
+[mcp_servers.pentaho-mcp.env]
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 
-### Codex với source-mode
+Kiểm tra bằng `codex mcp list` hoặc `/mcp` trong Codex TUI. Thêm qua MCP settings UI của IDE extension thì cần restart extension.
 
-```toml
-[mcp_servers.dte-pentaho]
-command = "node"
-args = ["C:/src/pentaho-mcp-server/src/index.js"]
+### Cursor / Windsurf
 
-[mcp_servers.dte-pentaho.env]
-PENTAHO_HOME = "C:/Pentaho/data-integration"
-```
+Cùng khối JSON `mcpServers` như Kiro (bỏ `disabled`/`autoApprove`), đặt trong `.cursor/mcp.json` (Cursor) hoặc `~/.codeium/windsurf/mcp_config.json` (Windsurf).
 
-Kiểm tra:
+## Bước 6 — Cài companion skill (khuyến nghị)
 
-```powershell
-codex mcp list
-```
-
-Hoặc dùng `/mcp` trong Codex TUI. Sau khi thêm server qua MCP settings UI của IDE extension, cần restart extension.
-
-## Companion skill
-
-Cây nguồn và ZIP đều chứa `skills/developing-pentaho-jobs/`, nhưng để client khám phá được, phải copy toàn bộ thư mục đó tới một trong các đích sau:
+Skill nằm trong ZIP tại `skills/developing-pentaho-jobs/`, nhưng client chỉ nhận khi copy vào thư mục skills của nó:
 
 | Client | Project scope | User scope |
-|---|---|---|
-| Kiro | `.kiro/skills/developing-pentaho-jobs/` | `%USERPROFILE%/.kiro/skills/developing-pentaho-jobs/` |
+| --- | --- | --- |
 | Claude Code | `.claude/skills/developing-pentaho-jobs/` | `%USERPROFILE%/.claude/skills/developing-pentaho-jobs/` |
+| Kiro | `.kiro/skills/developing-pentaho-jobs/` | `%USERPROFILE%/.kiro/skills/developing-pentaho-jobs/` |
 | Codex | `.agents/skills/developing-pentaho-jobs/` | `%USERPROFILE%/.agents/skills/developing-pentaho-jobs/` |
+
+Ví dụ Claude Code, user scope:
+
+```powershell
+$skills = "$env:USERPROFILE\.claude\skills"
+New-Item -ItemType Directory -Force $skills | Out-Null
+Copy-Item -Recurse -Force C:\Tools\pentaho-mcp\skills\developing-pentaho-jobs $skills
+```
 
 Đây là skill dẫn dắt workflow phát triển Pentaho năm pha (xem `docs/workflow-guide.md`).
 
-## Runtime dùng chung
+## Workspace root
 
-- Root workspace được **tự động phát hiện**, không có biến môi trường nào chỉ định root. Xem mục "Biên workspace" bên dưới và `docs/configuration.md`.
-- `PENTAHO_HOME` là tùy chọn: vừa tham gia bước 2 của dò root, vừa bật nhóm tool runtime PDI cục bộ.
-- `PENTAHO_ENABLE_EXECUTE="1"` là tùy chọn và phải thêm trực tiếp vào khối `env` của client đang dùng mới cho phép thực thi thật; bỏ hẳn để chặn.
+Root **đi theo thư mục bạn mở client** (với Claude Code: thư mục chạy `claude`). Không có biến môi trường nào chỉ định root. Các file repository đã đăng ký trong Spoon (`%USERPROFILE%/.kettle/repositories.xml`, `PENTAHO_HOME/repositories.xml`) chỉ dùng để biết thư mục đó có phải repository không:
 
-## Kiểm tra server độc lập client
+| Bạn mở client ở… | Kết quả |
+| --- | --- |
+| Đúng thư mục repository, hoặc thư mục con của nó | Repository mode, root = thư mục repository |
+| Thư mục cha chứa một repository (hoặc nhiều, có một repo mặc định) | Repository mode, root = repository đó |
+| Thư mục bình thường, không liên quan repository nào | File mode, root = thư mục đó |
+| Thư mục home / gốc ổ đĩa (client không đặt cwd) | Repository mặc định đã đăng ký |
 
-`doctor.ps1` kiểm tra trực tiếp server đã đóng gói và không đăng ký server vào bất kỳ client nào:
+Một repository đăng ký ở nơi khác **không** chiếm root của thư mục bạn đang mở. Muốn làm việc kiểu repository: đăng ký thư mục đó làm File Repository trong Spoon (hoặc nhờ Claude gọi `kettle_repository_register`), rồi mở client ở đúng thư mục đó.
 
-```powershell
-.\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
-```
+Chế độ quyết định XML được sinh:
 
-Lệnh thực hiện handshake MCP bằng initialize + tools/list, assert 41 tool, từ chối `pentaho_*`.
+| | Repository mode | File mode |
+| --- | --- | --- |
+| Header `<directory>` của job/trans | Thư mục repo của file, ví dụ `/batch/daily/job` | `/` |
+| Ref job → trans | `rep_name` + `<transname>` + `<directory>/batch/daily/trans</directory>` | `specification_method=filename` + `<filename>` đường dẫn tuyệt đối |
 
-Kiểm tra nhanh source-mode:
+Khi khởi động, server in ra stderr: `pentaho-mcp running on stdio (root=<path>, mode=<mode>, source=<source>, match=<match>)`.
 
-```powershell
-node --test
-node scripts/verify-production-profile.mjs
-```
+Biên luôn được enforce: đường tương đối resolve theo root; đường tuyệt đối chỉ hợp lệ khi nằm trong root; `..`, sibling-prefix và symlink/junction escape đều bị từ chối.
 
-Kỳ vọng: toàn suite pass và `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
+## An toàn thực thi
 
-## Mạng nội bộ hạn chế (không ra npm)
-
-Vì chỉ có 2 runtime dependency, có 2 lựa chọn đã kiểm chứng:
-
-1. **Đưa cả repo kèm `node_modules`.** Cài `npm install` một lần ở máy có mạng, rồi copy nguyên thư mục (gồm `node_modules`) vào máy đích. ESM chạy trực tiếp, không cần build lại.
-2. **Trỏ registry nội bộ** (Nexus/Artifactory): `npm config set registry <internal-registry-url>` rồi `npm install`.
-
-## Biên workspace
-
-Root workspace được **tự động phát hiện**, không có biến môi trường nào để chỉ định. Thứ tự dò:
-
-1. `%USERPROFILE%/.kettle/repositories.xml` (hoặc `$HOME`) → chế độ repository.
-2. `PENTAHO_HOME/repositories.xml` → chế độ repository.
-3. Thư mục làm việc của tiến trình server → chế độ file.
-
-Trong một `repositories.xml`, repository mặc định (`is_default=Y`) thắng; nếu không có, chọn repository đầu tiên có `base_directory` tồn tại.
-
-Hai bước đầu **thắng** bước 3: nếu `%USERPROFILE%/.kettle/repositories.xml` đã khai báo một repository dùng được thì thư mục làm việc của tiến trình server bị bỏ qua hoàn toàn.
-
-Vì không còn knob môi trường, chỉ có ba cách ghim workspace:
-
-1. Khai báo project như một file repository trong `%USERPROFILE%/.kettle/repositories.xml`.
-2. Đặt một `repositories.xml` trong `PENTAHO_HOME`.
-3. Khởi chạy tiến trình MCP với chính project đó làm thư mục làm việc.
-
-Nếu project **chưa** được đăng ký trong file repository của Spoon, phải khởi chạy client với project làm thư mục làm việc. Một số client MCP không cho đặt thư mục làm việc của server — khi đó đăng ký project trong `%USERPROFILE%/.kettle/repositories.xml` là đường tin cậy.
-
-Khi khởi động, server in ra stderr dòng `kettle-mcp-dte running on stdio (root=<path>, mode=<mode>, source=<source>)`; dùng dòng này để xác nhận root đã dò được.
-
-Biên vẫn **luôn được enforce**: đường tương đối resolve theo root; đường tuyệt đối chỉ hợp lệ khi nằm trong root; `..`, sibling-prefix (ví dụ `C:\ws-other` khi root là `C:\ws`) và symlink/junction escape đều bị từ chối. Không có cách tắt biên.
-
-`PENTAHO_HOME` chỉ **cần** cho các tool runtime tùy chọn; khi được đặt, nó cũng tham gia bước 2 của dò root. Không còn file cấu hình YAML theo project.
-
-## An toàn thực thi và không tự commit Git
-
-- Kitchen/Pan (runtime tùy chọn) luôn cần `confirmed: true` để execute; không tên môi trường nào bỏ qua bước xác nhận.
+- Kitchen/Pan chỉ chạy khi **cả hai**: `PENTAHO_ENABLE_EXECUTE=1` trong `env` của client **và** lời gọi có `confirmed: true`.
 - Server không bao giờ thay đổi Git (không commit/push/amend).
 
-## Gỡ bỏ
+## Nâng cấp / gỡ bỏ
 
-Việc gỡ bỏ là xóa mục/bảng `dte-pentaho` khỏi cấu hình client đang dùng và tùy chọn xóa thư mục companion-skill đã copy. Không cần script gỡ riêng.
+- **Nâng cấp:** làm lại Bước 1–4 với phiên bản mới vào cùng thư mục `C:\Tools\pentaho-mcp`, rồi restart/reconnect client. Nếu `Expand-Archive` báo `Access to the path ... pentaho-mcp.exe is denied` thì một client (ví dụ phiên Claude Code đang mở) vẫn đang chạy server: đóng client, hoặc đổi tên file đang chạy trước khi giải nén: `Move-Item C:\Tools\pentaho-mcp\pentaho-mcp.exe C:\Tools\pentaho-mcp\pentaho-mcp.exe.old -Force` (xóa file `.old` sau khi restart client). Đường dẫn trong cấu hình không đổi nên không cần sửa. Nhớ copy lại skill (Bước 6).
+- **Gỡ bỏ:** xóa mục `pentaho-mcp` khỏi cấu hình client (`claude mcp remove pentaho-mcp --scope user` với Claude Code), xóa thư mục skill đã copy, rồi xóa `C:\Tools\pentaho-mcp`.
 
-## Đóng gói npm (tùy chọn)
+## Phụ lục A — Source mode (cho developer)
 
-`package.json` khai báo `files` gồm `src`, `docs`, `README.md` và `skills`, nên `npm pack` gói đúng `src` (gồm knowledge) + docs + companion skill. Không phát hành `node_modules`.
+Yêu cầu Node.js 20+.
+
+```powershell
+git clone https://github.com/TumRoyall/pentaho-mcp.git
+cd pentaho-mcp
+npm install
+npm test
+npm run verify:profile
+```
+
+Đăng ký với client giống trên, chỉ khác lệnh chạy là `node` + đường dẫn tuyệt đối `src/index.js`. Ví dụ Claude Code:
+
+```powershell
+claude mcp add --scope user --transport stdio pentaho-mcp `
+  -e PENTAHO_HOME=C:/Pentaho/data-integration `
+  -- node C:/src/pentaho-mcp/src/index.js
+```
+
+Mạng nội bộ không ra được npm: cài `npm install` một lần ở máy có mạng rồi copy cả repo (gồm `node_modules`), hoặc trỏ registry nội bộ bằng `npm config set registry <url>`. Hai runtime dependency: `@modelcontextprotocol/sdk`, `fast-xml-parser`.
+
+## Phụ lục B — Phát hành phiên bản mới (maintainer)
+
+Release được build và đăng tự động bởi `.github/workflows/release.yml` khi push tag:
+
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Workflow chạy `npm test` + `npm run verify:profile`, build `pentaho-mcp-1.0.0-win-x64.zip` + `checksums.sha256`, rồi tạo GitHub Release `v1.0.0` đính kèm hai file đó. Build thủ công tại máy (Windows): `npm run build:release -- --version 1.0.0`, kết quả nằm trong `dist/`.

@@ -9,7 +9,7 @@ Runbook cho operator. Nguồn sự thật: `packaging/doctor.ps1`, `scripts/*.mj
 | Windows `.exe` tự chứa | End user, máy offline | Không cần system Node; knowledge + companion skill kèm theo |
 | Source-mode Node 20+ | Developer, CI | `npm install`; knowledge từ repo |
 
-Cả hai dùng chung workspace root được phát hiện tự động (`~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`) và luôn enforce biên; hành vi tool đồng nhất.
+Cả hai dùng chung workspace root được phát hiện tự động (theo thư mục mở client; `~/.kettle/repositories.xml` / `PENTAHO_HOME/repositories.xml` chỉ để nhận biết thư mục đó là repository) và luôn enforce biên; hành vi tool đồng nhất.
 
 ## Xác minh cài đặt
 
@@ -25,7 +25,7 @@ Source-mode, chạy từ repo root:
 node scripts/verify-production-profile.mjs
 ```
 
-`doctor.ps1` bắt tay MCP bằng **initialize + tools/list** (không kiểm prompt/resource), assert đúng **41 tool** và từ chối mọi tool `pentaho_*` (lifecycle legacy không được đăng ký). Kỳ vọng profile: `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
+`doctor.ps1` bắt tay MCP bằng **initialize + tools/list** (stdin ghi UTF-8 không BOM; `initialize` phải trả `serverInfo`, không kiểm prompt/resource), assert đúng **41 tool** và từ chối mọi tool `pentaho_*` (lifecycle legacy không được đăng ký). Kỳ vọng profile: `production profile OK: 41 tools (exact set), no lifecycle prompt/resource surface, no learning/promotion surface`.
 
 Kiểm tra handshake thủ công: `tools/list` phải có đủ 41 tool thuộc 8 nhóm (read 4, edit 9, artifact 2, removal 2, connection 6, repository 9, validate 1, knowledge 4, runtime 4), và **không** có tool `pentaho_*` nào; MCP không quảng bá prompt/resource.
 
@@ -43,7 +43,7 @@ Bản packaged kèm companion skill dưới `skills/developing-pentaho-jobs/` (g
 
 ## Nâng cấp/rollback
 
-- Nâng cấp: giải nén ZIP mới ra thư mục ổn định mới, sửa đường dẫn `command` của `dte-pentaho` trong cấu hình client đang dùng sang `.exe` mới, kiểm tra bằng `doctor.ps1`, sau đó giữ lại hoặc xóa thư mục cũ.
+- Nâng cấp: tải ZIP phiên bản mới từ GitHub Releases, đóng client, giải nén đè vào cùng thư mục (ví dụ `C:/Tools/pentaho-mcp`), `Unblock-File`, kiểm tra bằng `doctor.ps1`, rồi reconnect client — đường dẫn `command` không đổi nên không cần sửa cấu hình. Xem `docs/install.md`.
 - Rollback: khôi phục đường dẫn executable cũ trong cùng cấu hình client.
 
 ## `doctor.ps1`
@@ -55,7 +55,7 @@ Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp l�
 - Runtime log khử nhạy cảm nằm trong `runtime-logs/` (`<timestamp>-<kind>-<mode>.log`), gồm status/exitCode/signal + STDOUT/STDERR (mỗi luồng bị chặn 256 KiB bằng tail buffer ngay khi streaming) và redact credential/tham số nhạy cảm. Đọc bằng `kettle_runtime_logs`.
 - Thư mục log giữ **100 file mới nhất** sau mỗi lần chạy (retention theo số lượng); file cũ hơn bị xóa.
 - `kettle_runtime_logs` nhận `name` (tùy chọn) và `limit` (1..100), trả **mới nhất trước**, tối đa **256 KiB mỗi file**, kiểm chứa canonical từng file (từ chối tên thoát khỏi thư mục log).
-- Server log stderr (`kettle-mcp-dte running on stdio ...`); tool failure là payload `{ok:false}` trong `text`, không phải protocol error.
+- Server log stderr (`pentaho-mcp running on stdio ...`); tool failure là payload `{ok:false}` trong `text`, không phải protocol error.
 - Runtime log ghi dưới `<workspace root>/.pentaho-mcp/` (root phát hiện tự động); thư mục `.pentaho-mcp/` đã nằm trong `.gitignore` nên không lọt vào commit.
 
 ## CI và bao bì phát hành
@@ -81,7 +81,7 @@ Thoát nonzero khi executable bị thiếu hoặc MCP handshake không hợp l�
 
 ## Gỡ cài đặt
 
-Xóa mục/bảng `dte-pentaho` khỏi cấu hình client đang dùng và tùy chọn xóa thư mục companion-skill đã copy; giữ các server khác và workspace.
+Xóa mục/bảng `pentaho-mcp` khỏi cấu hình client đang dùng và tùy chọn xóa thư mục companion-skill đã copy; giữ các server khác và workspace.
 
 ## SmartScreen/AV
 

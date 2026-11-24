@@ -1,0 +1,38 @@
+name: release
+# Push a tag such as v1.0.0 to build the Windows .exe ZIP and publish it as a
+# GitHub Release asset (pentaho-mcp-<version>-win-x64.zip + checksums.sha256).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run verify:profile
+      - name: Build release ZIP
+        shell: pwsh
+        run: |
+          $version = '${{ github.ref_name }}'.TrimStart('v')
+          npm run build:release -- --version $version
+      - name: Publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = '${{ github.ref_name }}'.TrimStart('v')
+          gh release create '${{ github.ref_name }}' `
+            "dist/pentaho-mcp-$version-win-x64.zip" `
+            dist/checksums.sha256 `
+            --title "pentaho-mcp $version" `
+            --generate-notes

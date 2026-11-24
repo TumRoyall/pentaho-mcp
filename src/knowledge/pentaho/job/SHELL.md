@@ -8,8 +8,8 @@
   <description/>
   <type>SHELL</type>
   <attributes/>
-  <filename>${Internal.Entry.Current.Directory}/scripts/backup.sh</filename>
-  <work_directory>${Internal.Entry.Current.Directory}</work_directory>
+  <filename/>
+  <work_directory/>
   <arg_from_previous>N</arg_from_previous>
   <exec_per_row>N</exec_per_row>
   <set_logfile>N</set_logfile>
@@ -34,8 +34,8 @@
 
 | Field XML | Bắt buộc | Ý nghĩa / cách điền |
 |---|---|---|
-| `filename` | Y* | Đường dẫn tới script file (.sh/.bat) — dùng `${VAR}`; bỏ trống nếu dùng inline script |
-| `work_directory` | N | Thư mục làm việc khi chạy script. Hỗ trợ biến |
+| `filename` | Y* | Đường dẫn **tuyệt đối** tới script file (.sh/.bat), hoặc `${VAR}`; bỏ trống nếu dùng inline script |
+| `work_directory` | N | Thư mục làm việc khi chạy script — đường dẫn tuyệt đối hoặc `${VAR}` |
 | `arg_from_previous` | Y | `Y`/`N` — nhận argument từ result rows của entry trước (default `N`) |
 | `exec_per_row` | Y | `Y`/`N` — chạy script một lần cho mỗi row (default `N`) |
 | `set_logfile` | Y | `Y`/`N` — redirect stdout/stderr vào log file (default `N`) |
@@ -125,7 +125,7 @@ Ví dụ inline script (kèm `argument` điều kiện):
   chèn thủ công từng `<argument0>`, `<argument1>`, … sau `<loglevel>`, đánh số liên tục từ 0.
 - Khung entry (`parallel`, `draw`, `nr`, `xloc`, `yloc`, `attributes_kjc`) do
   `JobEntryCopy.getXML()` bao ngoài — giữ nguyên theo mẫu.
-- Không absolute path máy cụ thể trong template — dùng `${VAR}` hoặc `${Internal.Entry.Current.Directory}`.
+- Template để trống `filename`/`work_directory`; khi sinh thật thì ghi đường dẫn tuyệt đối (hoặc `${VAR}` do người dùng định nghĩa). Không dùng biến thư mục nội bộ của Pentaho.
 
 ## Production Example
 

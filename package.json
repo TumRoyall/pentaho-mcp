@@ -1,11 +1,11 @@
 {
-  "name": "pentaho-mcp-server",
-  "version": "0.1.0",
+  "name": "pentaho-mcp",
+  "version": "1.0.0",
   "description": "Knowledge-first Pentaho Kettle job/transformation inspection, editing, static validation, and optional local PDI runtime tools via MCP.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "pentaho-mcp-server": "src/index.js"
+    "pentaho-mcp": "src/index.js"
   },
   "scripts": {
     "test": "node --test",

@@ -78,6 +78,7 @@ Trạng thái catalog:
 
 - Job `test`: matrix Node `[20, 22]`, mỗi node chạy `npm ci` → `npm test` → `npm run verify:profile` → `git diff --check`.
 - Job `package`: Node 20, chạy `npm run build:release -- --version 0.0.0-ci` rồi upload `dist/**` qua `actions/upload-artifact@v4` để kiểm nhanh artifact release.
+- Workflow `release` (`.github/workflows/release.yml`): khi push tag `v*`, chạy test + verify profile, build ZIP + `checksums.sha256` với version lấy từ tag rồi tạo GitHub Release đính kèm hai file đó. Phát hành: `git tag v1.0.0; git push origin v1.0.0`.
 
 ## Bao bì npm
 
@@ -95,12 +96,12 @@ Trạng thái catalog:
 
 ## Danh mục phát hành
 
-ZIP gồm đúng các entry: `README.md`, `VERSION`, `doctor.ps1`, `dte-pentaho-mcp.exe`, `skills/`, `skills/developing-pentaho-jobs/`, `skills/developing-pentaho-jobs/references/`, `skills/developing-pentaho-jobs/SKILL.md`, `skills/developing-pentaho-jobs/references/pentaho-spec-template.md`, `skills/developing-pentaho-jobs/references/pentaho-plan-template.md`. `checksums.sha256` nằm cạnh ZIP, không phải entry bên trong. Cấu hình client được tài liệu hóa trong `docs/install.md` thay vì bị script release tự sửa.
+ZIP gồm đúng các entry: `README.md`, `VERSION`, `doctor.ps1`, `pentaho-mcp.exe`, `skills/`, `skills/developing-pentaho-jobs/`, `skills/developing-pentaho-jobs/references/`, `skills/developing-pentaho-jobs/SKILL.md`, `skills/developing-pentaho-jobs/references/pentaho-spec-template.md`, `skills/developing-pentaho-jobs/references/pentaho-plan-template.md`. `checksums.sha256` nằm cạnh ZIP, không phải entry bên trong. `README.md` trong ZIP là hướng dẫn cài cho end user (Claude Code, Kiro, Codex), sinh từ `packaging/README.md` với `{{VERSION}}` được thay bằng version release — không phải README của repo. Cấu hình client được tài liệu hóa trong `docs/install.md` thay vì bị script release tự sửa.
 
 ## Checklist đóng góp
 
 - [ ] Test focused pass; `node --test` pass; `node scripts/verify-production-profile.mjs` OK (41 tool, no prompt/resource, no learning/promotion).
-- [ ] Không hard-code `dte-*`; biên workspace (`createWorkspaceBoundary`) enforce mọi đường ghi/đọc.
+- [ ] Không hard-code tiền tố tên riêng của tổ chức; biên workspace (`createWorkspaceBoundary`) enforce mọi đường ghi/đọc.
 - [ ] Knowledge mới có provenance, không secret/endpoint/path thật.
 - [ ] Không commit/push trừ khi user cho phép riêng; mỗi task kết thúc bằng diff reviewable.
 - [ ] `git diff --check` sạch.

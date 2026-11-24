@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build a self-contained Windows release of the DTE Pentaho Kettle MCP.
+ * Build a self-contained Windows release of the Pentaho Kettle MCP.
  *
  * Pipeline:
  *   1. Bundle src/index.js (all src/**) into one CommonJS file with esbuild.
@@ -35,13 +35,13 @@ const require = createRequire(import.meta.url);
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const buildDir = path.join(root, 'build');
 const distDir = path.join(root, 'dist');
-const EXE_NAME = 'dte-pentaho-mcp.exe';
+const EXE_NAME = 'pentaho-mcp.exe';
 // Windows' bundled bsdtar, resolved by absolute path. A bare `tar.exe` goes
 // through PATH, where Git Bash/MSYS resolves it to GNU tar; GNU tar reads the
 // `C:/...` archive path as a remote host and fails with "Cannot connect to C:".
 const SYSTEM_TAR = path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe');
 // Stable virtual base for all bundled import.meta.url values (see bundleServer).
-const IMPORT_META_URL = 'file:///C:/dte-pentaho-mcp/src/index.js';
+const IMPORT_META_URL = 'file:///C:/pentaho-mcp/src/index.js';
 
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
@@ -226,7 +226,11 @@ function assembleRelease(exePath, version) {
   mkdirSync(staging, { recursive: true });
 
   copyFileSync(exePath, path.join(staging, EXE_NAME));
-  copyFileSync(path.join(root, 'README.md'), path.join(staging, 'README.md'));
+  // Ship the end-user install guide (Claude Code / Kiro / Codex), not the repo
+  // README: the repo README links into docs/, which is not part of the ZIP.
+  const installGuide = readFileSync(path.join(root, 'packaging', 'README.md'), 'utf8')
+    .replaceAll('{{VERSION}}', version);
+  writeFileSync(path.join(staging, 'README.md'), installGuide, 'utf8');
   copyFileSync(
     path.join(root, 'packaging', 'doctor.ps1'),
     path.join(staging, 'doctor.ps1'),
@@ -236,7 +240,7 @@ function assembleRelease(exePath, version) {
   writeFileSync(path.join(staging, 'VERSION'), `${version}\n`, 'utf8');
 
   mkdirSync(distDir, { recursive: true });
-  const zipName = `dte-pentaho-mcp-${version}-win-x64.zip`;
+  const zipName = `pentaho-mcp-${version}-win-x64.zip`;
   const zipPath = path.join(distDir, zipName);
   rmSync(zipPath, { force: true, maxRetries: 10, retryDelay: 100 });
   // Windows' bsdtar produces a standard ZIP with -a -cf.

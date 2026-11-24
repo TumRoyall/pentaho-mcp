@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Diagnose a DTE Pentaho Kettle MCP install.
+  Diagnose a Pentaho Kettle MCP install.
 
 .DESCRIPTION
   Verifies the packaged executable exists, performs an MCP stdio handshake
@@ -21,7 +21,7 @@ $ErrorActionPreference = 'Stop'
 $failures = @()
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$exePath = Join-Path $scriptDir 'dte-pentaho-mcp.exe'
+$exePath = Join-Path $scriptDir 'pentaho-mcp.exe'
 
 if (-not (Test-Path -LiteralPath $exePath)) {
   Write-Host "[FAIL] executable missing: $exePath"
@@ -48,8 +48,22 @@ $psi.RedirectStandardInput = $true
 $psi.RedirectStandardOutput = $true
 $psi.RedirectStandardError = $true
 $psi.UseShellExecute = $false
-$proc = [System.Diagnostics.Process]::Start($psi)
-$proc.StandardInput.Write($requests + "`n")
+$psi.StandardOutputEncoding = New-Object System.Text.UTF8Encoding($false)
+# Windows PowerShell (.NET Framework) builds the child's stdin writer from
+# [Console]::InputEncoding and emits its BOM as soon as the process starts,
+# which corrupts the first JSON-RPC line (initialize). Use BOM-less UTF-8 for
+# the duration of the start, then restore the console setting.
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$previousInputEncoding = $null
+try { $previousInputEncoding = [Console]::InputEncoding; [Console]::InputEncoding = $utf8NoBom } catch {}
+try {
+  $proc = [System.Diagnostics.Process]::Start($psi)
+} finally {
+  if ($previousInputEncoding) { try { [Console]::InputEncoding = $previousInputEncoding } catch {} }
+}
+$bytes = $utf8NoBom.GetBytes($requests + "`n")
+$proc.StandardInput.BaseStream.Write($bytes, 0, $bytes.Length)
+$proc.StandardInput.BaseStream.Flush()
 $proc.StandardInput.Close()
 $stdout = $proc.StandardOutput.ReadToEnd()
 $null = $proc.StandardError.ReadToEnd()
@@ -59,6 +73,14 @@ $responses = @()
 foreach ($line in ($stdout -split "`r?`n")) {
   $t = $line.Trim()
   if ($t.StartsWith('{')) { try { $responses += ($t | ConvertFrom-Json) } catch {} }
+}
+
+$serverInfo = ($responses | Where-Object { $_.id -eq 1 }).result.serverInfo
+if ($serverInfo) {
+  Write-Host "[OK]   MCP initialize: $($serverInfo.name) $($serverInfo.version)"
+} else {
+  Write-Host "[FAIL] MCP initialize: no valid response"
+  $failures += 'initialize'
 }
 
 $tools = ($responses | Where-Object { $_.id -eq 2 }).result.tools

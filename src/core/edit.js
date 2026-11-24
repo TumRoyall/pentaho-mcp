@@ -696,11 +696,12 @@ export function setFieldPath(filePath, name, fieldPath, value) {
 }
 
 /** Minimal, well-formed skeletons that pass the structural validator as-is. */
-function emptyTransXml(name) {
+function emptyTransXml(name, directory) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
     <name>${escapeXml(name)}</name>
+    <directory>${escapeXml(directory)}</directory>
   </info>
   <order>
   </order>
@@ -710,10 +711,11 @@ function emptyTransXml(name) {
 
 // A job must have exactly one start entry to validate clean, so the skeleton
 // ships the canonical Kettle START (type SPECIAL, <start>Y</start>).
-function emptyJobXml(name) {
+function emptyJobXml(name, directory) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <job>
   <name>${escapeXml(name)}</name>
+  <directory>${escapeXml(directory)}</directory>
   <entries>
     <entry>
       <name>START</name>
@@ -753,8 +755,12 @@ function emptyJobXml(name) {
  * transformation carries an empty <order>; a job carries the single START
  * entry it requires plus an empty <hops>. Callers then build it up with
  * addElement / editHops / set* — no clone-then-strip needed.
+ *
+ * `directory` is the artifact-level <directory> Spoon writes: the repository
+ * folder of the file in repository mode (e.g. "/batch/daily/job"), "/" for a
+ * plain file (the default).
  */
-export function createFile(filePath, { kind, name } = {}) {
+export function createFile(filePath, { kind, name, directory = '/' } = {}) {
   const detected = kindOf(filePath); // throws on a non-.kjb/.ktr path
   if (kind && kind !== detected) {
     throw new Error(`kind "${kind}" conflicts with extension of ${filePath} (${detected})`);
@@ -763,7 +769,7 @@ export function createFile(filePath, { kind, name } = {}) {
   const artifactName = name && String(name).trim()
     ? String(name).trim()
     : path.basename(filePath).replace(/\.(kjb|ktr)$/i, '');
-  const xml = detected === 'job' ? emptyJobXml(artifactName) : emptyTransXml(artifactName);
+  const xml = detected === 'job' ? emptyJobXml(artifactName, directory) : emptyTransXml(artifactName, directory);
   const v = XMLValidator.validate(xml);
   if (v !== true) throw new Error(`Generated skeleton is malformed: ${v.err?.msg}`);
   mkdirSync(path.dirname(filePath), { recursive: true });
@@ -772,7 +778,33 @@ export function createFile(filePath, { kind, name } = {}) {
   return { path: filePath, kind: detected, name: artifactName, validation };
 }
 
-export function cloneFile(sourcePath, destPath, name, replacements = []) {
+/**
+ * Set the artifact-level <directory> (job header before <entries>, or the
+ * transformation <info> block), never touching entry/step reference tags.
+ * Inserts the tag after the artifact <name> when it is absent.
+ */
+export function setHeaderDirectory(xml, kind, directory) {
+  const open = kind === 'job' ? '<job>' : '<info>';
+  const start = xml.indexOf(open);
+  if (start === -1) return xml;
+  const stop = kind === 'job' ? xml.indexOf('<entries>', start) : xml.indexOf('</info>', start);
+  const end = stop === -1 ? xml.length : stop;
+  const region = xml.slice(start, end);
+  const tag = `<directory>${escapeXml(directory)}</directory>`;
+  const existing = /<directory>[\s\S]*?<\/directory>|<directory\s*\/>/.exec(region);
+  if (existing) {
+    const at = start + existing.index;
+    return xml.slice(0, at) + tag + xml.slice(at + existing[0].length);
+  }
+  const nameClose = region.indexOf('</name>');
+  if (nameClose === -1) return xml;
+  const at = start + nameClose + '</name>'.length;
+  const lineStart = xml.lastIndexOf('\n', at) + 1;
+  const indent = /^[ \t]*/.exec(xml.slice(lineStart))[0];
+  return xml.slice(0, at) + dominantEol(xml) + indent + tag + xml.slice(at);
+}
+
+export function cloneFile(sourcePath, destPath, name, replacements = [], { directory } = {}) {
   if (kindOf(sourcePath) !== kindOf(destPath)) {
     throw new Error('Source and destination must be the same kind (.kjb/.ktr)');
   }
@@ -788,6 +820,7 @@ export function cloneFile(sourcePath, destPath, name, replacements = []) {
   const ne = xml.indexOf('</name>', ns);
   if (ns === -1 || ne === -1) throw new Error(`Missing <name> element in ${sourcePath}`);
   xml = xml.slice(0, ns + '<name>'.length) + escapeXml(name) + xml.slice(ne);
+  if (directory != null) xml = setHeaderDirectory(xml, kind, directory);
   const v = XMLValidator.validate(xml);
   if (v !== true) {
     throw new Error(`Clone would produce malformed XML (check replacements): ${v.err?.msg}`);

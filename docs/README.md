@@ -1,6 +1,6 @@
 # Trung tâm tài liệu (Documentation Hub)
 
-Chào mừng bạn đến với hệ thống tài liệu kỹ thuật của **Pentaho MCP** (`pentaho-mcp` / `kettle-mcp-dte`). Thư mục `docs/` chứa toàn bộ kiến trúc chi tiết, quy chuẩn thiết kế, hướng dẫn vận hành, danh mục công cụ và quy trình kiểm chứng hệ thống.
+Chào mừng bạn đến với hệ thống tài liệu kỹ thuật của **Pentaho MCP** (`pentaho-mcp`). Thư mục `docs/` chứa toàn bộ kiến trúc chi tiết, quy chuẩn thiết kế, hướng dẫn vận hành, danh mục công cụ và quy trình kiểm chứng hệ thống.
 
 ---
 

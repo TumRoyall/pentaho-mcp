@@ -20,8 +20,8 @@
 - [Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)
 - [Quy trình phát triển 5 pha (Workflow)](#-quy-trình-phát-triển-5-pha-workflow)
 - [Bắt đầu nhanh (Quickstart)](#-bắt-đầu-nhanh-quickstart)
-  - [1. Chế độ mã nguồn (Source Mode)](#1-chế-độ-mã-nguồn-source-mode-cho-developer)
-  - [2. Bản Windows tự chứa (.exe)](#2-bản-windows-tự-chứa-exe-cho-end-user)
+  - [1. Tải bản Windows phát hành (.exe)](#1-tải-bản-windows-phát-hành-exe-cho-end-user)
+  - [2. Chế độ mã nguồn (Source Mode)](#2-chế-độ-mã-nguồn-source-mode-cho-developer)
 - [Cấu hình trên các AI Client](#-cấu-hình-trên-các-ai-client)
   - [Claude Code](#claude-code)
   - [Cursor](#cursor)
@@ -38,7 +38,7 @@
 
 ## 💡 Tổng quan
 
-**Pentaho MCP** (tên dịch vụ stdio: `kettle-mcp-dte`) là bộ công cụ **Model Context Protocol (MCP)** chuyên dụng, giúp các trợ lý AI (như Claude Code, Cursor, Windsurf, Codex, Kiro) có thể đọc hiểu, tạo mới, chỉnh sửa, validate và vận hành các luồng ETL Pentaho Data Integration (Kettle) bao gồm **Job (`.kjb`)** và **Transformation (`.ktr`)**.
+**Pentaho MCP** (tên dịch vụ stdio: `pentaho-mcp`) là bộ công cụ **Model Context Protocol (MCP)** chuyên dụng, giúp các trợ lý AI (như Claude Code, Cursor, Windsurf, Codex, Kiro) có thể đọc hiểu, tạo mới, chỉnh sửa, validate và vận hành các luồng ETL Pentaho Data Integration (Kettle) bao gồm **Job (`.kjb`)** và **Transformation (`.ktr`)**.
 
 Hệ thống được thiết kế theo triết lý **Deterministic Primitives + External Reasoning**:
 - **Pentaho MCP**: Chịu trách nhiệm thực thi các tác vụ kỹ thuật xác định (deterministic primitives): bóc tách XML, kiểm tra tọa độ hop, thêm/sửa step/job entry đúng chuẩn schema, validate cấu trúc, và quản lý repository.
@@ -52,7 +52,7 @@ Hệ thống được thiết kế theo triết lý **Deterministic Primitives +
 - 🧠 **Tri thức nhúng sẵn (Knowledge-First Design)**: Tích hợp sẵn catalog (`catalog.yaml`) và thư viện đặc tả Markdown (`src/knowledge/pentaho/`) cho hàng chục loại step/entry. AI agent không bao giờ phải "bịa" cấu trúc XML mà luôn tra cứu template chuẩn trước khi tạo/sửa.
 - ⚡ **Zero-PDI Core Dependency**: Toàn bộ tính năng đọc, tạo file, sửa trường, sửa hop, kiểm tra liên kết, quản lý repository và validation tĩnh chạy hoàn toàn trên Node.js thuần túy — **không cần cài đặt Pentaho Data Integration hay máy ảo Java**.
 - 🛡️ **Biên Workspace chuẩn tắc (Canonical Containment)**: Bảo vệ an toàn tuyệt đối với cơ chế `canonical containment`. Chặn đứng mọi nỗ lực path traversal (`..`), sibling-prefix escape hay symlink/junction trỏ ra ngoài thư mục workspace đã resolve.
-- 🗄️ **Quản lý Repository & Connection**: Hỗ trợ đầy đủ Pentaho File Repository, ánh xạ đường dẫn nội bộ (`${Internal.Entry.Current.Directory}`), quản lý file connection `.kdb` và tự động phát hiện `repositories.xml` của Spoon.
+- 🗄️ **Quản lý Repository & Connection**: Hỗ trợ đầy đủ Pentaho File Repository, ref theo chế độ (`rep_name` khi có repository, `<filename>` tuyệt đối khi không), quản lý file connection `.kdb` và tự động phát hiện `repositories.xml` của Spoon.
 - 🚦 **Thực thi phân pha có kiểm soát (Phase-Gated Runtime)**: Hỗ trợ gọi Kitchen/Pan cục bộ để chạy thử nghiệm, nhưng chỉ cho phép sau khi đã vượt qua bước validation tĩnh, có biến môi trường bật (`PENTAHO_ENABLE_EXECUTE=1`) và người dùng xác nhận (`confirmed: true`).
 
 ---
@@ -86,7 +86,7 @@ flowchart LR
         SP[Superpowers / Skills: Phân tích & Lập kế hoạch] -. hướng dẫn .-> AI
     end
 
-    subgraph MCP_Layer[Pentaho MCP / kettle-mcp-dte]
+    subgraph MCP_Layer[Pentaho MCP]
         STDIO[Stdio Transport JSON-RPC]
         SRV[Protocol Core: src/server.js]
         REG[Registry: 9 Tool Factories]
@@ -147,64 +147,75 @@ flowchart TD
 
 ## 🚀 Bắt đầu nhanh (Quickstart)
 
-### 1. Chế độ mã nguồn (Source Mode, cho Developer)
+### 1. Tải bản Windows phát hành (.exe, cho End User)
+
+Không cần Node.js hay `npm install`: server, dependencies, knowledge base và companion skill nằm gọn trong một file ZIP.
+
+1. Tải `pentaho-mcp-<version>-win-x64.zip` và `checksums.sha256` từ [GitHub Releases](https://github.com/TumRoyall/pentaho-mcp/releases).
+2. Kiểm checksum, giải nén vào thư mục cố định, bỏ chặn và chạy kiểm tra:
+
+```powershell
+$zip = 'pentaho-mcp-1.0.0-win-x64.zip'
+(Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()   # phải khớp checksums.sha256
+Expand-Archive $zip -DestinationPath C:\Tools\pentaho-mcp -Force
+Get-ChildItem C:\Tools\pentaho-mcp -Recurse | Unblock-File
+powershell -ExecutionPolicy Bypass -File C:\Tools\pentaho-mcp\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
+```
+
+3. Đăng ký `C:/Tools/pentaho-mcp/pentaho-mcp.exe` vào AI client (xem bên dưới).
+
+👉 Hướng dẫn từng bước (script tải, nâng cấp, gỡ bỏ): [Hướng dẫn cài đặt (`docs/install.md`)](docs/install.md).
+
+### 2. Chế độ mã nguồn (Source Mode, cho Developer)
 
 **Yêu cầu**: Node.js >= 20.
 
 ```powershell
-# 1. Clone repository và cài đặt dependencies
-git clone https://github.com/TumRoyal/pentaho-mcp-server.git
-cd pentaho-mcp-server
+git clone https://github.com/TumRoyall/pentaho-mcp.git
+cd pentaho-mcp
 npm install
-
-# 2. Kiểm tra toàn bộ test suite và profile
 npm test
 npm run verify:profile
-
-# 3. Khởi chạy thử nghiệm trên stdio
 node src/index.js
 ```
 
-### 2. Bản Windows tự chứa (.exe, cho End User)
-
-Không cần cài đặt Node.js hay chạy `npm install`. Toàn bộ ứng dụng, dependencies và knowledge base đã được đóng gói thành một file `.exe` duy nhất.
-
-```powershell
-# 1. Đóng gói release Windows
-npm run build:release -- --version 1.0.0
-
-# 2. Kiểm tra tính toàn vẹn và sức khỏe hệ thống
-.\build\release\doctor.ps1 -PentahoHome C:\Pentaho\data-integration
-```
-
-Giải nén file ZIP thu được trong `dist/` vào một thư mục cố định (ví dụ `C:\Tools\dte-pentaho-mcp\`) để cấu hình vào các AI client.
+Bản phát hành được build và đăng tự động khi push tag `v*` (`.github/workflows/release.yml`).
 
 ---
 
 ## 🔌 Cấu hình trên các AI Client
 
-> **Thư mục workspace (workspace root):** không có biến môi trường nào thiết lập thư mục workspace. Server tự động phát hiện khi khởi động, mô phỏng đúng cách Spoon tìm file repository: repository khai báo trong `~/.kettle/repositories.xml` (repository mặc định `is_default=Y` được chọn, nếu không có thì lấy repository đầu tiên có `base_directory` tồn tại), ngược lại là `repositories.xml` bên trong `PENTAHO_HOME`, cuối cùng là thư mục làm việc (working directory) của tiến trình server. Vì không còn biến môi trường để ghi đè, cách duy nhất để cố định workspace là đăng ký project vào `~/.kettle/repositories.xml`, hoặc khởi động client với project làm thư mục làm việc. Mọi đường dẫn truyền vào tool vẫn được kiểm tra containment dựa trên root đã resolve.
+> **Thư mục workspace (workspace root):** không có biến môi trường nào thiết lập thư mục workspace. Root đi theo thư mục bạn mở client. Nếu thư mục đó là (hoặc nằm trong) một file repository đã đăng ký trong Spoon (`~/.kettle/repositories.xml` hoặc `PENTAHO_HOME/repositories.xml`), hoặc chứa đúng một repository, server chạy repository mode tại repository đó; ngược lại chạy file mode tại chính thư mục đó. Repository đăng ký ở nơi khác không bao giờ chiếm root của thư mục bạn đang mở. Repository mode sinh header kiểu `<directory>/batch/daily/job</directory>` và ref `rep_name`; file mode sinh `<directory>/</directory>` và ref `<filename>` tuyệt đối. Mọi đường dẫn truyền vào tool vẫn được kiểm tra containment dựa trên root đã resolve.
 
 ### Claude Code
 
-Thêm vào file `.mcp.json` tại thư mục gốc của project cần làm việc:
+Khuyến nghị: đăng ký một lần ở **scope `user`** bằng CLI (dùng được ở mọi project; workspace root là thư mục bạn chạy `claude`). Mọi option phải đứng trước `--`:
+
+```powershell
+claude mcp add --scope user --transport stdio pentaho-mcp `
+  -e PENTAHO_HOME=C:/Pentaho/data-integration `
+  -- C:/Tools/pentaho-mcp/pentaho-mcp.exe
+claude mcp list   # pentaho-mcp phải hiện ✓ Connected
+```
+
+Muốn chia sẻ cho team: commit file `.mcp.json` ở **root của project Pentaho** (không phải trong `.claude/`); lần đầu mở Claude Code sẽ hỏi phê duyệt:
 
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "node",
-      "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
+    "pentaho-mcp": {
+      "type": "stdio",
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
+      "args": [],
       "env": {
-        "PENTAHO_HOME": "C:/Pentaho/data-integration",
-        "PENTAHO_ENABLE_EXECUTE": "0"
+        "PENTAHO_HOME": "${PENTAHO_HOME:-C:/Pentaho/data-integration}"
       }
     }
   }
 }
 ```
 
-*(Đối với bản `.exe`, thay `command` bằng đường dẫn tới `dte-pentaho-mcp.exe` và để `args: []`)*
+*(Source mode: dùng `-- node C:/path/to/pentaho-mcp/src/index.js`, hoặc `"command": "node"` kèm đường dẫn đó trong `args`. Chỉ thêm `PENTAHO_ENABLE_EXECUTE=1` khi muốn cho phép chạy Kitchen/Pan thật.)*
 
 ### Cursor
 
@@ -213,8 +224,8 @@ Thêm vào file cấu hình MCP của Cursor (hoặc giao diện Settings -> MCP
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
+    "pentaho-mcp": {
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
       "args": [],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
@@ -231,9 +242,9 @@ Thêm vào file `~/.codeium/windsurf/mcp_config.json`:
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
+    "pentaho-mcp": {
       "command": "node",
-      "args": ["C:/path/to/pentaho-mcp-server/src/index.js"],
+      "args": ["C:/path/to/pentaho-mcp/src/index.js"],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
       }
@@ -249,8 +260,8 @@ Cấu hình tại `.kiro/settings/mcp.json` (theo workspace) hoặc `%USERPROFIL
 ```json
 {
   "mcpServers": {
-    "dte-pentaho": {
-      "command": "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe",
+    "pentaho-mcp": {
+      "command": "C:/Tools/pentaho-mcp/pentaho-mcp.exe",
       "args": [],
       "env": {
         "PENTAHO_HOME": "C:/Pentaho/data-integration"
@@ -265,11 +276,11 @@ Cấu hình tại `.kiro/settings/mcp.json` (theo workspace) hoặc `%USERPROFIL
 Thêm vào `.codex/config.toml`:
 
 ```toml
-[mcp_servers.dte-pentaho]
-command = "C:/Tools/dte-pentaho-mcp/dte-pentaho-mcp.exe"
+[mcp_servers.pentaho-mcp]
+command = "C:/Tools/pentaho-mcp/pentaho-mcp.exe"
 args = []
 
-[mcp_servers.dte-pentaho.env]
+[mcp_servers.pentaho-mcp.env]
 PENTAHO_HOME = "C:/Pentaho/data-integration"
 ```
 

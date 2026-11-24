@@ -23,7 +23,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - Run in source mode: `node src/index.js`
 - Relevant environment variables:
-  - No environment variable sets the workspace root: it is auto-detected at start-up by `src/workspace/resolve-root.js` (`~/.kettle/repositories.xml` -> `PENTAHO_HOME/repositories.xml` -> `process.cwd()`).
+  - No environment variable sets the workspace root: it is auto-detected at start-up by `src/workspace/resolve-root.js` from the server's working directory: if cwd is/is inside (or contains exactly one) file repository registered in `~/.kettle/repositories.xml` or `PENTAHO_HOME/repositories.xml`, repository mode at that repo; otherwise file mode at cwd. A repository registered elsewhere never takes over cwd.
   - `PENTAHO_HOME`: Path to Pentaho Data Integration directory containing `Kitchen.bat` / `Pan.bat` (required only for optional runtime tools).
   - `PENTAHO_ENABLE_EXECUTE`: Set to `1` to opt into runtime execution (any other value leaves execution disabled).
   - `KETTLE_KNOWLEDGE_DIR`: Override path for the embedded knowledge base.
@@ -35,7 +35,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Core Modules
 
 - **Workspace Boundary (`src/workspace/`)**:
-  - `resolve-root.js`: Discovers workspace root mirroring Spoon (`~/.kettle/repositories.xml` -> `PENTAHO_HOME/repositories.xml` -> current working directory).
+  - `resolve-root.js`: Discovers the workspace root from cwd, using registered Spoon file repositories only to classify cwd as repository vs file mode (repository mode drives header `<directory>` and `rep_name` references; file mode writes `/` and absolute `<filename>` references).
   - `boundary.js`: Enforces canonical containment (`createWorkspaceBoundary`). Resolves relative paths against root, allows absolute paths only within root, and rejects traversal (`..`), sibling-prefix escapes, and symlink/junction escapes. Case-insensitive on Windows.
 
 - **Core Engine (`src/core/`)**:

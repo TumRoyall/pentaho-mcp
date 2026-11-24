@@ -28,5 +28,5 @@ jobs:
       - run: npm run build:release -- --version 0.0.0-ci
       - uses: actions/upload-artifact@v4
         with:
-          name: dte-pentaho-mcp-dist
+          name: pentaho-mcp-dist
           path: dist/**

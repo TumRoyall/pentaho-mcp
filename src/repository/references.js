@@ -116,7 +116,50 @@ function updateDirectChild(xml, parentSpan, childTag, newValue) {
   return xml.slice(0, parentCloseTag) + tagToInsert + xml.slice(parentCloseTag);
 }
 
-export function rewriteReference(xml, { ownerKind, elementName, target }) {
+/**
+ * Point a job entry / transformation step at `target`.
+ *
+ * mode 'repository' (default): specification_method=rep_name with the target
+ * name + repository directory, filename/object id emptied.
+ * mode 'file': specification_method=filename with the target's absolute path,
+ * name/directory/object id emptied — what Spoon writes without a repository.
+ */
+export function rewriteReference(xml, { ownerKind, elementName, target, mode = 'repository' }) {
+  if (mode === 'file') return rewriteFileReference(xml, { ownerKind, elementName, target });
+  return rewriteRepositoryReference(xml, { ownerKind, elementName, target });
+}
+
+function resolveCaller(xml, ownerKind, elementName) {
+  const containerTag = ownerKind === 'job' ? 'entry' : 'step';
+  const span = findElementSpan(xml, containerTag, elementName);
+  if (!span) {
+    throw new Error(`No ${containerTag} named "${elementName}" found in artifact`);
+  }
+  const rawType = innerText(xml, span, 'type');
+  const adapter = findAdapter(ownerKind, rawType);
+  if (!adapter) {
+    throw new Error(`Element "${elementName}" of type "${rawType}" is not a supported reference caller`);
+  }
+  return { containerTag, adapter };
+}
+
+function rewriteFileReference(xml, { ownerKind, elementName, target }) {
+  const { containerTag, adapter } = resolveCaller(xml, ownerKind, elementName);
+  const writes = [
+    [adapter.methodTag, 'filename'],
+    [adapter.filenameTag, target.physicalPath],
+    [adapter.nameTag, ''],
+    [adapter.directoryTag, ''],
+    [adapter.objectIdTag, ''],
+  ];
+  let updated = xml;
+  for (const [tag, value] of writes) {
+    updated = updateDirectChild(updated, findElementSpan(updated, containerTag, elementName), tag, value);
+  }
+  return updated;
+}
+
+function rewriteRepositoryReference(xml, { ownerKind, elementName, target }) {
   const containerTag = ownerKind === 'job' ? 'entry' : 'step';
   const span = findElementSpan(xml, containerTag, elementName);
   if (!span) {

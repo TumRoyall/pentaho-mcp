@@ -4,7 +4,7 @@ Tài liệu khái niệm cho operator, maintainer và người dùng tool. Ngu�
 
 ## Bối cảnh hệ thống
 
-`pentaho-mcp-server` là MCP stdio server: client gọi **tool** qua stdio; server kiểm tra, chỉnh sửa và validate file `.kjb`/`.ktr` trong workspace, và (tùy chọn, phase-gated) nhờ PDI cục bộ load-check/execute sau khi validation tĩnh pass. Server không quảng bá prompt/resource, không deploy, không sửa Git.
+`pentaho-mcp` là MCP stdio server: client gọi **tool** qua stdio; server kiểm tra, chỉnh sửa và validate file `.kjb`/`.ktr` trong workspace, và (tùy chọn, phase-gated) nhờ PDI cục bộ load-check/execute sau khi validation tĩnh pass. Server không quảng bá prompt/resource, không deploy, không sửa Git.
 
 Việc suy luận — brainstorming, duyệt thiết kế, đặc tả, lập kế hoạch, thực thi kế hoạch — do **Superpowers** đảm nhận **bên ngoài** MCP. MCP chỉ cung cấp các tool nguyên thủy deterministic; các tool này vẫn gọi trực tiếp được bởi client khác.
 
@@ -43,7 +43,7 @@ Cơ chế `assertWritable` cũ (dựa biến môi trường trong `src/core/edit
 |--------|---------|-------|
 | `src/server.js` | Wiring MCP: `ListTools`, `CallTool`; `initialize` khai báo `capabilities = { tools: {} }` (không prompt/resource); envelope `{ok, data/error}` | `src/server.js` |
 | `src/tools/registry.js` | `buildTools(ctx)` gộp 7 factory: read/edit/validate/knowledge/runtime/artifact/removal; chặn trùng tên | `src/tools/registry.js` |
-| `src/workspace/resolve-root.js` | `resolveWorkspaceRoot` — phát hiện workspace root tự động (`~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`); trả `{root, mode, source, repository}` | `src/workspace/resolve-root.js` |
+| `src/workspace/resolve-root.js` | `resolveWorkspaceRoot` — phát hiện workspace root tự động (theo thư mục mở client; `~/.kettle/repositories.xml` / `PENTAHO_HOME/repositories.xml` chỉ để nhận biết thư mục đó là repository); trả `{root, mode, source, repository}` | `src/workspace/resolve-root.js` |
 | `src/workspace/boundary.js` | `createWorkspaceBoundary` — chính sách biên workspace chia sẻ (canonical containment) | `src/workspace/boundary.js` |
 | `src/core/` | `model.js`, `span.js`, `edit.js`, `artifact-edit.js`, `remove.js`, `search.js`, `validate.js`, `summarize.js`, `knowledge-intake.js`, `knowledge-coverage.js` — engine thuần túy, filesystem op | `src/core/*.js` |
 | `src/knowledge/` | `loader.js` (parse `catalog.yaml`, resolve reference, `KETTLE_KNOWLEDGE_DIR` override), `catalog-check.js` | `src/knowledge/loader.js` |

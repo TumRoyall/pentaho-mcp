@@ -6,7 +6,7 @@ MCP **không quảng bá prompt hay resource nào**; `initialize` chỉ khai bá
 
 ## Quy ước chung
 
-- **Biên workspace**: mọi đường dẫn hoặc tương đối workspace root, hoặc tuyệt đối **nằm trong** workspace root. Workspace root được phát hiện tự động (`src/workspace/resolve-root.js`: `~/.kettle/repositories.xml` → `PENTAHO_HOME/repositories.xml` → `process.cwd()`) và luôn được enforce (`src/workspace/boundary.js`). Đường ngoài workspace root (absolute ngoài root, `..`, sibling-prefix, symlink/junction escape) → từ chối.
+- **Biên workspace**: mọi đường dẫn hoặc tương đối workspace root, hoặc tuyệt đối **nằm trong** workspace root. Workspace root được phát hiện tự động (`src/workspace/resolve-root.js`: theo thư mục mở client; `~/.kettle/repositories.xml` / `PENTAHO_HOME/repositories.xml` chỉ để nhận biết thư mục đó là repository) và luôn được enforce (`src/workspace/boundary.js`). Đường ngoài workspace root (absolute ngoài root, `..`, sibling-prefix, symlink/junction escape) → từ chối.
 - **Transport**: stdio JSON-RPC. `tools/list` liệt kê `{name, description, inputSchema}`; `tools/call` trả envelope trên.
 - **Edit tool** trả unified diff của đúng bytes đã đổi và validate trước khi commit nơi áp dụng được. `kettle_add_element` trả thêm `{diff, catalogStatus, manualReviewRequired}`.
 

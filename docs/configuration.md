@@ -5,16 +5,17 @@ Tài liệu schema cho operator và maintainer. Nguồn sự thật: `src/worksp
 ## Dò root tự động và biên workspace
 
 - Root là scope chia sẻ cho read/edit/validate/coverage. Root được **dò tự động** bởi `src/workspace/resolve-root.js` (`resolveWorkspaceRoot()`); **không có biến môi trường nào chỉ định root**. Thứ tự:
-  1. `%USERPROFILE%/.kettle/repositories.xml` (hoặc `$HOME`) → chế độ repository, source `kettle_home`.
-  2. `PENTAHO_HOME/repositories.xml` → chế độ repository, source `pentaho_home`.
-  3. Thư mục làm việc của tiến trình server → chế độ file, source `cwd`.
-- Trong một `repositories.xml`, repository mặc định (`is_default=Y`) thắng; nếu không có, chọn repository đầu tiên có `base_directory` tồn tại dưới dạng thư mục.
-- Hai bước đầu **thắng** bước 3: nếu `%USERPROFILE%/.kettle/repositories.xml` đã khai báo một repository dùng được thì thư mục làm việc của tiến trình server bị bỏ qua hoàn toàn.
-- Vì không còn knob môi trường, chỉ có **ba cách ghim workspace**: (a) file repository trong `%USERPROFILE%/.kettle/repositories.xml`, (b) `repositories.xml` trong `PENTAHO_HOME`, (c) thư mục làm việc của tiến trình server. Project chưa đăng ký trong file repository của Spoon thì client phải khởi chạy với project làm thư mục làm việc; client không cho đặt cwd của server thì đăng ký project vào `~/.kettle/repositories.xml` là đường tin cậy.
+  1. Thư mục mở client (cwd) **là hoặc nằm trong** `base_directory` của một file repository đã đăng ký → chế độ repository, root = `base_directory` đó (repo sâu nhất thắng), match `cwd_inside_repository`.
+  2. cwd **chứa** đúng một repository đã đăng ký (hoặc nhiều repo, trong đó có một repo mặc định) → chế độ repository, root = repo đó, match `repository_inside_cwd`.
+  3. cwd là thư mục khởi chạy chứ không phải project (thư mục home, gốc ổ đĩa, thư mục Windows) → repository mặc định đã đăng ký (không có thì repo đầu tiên), match `fallback_default`.
+  4. Còn lại → chế độ file, root = cwd, source `cwd`.
+- "Đã đăng ký" = file repository khai báo trong `%USERPROFILE%/.kettle/repositories.xml` (source `kettle_home`) hoặc `PENTAHO_HOME/repositories.xml` (source `pentaho_home`) có `base_directory` tồn tại. Repo database (không có `base_directory`) bị bỏ qua. `is_default` nhận cả `true` (Spoon 9.x) lẫn `Y`.
+- Một repository đăng ký **ở nơi khác** không bao giờ chiếm root của thư mục bạn đang mở; `repositories.xml` chỉ dùng để biết thư mục đang mở có phải repository hay không.
+- Chế độ quyết định XML được sinh: repository mode → header `<directory>` = thư mục repo của file (ví dụ `/batch/daily/job`), ref job→trans dùng `rep_name` + `<directory>`; file mode → `<directory>/</directory>`, ref dùng `specification_method=filename` + đường dẫn tuyệt đối.
 - Chính sách chứa (canonical containment) do `src/workspace/boundary.js` (`createWorkspaceBoundary`) sở hữu và dùng chung cho mọi factory tool. Biên **luôn được enforce** — không có chế độ tắt biên.
 - Đường tương đối resolve theo root. Đường **tuyệt đối chỉ hợp lệ khi nằm trong root**.
 - Từ chối mọi đường thoát root: `..`, sibling-prefix (ví dụ `C:\ws-other` khi root là `C:\ws`), và symlink/junction escape. So sánh containment không phân biệt hoa/thường trên Windows; ancestor đã tồn tại được canonical hóa trước khi so.
-- Log khởi động in ra stderr: `kettle-mcp-dte running on stdio (root=<path>, mode=<mode>, source=<source>)`.
+- Log khởi động in ra stderr: `pentaho-mcp running on stdio (root=<path>, mode=<mode>, source=<source>, match=<match>)`.
 
 ## Biến môi trường
 
@@ -67,15 +68,15 @@ Nguồn: `src/runtime/policy.js` (`executionPolicy({confirmed, executeEnabled})`
 
 ## Mô hình đăng ký client dùng chung
 
-Mọi client đều dùng chung mô hình command/args/env cho server `dte-pentaho`:
+Mọi client đều dùng chung mô hình command/args/env cho server `pentaho-mcp`:
 
-- `command` là đường dẫn tuyệt đối `dte-pentaho-mcp.exe` (bản packaged) hoặc `node` (source-mode).
+- `command` là đường dẫn tuyệt đối `pentaho-mcp.exe` (bản packaged) hoặc `node` (source-mode).
 - `args` rỗng cho bản packaged, hoặc một phần tử là đường dẫn tuyệt đối `src/index.js` cho source-mode.
 - `env` chỉ chứa những biến thật sự được đọc: `PENTAHO_HOME` là biến duy nhất một bản cài bình thường cần; `PENTAHO_REPOSITORY_NAME` và `PENTAHO_ENABLE_EXECUTE` là tùy chọn. **Không có biến nào đặt root** — root do dò tự động.
 
-Ví dụ chính xác cho từng client xem `docs/install.md`: Kiro (`.kiro/settings/mcp.json`), Claude Code (`.mcp.json` tại project root), Codex (`.codex/config.toml`).
+Ví dụ chính xác cho từng client xem `docs/install.md`: Kiro (`.kiro/settings/mcp.json`), Claude Code (`claude mcp add --scope user`, hoặc `.mcp.json` tại project root), Codex (`.codex/config.toml`).
 
-Vì `env` không đặt được root, muốn ghim workspace phải dùng file repository hoặc thư mục làm việc của tiến trình server (xem mục "Dò root tự động và biên workspace"). Nếu `~/.kettle/repositories.xml` đã khai báo một repository dùng được thì **không cần biến môi trường nào cả**. `PENTAHO_HOME` chỉ cần khi dùng nhóm runtime tùy chọn, hoặc khi muốn dò root qua `repositories.xml` trong thư mục PDI. `PENTAHO_ENABLE_EXECUTE` cũng tùy chọn: **chỉ đặt `"1"` khi muốn cho phép thực thi thật**; bỏ hẳn để chặn (`EXECUTE_DISABLED`).
+Vì `env` không đặt được root, root đi theo thư mục bạn mở client (xem mục "Dò root tự động và biên workspace"). `PENTAHO_HOME` chỉ cần khi dùng nhóm runtime tùy chọn, hoặc khi muốn dò root qua `repositories.xml` trong thư mục PDI. `PENTAHO_ENABLE_EXECUTE` cũng tùy chọn: **chỉ đặt `"1"` khi muốn cho phép thực thi thật**; bỏ hẳn để chặn (`EXECUTE_DISABLED`).
 
 ## Lỗi biên thường gặp
 

@@ -1,23 +1,30 @@
 /**
- * Auto-detect the workspace root for the MCP, mirroring how Spoon decides
- * where it is operating. There is no manual KETTLE_ROOT knob anymore; the root
- * is discovered from the same two places Spoon looks for a file repository,
- * and falls back to the AI working directory when neither is present.
+ * Auto-detect the workspace root for the MCP. There is no manual root env
+ * knob: the root follows the folder the AI client was opened in (the server
+ * process's working directory), and the file repositories Spoon knows about
+ * (~/.kettle/repositories.xml, PENTAHO_HOME/repositories.xml) only decide
+ * whether that folder is repository-backed. A repository registered somewhere
+ * else never takes over an unrelated working folder.
  *
- * Precedence:
- *   1. ~/.kettle/repositories.xml           -> repository mode (base_directory)
- *   2. PENTAHO_HOME/repositories.xml         -> repository mode (base_directory)
- *      (the data-integration install directory)
- *   3. current working directory             -> file mode
+ * Precedence (registered = a repository with an existing base_directory):
+ *   1. cwd is the base_directory of a registered repository, or inside one
+ *      -> repository mode, root = that base_directory (deepest match wins)
+ *   2. exactly one registered repository lives inside cwd (or several, one of
+ *      which is the default) -> repository mode, root = that base_directory
+ *   3. cwd is not a real project folder (user home, drive root, Windows
+ *      system dir: some clients launch servers there) -> the default
+ *      registered repository, else the first registered one
+ *   4. otherwise -> file mode, root = cwd
  *
- * Within a repositories.xml the default repository wins (is_default=Y),
- * otherwise the first repository whose base_directory exists is chosen.
- *
- * Returns { root, mode: 'repository' | 'file', source, repository|null }.
+ * Returns { root, mode: 'repository' | 'file', source, match, registryPath,
+ * repository }. `source` is 'kettle_home' | 'pentaho_home' | 'cwd'.
  */
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { parseRepositoriesXml } from '../repository/registration.js';
+
+const caseInsensitive = process.platform === 'win32';
+const key = p => (caseInsensitive ? p.toLowerCase() : p);
 
 function readRepositories(registryPath) {
   if (!registryPath || !existsSync(registryPath)) return [];
@@ -34,11 +41,50 @@ function isUsableDirectory(dir) {
   return existsSync(resolved) && statSync(resolved).isDirectory();
 }
 
-/** Pick the default repo, else the first whose base_directory is a real dir. */
-function chooseRepository(repositories) {
-  const usable = repositories.filter(r => isUsableDirectory(r.baseDirectory));
-  if (usable.length === 0) return null;
-  return usable.find(r => r.isDefault) ?? usable[0];
+/** True when `child` equals `parent` or sits underneath it. */
+function isWithin(parent, child) {
+  const rel = path.relative(key(parent), key(child));
+  return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+}
+
+/** Folders that are a launch location, not a project the user opened. */
+function isLaunchLocation(dir, environment) {
+  const resolved = path.resolve(dir);
+  if (path.parse(resolved).root === resolved) return true;
+  const home = environment.USERPROFILE || environment.HOME;
+  if (home && key(path.resolve(home)) === key(resolved)) return true;
+  const systemRoot = environment.SystemRoot || environment.windir;
+  if (systemRoot && isWithin(path.resolve(systemRoot), resolved)) return true;
+  return false;
+}
+
+/** Every registered file repository with a real base_directory, in precedence order. */
+function registeredRepositories(environment, pentahoHome) {
+  const sources = [];
+  const userHome = environment.USERPROFILE || environment.HOME;
+  if (userHome) sources.push({ source: 'kettle_home', registryPath: path.join(userHome, '.kettle', 'repositories.xml') });
+  if (pentahoHome && pentahoHome.trim()) {
+    sources.push({ source: 'pentaho_home', registryPath: path.join(pentahoHome.trim(), 'repositories.xml') });
+  }
+  const out = [];
+  for (const { source, registryPath } of sources) {
+    for (const repository of readRepositories(registryPath)) {
+      if (!isUsableDirectory(repository.baseDirectory)) continue;
+      out.push({ base: path.resolve(repository.baseDirectory.trim()), source, registryPath, repository });
+    }
+  }
+  return out;
+}
+
+function repositoryResult(entry, match) {
+  return {
+    root: entry.base,
+    mode: 'repository',
+    source: entry.source,
+    match,
+    registryPath: entry.registryPath,
+    repository: entry.repository,
+  };
 }
 
 /**
@@ -52,44 +98,28 @@ export function resolveWorkspaceRoot({
   cwd = process.cwd(),
   pentahoHome = environment.PENTAHO_HOME,
 } = {}) {
-  const userHome = environment.USERPROFILE || environment.HOME;
+  const work = path.resolve(cwd);
+  const repos = registeredRepositories(environment, pentahoHome);
 
-  // 1. ~/.kettle/repositories.xml
-  if (userHome) {
-    const kettleRegistry = path.join(userHome, '.kettle', 'repositories.xml');
-    const repo = chooseRepository(readRepositories(kettleRegistry));
-    if (repo) {
-      return {
-        root: path.resolve(repo.baseDirectory),
-        mode: 'repository',
-        source: 'kettle_home',
-        registryPath: kettleRegistry,
-        repository: repo,
-      };
-    }
+  // 1. Opened inside (or at) a repository: deepest base_directory wins.
+  const containing = repos
+    .filter(r => isWithin(r.base, work))
+    .sort((a, b) => b.base.length - a.base.length);
+  if (containing.length > 0) return repositoryResult(containing[0], 'cwd_inside_repository');
+
+  // 2. Opened at a folder that holds the repository.
+  if (!isLaunchLocation(work, environment)) {
+    const inside = repos.filter(r => isWithin(work, r.base));
+    const distinct = [...new Map(inside.map(r => [key(r.base), r])).values()];
+    const chosen = distinct.length === 1 ? distinct[0] : distinct.find(r => r.repository.isDefault);
+    if (chosen) return repositoryResult(chosen, 'repository_inside_cwd');
   }
 
-  // 2. PENTAHO_HOME/repositories.xml (data-integration install)
-  if (pentahoHome && pentahoHome.trim()) {
-    const installRegistry = path.join(pentahoHome.trim(), 'repositories.xml');
-    const repo = chooseRepository(readRepositories(installRegistry));
-    if (repo) {
-      return {
-        root: path.resolve(repo.baseDirectory),
-        mode: 'repository',
-        source: 'pentaho_home',
-        registryPath: installRegistry,
-        repository: repo,
-      };
-    }
+  // 3. Launched from home / drive root / system dir: fall back to Spoon's default.
+  if (isLaunchLocation(work, environment) && repos.length > 0) {
+    return repositoryResult(repos.find(r => r.repository.isDefault) ?? repos[0], 'fallback_default');
   }
 
-  // 3. Fallback: the AI working directory, file mode
-  return {
-    root: path.resolve(cwd),
-    mode: 'file',
-    source: 'cwd',
-    registryPath: null,
-    repository: null,
-  };
+  // 4. Plain folder: file mode at the working directory.
+  return { root: work, mode: 'file', source: 'cwd', match: 'cwd', registryPath: null, repository: null };
 }

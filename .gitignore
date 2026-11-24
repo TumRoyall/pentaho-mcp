@@ -1,13 +1,40 @@
+# Dependencies
 node_modules/
-*.tmp
-
-# Coordinator scratch (SDD ledger, task briefs, review packages)
-.superpowers/
 
 # Release build artifacts (produced by scripts/build-release.mjs)
 build/
 dist/
-.kiro/
+*.tgz
 
 # Local PDI runtime logs (written under the active project root)
 .pentaho-mcp/
+
+# Logs & temp files
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+coverage/
+
+# Secrets / local environment
+.env
+.env.*
+
+# AI client & coordinator local state
+.superpowers/
+.kiro/
+.claude/settings.local.json
+.mcp.json
+.codex/
+.cursor/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local Spoon file repositories (reference copies live in test/fixtures/)
+test/test_repo/
+test/test_norepo/

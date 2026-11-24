@@ -10,7 +10,7 @@
   <attributes/>
   <specification_method>filename</specification_method>
   <job_object_id/>
-  <filename>${Internal.Entry.Current.Directory}/etl_job_logic.kjb</filename>
+  <filename/>
   <jobname/>
   <directory/>
   <arg_from_previous>N</arg_from_previous>
@@ -49,7 +49,7 @@
 | `<name>` | Y | **Phải trùng filename stem** của `.kjb` con |
 | `<type>` | Y | `JOB` |
 | `<specification_method>` | Y | `filename` |
-| `<filename>` | Y | `${Internal.Entry.Current.Directory}/<stem>.kjb` |
+| `<filename>` | Y | Đường dẫn **tuyệt đối** tới `.kjb` (ví dụ `C:\etl\batch\daily\job\<stem>.kjb`), ghi bằng `kettle_set_reference`. Repository mode: để trống, dùng `rep_name` + `<jobname>` + `<directory>` |
 | `<wait_until_finished>` | Y | `Y` |
 | `<run_configuration>` | Y | `Pentaho local` |
 | `<pass_all_parameters>` | Y | `Y` |

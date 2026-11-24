@@ -60,6 +60,15 @@ export function selectArtifact(ctx, args, { prefix = '', physicalKey = 'path', w
   return repoPaths.resolveArtifact(selector, { write });
 }
 
+/**
+ * The artifact-level <directory> Spoon writes for a resolved artifact: its
+ * repository folder (e.g. "/batch/daily/job") in repository mode, "/" for a
+ * plain file workspace.
+ */
+export function headerDirectoryFor(ctx, identity) {
+  return ctx.workspaceMode === 'repository' ? (identity.directory || '/') : '/';
+}
+
 export function selectDirectory(ctx, args) {
   const repoPaths = ctx.repositoryPaths || createRepositoryPaths(ctx);
   const selector = {

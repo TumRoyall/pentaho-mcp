@@ -1,6 +1,6 @@
 ---
 name: developing-pentaho-jobs
-description: Use when turning a BA requirement, ticket, or approved Pentaho request into validated KJB/KTR artifacts — reuses Superpowers for design/spec/planning/execution and pentaho-mcp-server for knowledge-first XML edits, static validation, and optional PDI loadcheck/execute.
+description: Use when turning a BA requirement, ticket, or approved Pentaho request into validated KJB/KTR artifacts — reuses Superpowers for design/spec/planning/execution and pentaho-mcp for knowledge-first XML edits, static validation, and optional PDI loadcheck/execute.
 ---
 
 # Developing Pentaho Jobs
@@ -24,7 +24,7 @@ BA requirement
 ```
 
 **Superpowers owns the reasoning:** brainstorming, approval gates,
-specification, and planning. **`pentaho-mcp-server` owns the deterministic
+specification, and planning. **`pentaho-mcp` owns the deterministic
 operations** on `.kjb`/`.ktr`: knowledge lookup, XML create/edit, graph
 operations, static validation, and the four runtime tools.
 

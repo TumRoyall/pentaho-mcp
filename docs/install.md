@@ -210,7 +210,7 @@ Biên luôn được enforce: đường tương đối resolve theo root; đư�
 
 ## Nâng cấp / gỡ bỏ
 
-- **Nâng cấp:** làm lại Bước 1–4 với phiên bản mới vào cùng thư mục `C:\Tools\pentaho-mcp`, rồi restart/reconnect client. Nếu `Expand-Archive` báo `Access to the path ... pentaho-mcp.exe is denied` thì một client (ví dụ phiên Claude Code đang mở) vẫn đang chạy server: đóng client, hoặc đổi tên file đang chạy trước khi giải nén: `Move-Item C:\Tools\pentaho-mcp\pentaho-mcp.exe C:\Tools\pentaho-mcp\pentaho-mcp.exe.old -Force` (xóa file `.old` sau khi restart client). Đường dẫn trong cấu hình không đổi nên không cần sửa. Nhớ copy lại skill (Bước 6).
+- **Nâng cấp:** làm lại Bước 1–4 với phiên bản mới vào cùng thư mục `C:\Tools\pentaho-mcp`, rồi restart/reconnect client. Nếu `Expand-Archive` báo `Access to the path ... pentaho-mcp.exe is denied` thì một client (ví dụ phiên Claude Code đang mở) vẫn đang chạy server: đóng client, hoặc đổi tên file đang chạy trước khi giải nén: `Move-Item C:\Tools\pentaho-mcp\pentaho-mcp.exe "C:\Tools\pentaho-mcp\pentaho-mcp.exe.old-$(Get-Date -Format yyyyMMddHHmmss)"` (tên kèm thời gian để không đụng file `.old` cũ vẫn đang bị giữ; sau khi restart client, xóa các file `.old-*` bằng `Get-ChildItem C:\Tools\pentaho-mcp -Filter 'pentaho-mcp.exe.old*' | Remove-Item -ErrorAction SilentlyContinue`). Đường dẫn trong cấu hình không đổi nên không cần sửa. Nhớ copy lại skill (Bước 6).
 - **Gỡ bỏ:** xóa mục `pentaho-mcp` khỏi cấu hình client (`claude mcp remove pentaho-mcp --scope user` với Claude Code), xóa thư mục skill đã copy, rồi xóa `C:\Tools\pentaho-mcp`.
 
 ## Phụ lục A — Source mode (cho developer)

@@ -189,13 +189,17 @@ Kitchen/Pan chỉ chạy khi có **đủ cả hai**: `PENTAHO_ENABLE_EXECUTE=1` 
 ## Nâng cấp
 
 1. Tải ZIP phiên bản mới, làm lại Bước 1–3 vào **cùng** thư mục `C:\Tools\pentaho-mcp`.
-2. Nếu `Expand-Archive` báo `Access to the path ... pentaho-mcp.exe is denied`, client vẫn đang chạy server. Đóng client, hoặc đổi tên file đang chạy rồi giải nén lại:
+2. Nếu `Expand-Archive` báo `Access to the path ... pentaho-mcp.exe is denied`, client vẫn đang chạy server. Đóng client, hoặc đổi tên file đang chạy (Windows cho phép đổi tên file đang chạy) rồi giải nén lại:
 
    ```powershell
-   Move-Item C:\Tools\pentaho-mcp\pentaho-mcp.exe C:\Tools\pentaho-mcp\pentaho-mcp.exe.old -Force
+   Move-Item C:\Tools\pentaho-mcp\pentaho-mcp.exe "C:\Tools\pentaho-mcp\pentaho-mcp.exe.old-$(Get-Date -Format yyyyMMddHHmmss)"
    ```
 
-3. Restart/reconnect client (đường dẫn không đổi nên không phải sửa cấu hình), copy lại skill (Bước 5), xóa `pentaho-mcp.exe.old` nếu có.
+3. Restart/reconnect client (đường dẫn không đổi nên không phải sửa cấu hình), copy lại skill (Bước 5), rồi dọn các file `.old-*` không còn bị giữ:
+
+   ```powershell
+   Get-ChildItem C:\Tools\pentaho-mcp -Filter 'pentaho-mcp.exe.old*' | Remove-Item -ErrorAction SilentlyContinue
+   ```
 
 ## Gỡ cài đặt
 
